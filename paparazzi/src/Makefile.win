@@ -1,0 +1,32 @@
+SUBDIRS=capteur capteur\ahrs generated math moteur stabilization
+
+CC=arm-none-linux-gnueabi-gcc
+INCLUDES=
+DRONEFLAGS= -march=armv7-a
+CXXFLAGS=-W -Wall -Wextra $(DRONEFLAGS)
+
+LIBNAME=paparazzi
+INCLUDE_PATH=..\include\paparazzi
+
+SRC= $(wildcard *.c) $(foreach dir, $(SUBDIRS), $(wildcard $(dir)/*.c))
+OBJ= $(SRC:.c=.o)
+
+all: setup-lib setup-includes
+
+lib$(LIBNAME).a: $(OBJ)
+	$(AR) rcs $@ $^
+
+%.o: %.c
+	$(CC) $(CXXFLAGS) -o $@ -c $<
+
+setup-lib: lib$(LIBNAME).a
+	if not exist ..\lib mkdir ..\lib
+	move /Y "lib$(LIBNAME).a" "..\lib"
+
+setup-includes: 
+	if not exist $(INCLUDE_PATH)  mkdir $(INCLUDE_PATH)
+	for %%f in ($(SUBDIRS)) do if not exist $(INCLUDE_PATH)\%%f mkdir $(INCLUDE_PATH)\%%f
+	for %%f in (. $(SUBDIRS)) do copy %%f\*.h $(INCLUDE_PATH)\%%f\*.h
+
+clean:
+	for /r %%i in (*.o) do del %%i
