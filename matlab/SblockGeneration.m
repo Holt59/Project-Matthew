@@ -3,15 +3,16 @@
 
 def = legacy_code('initialize')
 % Nom du fichier et du header
-def.SourceFiles = {'led_basic.c'};
-%def.HeaderFiles = {'testprintf.h'};
+def.SourceFiles = {'print2file.c'};
+def.HeaderFiles = {'print2file.h'};
 %def.TargetLibFiles = {'ws2_32.lib'};
 %def.HostLibFiles = {'-lwsock32'};
 %def.TargetLibFiles = {'-lws2_32'};
+
 % Nom de la fonction
-def.SFunctionName = 'ex_sfun_montest';
+def.SFunctionName = 'ex_sfun_print2file';
 % Les entrées sont y1, y2... etc, les entrées sont u1, u2...etc
-def.OutputFcnSpec = 'void myfunction(double u1, double u2)';
+def.OutputFcnSpec = 'void print2function(int16 u1)';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);
@@ -19,3 +20,5 @@ legacy_code('compile', def);
 
 %Genere le block sous simulink
 legacy_code('slblock_generate', def);
+legacy_code('sfcn_tlc_generate', def);
+
