@@ -4,10 +4,10 @@
 
 #include "print2file.h"
 
-void print2function (int a) {
-    FILE *f = fopen(OUTPUT_FILENAME, "a") ;
+void print2file (int a, const char *name) {
+    FILE *f = fopen(name, "w") ;
     if (f == NULL) {
-	fprintf(stderr, "Error openning file %s: %s", OUTPUT_FILENAME, strerror(errno)) ;
+	fprintf(stderr, "Error openning file %s: %s", name, strerror(errno)) ;
     }
     fprintf(f, "LOG: %d\n", a) ;
     fclose(f) ;
