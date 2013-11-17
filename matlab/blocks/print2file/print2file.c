@@ -5,7 +5,7 @@
 #include "print2file.h"
 
 void print2function (int a) {
-    FILE *f = fopen(OUTPUT_FILENAME, "a") ;
+    FILE *f = fopen(OUTPUT_FILENAME, "w") ;
     if (f == NULL) {
 	fprintf(stderr, "Error openning file %s: %s", OUTPUT_FILENAME, strerror(errno)) ;
     }
