@@ -1,10 +1,10 @@
 DEBUG=no
 STATIC=yes
 
-CC=arm-none-linux-gnueabi-gcc
+CC=/usr/local/carlson-minot/crosscompilers/bin/arm-none-linux-gnueabi-gcc
 INCLUDES=-I../../paparazzi/include/
 DRONEFLAGS= -march=armv7-a
-CXXFLAGS =-W -Wall -Wextra $(DRONEFLAGS) $(INCLUDES)
+CFLAGS =-W -Wall -Wextra $(DRONEFLAGS) $(INCLUDES)
 LDFLAGS =-L../../paparazzi/lib -lpaparazzi -lm
 
 SRC=  $(wildcard *.c)
@@ -15,9 +15,9 @@ all: $(EXEC)
 
 %.o: %.c
 ifeq ($(DEBUG),yes)
-	$(CC) -g $(CXXFLAGS) -o $@ -c $<
+	$(CC) -g $(CFLAGS) -o $@ -c $<
 else
-	$(CC) $(CXXFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 endif
 
 %.elf: %.o

@@ -4,8 +4,6 @@
 
 #include "print2file.h"
 
-int main()
+void print2file (int a, const char *name)
 {
-	print2function(6);
-	return 0;
 }

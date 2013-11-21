@@ -3,17 +3,14 @@
 
 def = legacy_code('initialize')
 % Nom du fichier et du header
-def.SourceFiles = {'blocks/led/led.c'};
+def.SourceFiles = {'../src/proto/led.c'};
 def.HeaderFiles = {'led.h'};
-def.IncPaths = {'blocks\led', '..\paparazzi\include'};
-%def.TargetLibFiles = {'ws2_32.lib'};
-%def.HostLibFiles = {'-lwsock32'};
-%def.TargetLibFiles = {'-lws2_32'};
+def.IncPaths = {'../src/proto',};
 
 % Nom de la fonction
-def.SFunctionName = 'ex_sfun_led';
-% Les entrées sont y1, y2... etc, les entrées sont u1, u2...etc
-def.OutputFcnSpec = 'void led(int8 u1, uint8 p1)';
+def.SFunctionName = 'AR_Drone_LED';
+% Les entrées sont y1, y2... etc, les entr�es sont u1, u2...etc
+def.OutputFcnSpec = 'void led(int32 u1, uint8 p1)';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);

@@ -5,9 +5,9 @@
 #include "print2file.h"
 
 void print2file (int a, const char *name) {
-    FILE *f = fopen(name, "w") ;
+    FILE *f = fopen(name, "a") ;
     if (f == NULL) {
-	fprintf(stderr, "Error openning file %s: %s", name, strerror(errno)) ;
+        fprintf(stderr, "Error openning file %s: %s", name, strerror(errno)) ;
     }
     fprintf(f, "LOG: %d\n", a) ;
     fclose(f) ;

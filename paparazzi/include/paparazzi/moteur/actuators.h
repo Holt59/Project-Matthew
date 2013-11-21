@@ -42,6 +42,7 @@ extern "C" {
 
 /* Initialisation moteur */
 extern void actuators_init(void);
+
 /* Envoie de l'information moteur au moteur */
 extern void actuators_commit(void);
 

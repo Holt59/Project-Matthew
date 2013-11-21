@@ -37,38 +37,40 @@ tid_t leds_tid;
 
 int main()
 {
-  int i = 0;
-  printf("Initialisation\n");
-  actuators_init();
-  actuators_led_set(RED,RED,RED,RED);
-
-  sys_time_init();
-  log_init();
-  stateInit();
-  
-  imu_init();
-  ahrs_aligner_init();
-  ahrs_init();
-
-  stabilization_attitude_init();
-  guidance_v_init(); 
-  ins_init();
-
-  main_tid = sys_time_register_timer(40,NULL);
-  leds_tid = sys_time_register_timer((0.2),NULL);
-
-  printf("Update imu\n");
-  actuators_led_set(GREEN,GREEN,GREEN,GREEN);
-  while(!sys_time_check_and_ack_timer(main_tid)){//periodic
-    if(sys_time_check_and_ack_timer(leds_tid))
-    {
-      i++;
-      actuators_led_set((i==1)?GREEN:RED,(i==2)?GREEN:RED,(i==3)?GREEN:RED,(i==4)?GREEN:RED);
-      printf("LED %d\n",i);
-      if (i==4)
-        i=0;
+    int i = 0;
+    printf("Initialisation\n");
+    actuators_init();
+    actuators_led_set(RED,RED,RED,RED);
+    
+    sys_time_init();
+    log_init();
+    stateInit();
+    
+    imu_init();
+    ahrs_aligner_init();
+    ahrs_init();
+    
+    stabilization_attitude_init();
+    guidance_v_init();
+    ins_init();
+    
+    main_tid = sys_time_register_timer(40,NULL);
+    leds_tid = sys_time_register_timer((0.2),NULL);
+    
+    printf("Update imu\n");
+    actuators_led_set(GREEN,GREEN,GREEN,GREEN);
+    while(!sys_time_check_and_ack_timer(main_tid)){//periodic
+        if(sys_time_check_and_ack_timer(leds_tid))
+        {
+            i++;
+            actuators_led_set((i==1)?GREEN:RED,(i==2)?GREEN:RED,(i==3)?GREEN:RED,(i==4)?GREEN:RED);
+            printf("LED %d\n",i);
+            if (i==4)
+                i=0;
+        }
     }
-  }
-  
-  actuators_close();
+    
+    actuators_close();
+
+    return 0;
 }
