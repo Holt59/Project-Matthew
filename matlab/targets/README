@@ -1,0 +1,15 @@
+Pour installer une target dans MATLAB, ajouter dans le path MATLAB les répertoire
+target
+target/target
+target/blocks
+
+EXEMPLE
+addpath('/cheminverstarget/ardrone')
+addpath('/cheminverstarget/ardrone/ardrone')
+addpath('/cheminverstarget/ardrone/blocks')
+Pour sauvegarder définitivement: 
+savepath 
+
+-> redémarrer MATLAB
+-> on doit trouver la target dans les settings Simulink
+-> on doit trouver la toolbox dans le library browser
