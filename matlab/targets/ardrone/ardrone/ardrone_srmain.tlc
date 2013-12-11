@@ -1,0 +1,67 @@
+%% ==============================================================================
+%% Copyright 1994-2012 The MathWorks, Inc.
+%%
+%selectfile NULL_FILE
+
+%function FcnSingleTaskingMain() void
+  
+  %if GenerateSampleERTMain
+    %assign ::CompiledModel.GenerateSampleERTMain = TLC_FALSE
+    %warning Overriding example ert_main.c!
+  %endif
+
+  %openfile tmpBuf
+
+  %<SLibDeclareFcnProtoCtlVariables()>\
+  
+  %<LibWriteModelData()>\
+  %closefile tmpBuf
+  
+  %<SLibCacheCodeToFile("mainSrc_data_defn", tmpBuf)>
+  
+  %openfile tmpBuf
+  #include "%<LibGetMdlPubHdrBaseName()>.h"
+  #include <sys/time.h> 
+  %closefile tmpBuf
+ 
+  %<SLibCacheCodeToFile("mainSrc_incl", tmpBuf)>
+  
+  %openfile tmpBuf
+  void __cxa_pure_virtual(void){}
+  #define STEP_SIZE_MILLIS ((unsigned long)(%<CompiledModel.FundamentalStepSize>*1000))
+
+
+  %assign fcnReturns = "int_T"
+  %assign fcnName = "main"
+  %assign fcnParams = "int_T argc, const char *argv[]"
+  %assign fcnCategory = "main"
+  %createrecord fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; ...
+    Abstract ""; Category fcnCategory; GeneratedBy "bareboard_srmain.tlc"; ...
+    Type "Main"}
+  %<SLibDumpFunctionBanner(fcnRec)>
+  %undef fcnRec
+  %<fcnReturns> %<fcnName>(%<fcnParams>)
+  {
+    
+    /* Unused arguments */
+    (void)(argc);
+    (void)(argv);
+    
+    /* Initialize model */
+    %<LibCallModelInitialize()>\
+    
+    /* Associate rt_OneStep() with a timer that executes at the base rate of the model */
+    while (1)
+    {
+        usleep(STEP_SIZE_MILLIS*1000);
+        %<LibCallModelStep(0)>\
+    }
+
+    %<LibCallModelTerminate()>\
+    return 0;
+  }
+  %closefile tmpBuf
+  
+  %<SLibCacheCodeToFile("mainSrc_fcn_defn", tmpBuf)>
+  
+%endfunction
