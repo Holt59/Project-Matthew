@@ -4,6 +4,9 @@
 #include <iostream>
 
 #include <unistd.h>
+#include <stdio.h>
+#include <sys/time.h>
+#include <math.h>
 
 int main () {
 
@@ -21,38 +24,43 @@ int main () {
 
 	return 0 ;
 
-	
+	*/
+
+	const int dt = 10000 ;
+	int udt ;
 
 	if (!Navdata::init ()) {
 		std::cerr << "Error initializing navdata." << std::endl ;
 		return 1 ;
-	}*/
+	}
 
 	std::cout << "Starting loop... " << std::endl ;
 
-	while (1) {
-		
-		std::cout << "TOP LOOP: " << std::endl ;
+	Navdata::AHRS::setSamplePeriod(dt) ;
 
-		std::cout << Navdata::update () << std::endl ;
+	while (1) {
+
+		struct Navdata::AHRS::EulerAngles eangles ;
+		struct timeval start, end ;
 		
-		if (Navdata::IMU::isIMUAvailable()) {
-			std::cout << "IMU OK !" << std::endl ;
-			Navdata::IMU::update () ;
-			std::cout << Navdata::IMU::Accelerometer::getX () << std::endl ;
-			std::cout << Navdata::IMU::Accelerometer::getY () << std::endl ;
-			std::cout << Navdata::IMU::Accelerometer::getZ () << std::endl ;
-		}
-		/*
-		if (Navdata::Barometer::isBaroAvailable()) {
-			std::cout << "Baro OK !" << std::endl ;
-			std::cout << Navdata::Barometer::getTemperature() << std::endl ;
-			std::cout << Navdata::Barometer::getPressure() << std::endl ;
-		}
-	
-		Navdata::height ()  ;
-		*/
-		usleep(1000000) ; 
+		gettimeofday(&start, NULL) ;
+
+		Navdata::update () ;
+		
+		Navdata::IMU::update () ;
+		Navdata::AHRS::update () ;
+
+		eangles = Navdata::AHRS::getEulerAngles() ;
+
+		printf("\r%8f %8f %8f", eangles.phi * 180.0 / M_PI, eangles.rho * 180.0 / M_PI, eangles.tetha * 180.0 / M_PI) ;
+
+		gettimeofday(&end, NULL) ;
+
+		udt = ((float)(end.tv_sec - start.tv_sec)) * 1e6 - (end.tv_usec - start.tv_usec) ;
+
+		// std::cout << udt << std::endl ;
+		
+		usleep(dt - (int)udt) ; 
 
 	}
 	

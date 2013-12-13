@@ -10,6 +10,7 @@
 #include <math.h>
 
 #include <iostream>
+#include <stdio.h>
 
 namespace Navdata {
 
@@ -132,7 +133,7 @@ namespace Navdata {
         // stop acquisition
         uint8_t cmd = 0x02;
         write (fd, &cmd, 1);
-
+		
         // read some potential dirt (retry alot of times)
         char tmp[100];
         for (int i = 0; i < 100; i++) {
@@ -143,7 +144,7 @@ namespace Navdata {
             write (fd, &cmd, 1);
             usleep (200);
         }
-
+		
         baroCalibrated = false ;
         if (!acquireBaroCalibration ())
             return false;
@@ -162,12 +163,14 @@ namespace Navdata {
         port.packetsRead = 0;
         port.isInitialized = true;
 
+		/*
+
 		std::cout << "AC6: " << baroCalibration.ac6 << std::endl ;
 		std::cout << "AC5: " << baroCalibration.ac5  << std::endl ;
 		std::cout << "MC: " << baroCalibration.md << std::endl ;
 		std::cout << "MD: " << baroCalibration.mc << std::endl ;
 
-		/*
+		
 		baroCalibration.ac6 = 23153;
 		baroCalibration.ac5 = 32757;
 		baroCalibration.mc = -8711;
@@ -285,12 +288,6 @@ namespace Navdata {
         static bool last_checksum_wrong = false ;
 		bool checkSumOk = true ;
 
-        // Check if initialized
-        if (!port.isInitialized) {
-            Navdata::init ();
-            return false ;
-        }
-
         // Start reading
         Navdata::acquire ();
 
@@ -358,7 +355,6 @@ namespace Navdata {
         if (navdata.ultrasound > 10000) {
             return previousUltrasoundHeight;
         }
-		std::cout << "Navdata.ultrasound: " << navdata.ultrasound << std::endl ;
         int16_t ultrasoundHeight = 0;
         ultrasoundHeight = (navdata.ultrasound - 880) / 26.553;
         previousUltrasoundHeight = ultrasoundHeight;
@@ -422,6 +418,7 @@ namespace Navdata {
         namespace Gyroscope {
 
             const float Sensitivity[3] = {4.359, 4.359, 4.359} ;
+			const float Neutral[3] = {0.0, 0.0, 0.0} ;
 
             float getX () {
                 return gyroscope[0] ;
@@ -440,6 +437,7 @@ namespace Navdata {
         namespace Accelerometer {
 
             const float Sensitivity[3] = {19.5, 19.5, 19.5} ;
+			const float Neutral[3] = {2048.0, 2048.0, 2048.0} ;
 
             float getX () {
                 return accelerometer[0] ;
@@ -457,7 +455,8 @@ namespace Navdata {
 
         namespace Magnetometer {
 
-            const float Sensitivity[3] = {16.0, 16.0, 16.0} ;
+            const float Sensitivity[3] = {14.64, 14.51, 15.16} ;
+			const float Neutral[3] = {0.0, 0.0, 0.0} ;
 
             float getX () {
                 return magnetometer[0] ;
@@ -475,6 +474,8 @@ namespace Navdata {
 
         void update () {
 
+			// printf("\r %5d %5d %6d", navdata.ax, navdata.ay, navdata.az) ;
+
             gyroscope[0] = (float) navdata.vx ;
             gyroscope[1] = - (float) navdata.vy ;
             gyroscope[2] = - (float) navdata.vz ;
@@ -484,13 +485,13 @@ namespace Navdata {
             accelerometer[2] = 4096.0 - (float) navdata.az ;
 
             magnetometer[0] = (float) navdata.mx ;
-            magnetometer[1] = - (float) navdata.my ;
+            magnetometer[1] = (float) navdata.my ;
             magnetometer[2] = - (float) navdata.mz ;
-
+			
             for (int i = 0 ; i < 3 ; ++i) {
-                gyroscope[i] *= Gyroscope::Sensitivity[i] ;
-                accelerometer[i] *= Accelerometer::Sensitivity[i] ;
-                magnetometer[i] *= Magnetometer::Sensitivity[i] ;
+                gyroscope[i] = (gyroscope[i] - Gyroscope::Neutral[i]) * Gyroscope::Sensitivity[i] * M_PI / 180.0 ;
+                accelerometer[i] = (accelerometer[i] - Accelerometer::Neutral[i]) * Accelerometer::Sensitivity[i] ;
+                magnetometer[i] = (magnetometer[i] - Magnetometer::Neutral[i]) * Magnetometer::Sensitivity[i] ;
             }
 
         }
@@ -499,7 +500,7 @@ namespace Navdata {
 
     namespace AHRS {
 
-        float quaternion[4] ;
+		float quaternion[4] = {1.0, 0.0, 0.0, 0.0} ;
         float samplePeriod = 1.0f ;
 
         float intErrors[3] = {0.0f, 0.0f, 0.0f} ;
@@ -528,9 +529,9 @@ namespace Navdata {
                 ax = IMU::accelerometer[0],
                 ay = IMU::accelerometer[1],
                 az = IMU::accelerometer[2],
-                mx = IMU::accelerometer[0],
-                my = IMU::accelerometer[1],
-                mz = IMU::accelerometer[2] ;
+                mx = IMU::magnetometer[0],
+                my = IMU::magnetometer[1],
+                mz = IMU::magnetometer[2] ;
 
             // Auxiliary variables to avoid repeated arithmetic
             float q1q1 = q1 * q1;
@@ -546,6 +547,8 @@ namespace Navdata {
 
             // Normalise accelerometer measurement
             norm = (float) sqrt (ax * ax + ay * ay + az * az);
+
+			// std::cout << "TOP: " << std::endl ;
             if (norm == 0.0f) return; // handle NaN
             norm = 1.0f / norm;        // use reciprocal for division
             ax *= norm;
@@ -564,6 +567,7 @@ namespace Navdata {
             hx = 2.0f * mx * (0.5f - q3q3 - q4q4) + 2.0f * my * (q2q3 - q1q4) + 2.0f * mz * (q2q4 + q1q3);
             hy = 2.0f * mx * (q2q3 + q1q4) + 2.0f * my * (0.5f - q2q2 - q4q4) + 2.0f * mz * (q3q4 - q1q2);
             bx = (float) sqrt ((hx * hx) + (hy * hy));
+			// std::cout << "BX: " << (hx * hx) + (hy * hy) << std::endl ;
             bz = 2.0f * mx * (q2q4 - q1q3) + 2.0f * my * (q3q4 + q1q2) + 2.0f * mz * (0.5f - q2q2 - q3q3);
 
             // Estimated direction of gravity and magnetic field
@@ -603,8 +607,12 @@ namespace Navdata {
             q3 = pb + (q1 * gy - pa * gz + pc * gx) * (0.5f * samplePeriod);
             q4 = pc + (q1 * gz + pa * gy - pb * gx) * (0.5f * samplePeriod);
 
+			// std::cout << q1 << ", " << q2 << ", " << q3 << ", " << q4 << std::endl ;
+
             // Normalise quaternion
             norm = (float) sqrt (q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
+			// std::cout << norm << std::endl ;
+
             norm = 1.0f / norm;
             quaternion[0] = q1 * norm;
             quaternion[1] = q2 * norm;
@@ -613,7 +621,13 @@ namespace Navdata {
         }
 
         struct EulerAngles getEulerAngles () {
-
+			struct EulerAngles eangles ;
+			eangles.phi = atan2(2 * quaternion[2] * quaternion[3] - 2 * quaternion[0] * quaternion[1], 
+					2 * quaternion[0] * quaternion[0] + 2 * quaternion[3] * quaternion[3] - 1) ;
+			eangles.tetha = -asin(2 * quaternion[1] * quaternion[3] + 2 * quaternion[0] * quaternion[2]) ;
+			eangles.rho = atan2(2 * quaternion[1] * quaternion[2] - 2 * quaternion[0] * quaternion[3], 
+					2 * quaternion[0] * quaternion[0] + 2 * quaternion[1] * quaternion[1] - 1);
+			return eangles ;
         }
 
     }
