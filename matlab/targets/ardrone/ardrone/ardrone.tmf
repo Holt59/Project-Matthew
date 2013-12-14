@@ -102,7 +102,6 @@ INTEGER_CODE            = |>INTEGER_CODE<|
 MAT_FILE                = |>MAT_FILE<|
 ONESTEPFCN              = |>COMBINE_OUTPUT_UPDATE_FCNS<|
 TERMFCN                 = |>INCLUDE_MDL_TERMINATE_FCN<|
-B_ERTSFCN               = |>GENERATE_ERT_S_FUNCTION<|
 MEXEXT                  = |>MEXEXT<|
 EXT_MODE                = |>EXT_MODE<|
 TMW_EXTMODE_TESTING     = |>TMW_EXTMODE_TESTING<|
@@ -137,7 +136,6 @@ MODELREF_INC_PATH         = |>START_MDLREFINC_EXPAND_INCLUDES<|-I|>MODELREF_INC_
 RELATIVE_PATH_TO_ANCHOR   = |>RELATIVE_PATH_TO_ANCHOR<|
 # NONE: standalone, SIM: modelref sim, RTW: modelref coder target
 MODELREF_TARGET_TYPE       = |>MODELREF_TARGET_TYPE<|
-MODELREF_SFCN_SUFFIX       = |>MODELREF_SFCN_SUFFIX<|
 
 #-- In the case when directory name contains space ---
 ifneq ($(MATLAB_ROOT),$(ALT_MATLAB_ROOT))
@@ -253,15 +251,6 @@ ifeq ($(PURIFY),1)
   OPT_OPTS := -g
 endif
 
-# Determine if we are generating an s-function
-SFCN = 0
-ifeq ($(MODELREF_TARGET_TYPE),SIM)
-  SFCN = 1
-endif
-ifeq ($(B_ERTSFCN),1)
-  SFCN = 1
-endif
-
 #------------------------------ Include Path -----------------------------------
 
 MATLAB_INCLUDES = \
@@ -329,31 +318,18 @@ endif
 
 CFLAGS = $(ANSI_OPTS) $(DBG_FLAG) $(CC_OPTS) $(CPP_REQ_DEFINES) $(INCLUDES)
 CPPFLAGS = $(CPP_ANSI_OPTS) $(DBG_FLAG) $(CPP_OPTS) $(CC_OPTS) $(CPP_REQ_DEFINES) $(INCLUDES)
-ifeq ($(SFCN),1)
-ifneq ($(OPTIMIZATION_FLAGS),)
-CC_OPTS_SFCN = COPTIMFLAGS="$(ANSI_OPTS) $(OPTIMIZATION_FLAGS)"
-else
-CC_OPTS_SFCN = COPTIMFLAGS="$(OPT_OPTS) $(ANSI_OPTS)"
-endif
-CFLAGS_SFCN = $(CC_OPTS_SFCN) $(CPP_REQ_DEFINES1) $(INCLUDES)
-endif
 
 #-------------------------- Additional Libraries ------------------------------
 
-SYSLIBS += $(EXT_LIB) -lpaparazzi
-ifeq ($(SFCN),0)
-SYSLIBS += -lm
-endif
+SYSLIBS += $(EXT_LIB) -lm -lpaparazzi
 
 LIBS =
 |>START_PRECOMP_LIBRARIES<|
 ifeq ($(OPT_OPTS),$(DEFAULT_OPT_OPTS))
 ifeq ($(INTEGER_CODE),0)
-ifeq ($(SFCN),1)
-LIBS += |>EXPAND_LIBRARY_LOCATION<|/|>EXPAND_LIBRARY_NAME<|_rtwsfcn.a
-else
+
 LIBS += |>EXPAND_LIBRARY_LOCATION<|/|>EXPAND_LIBRARY_NAME<|_ert.a
-endif
+
 else
 LIBS += |>EXPAND_LIBRARY_LOCATION<|/|>EXPAND_LIBRARY_NAME<|_int_ert.a
 endif
@@ -364,11 +340,7 @@ endif
 LIBS += |>EXPAND_LIBRARY_NAME<|.a |>END_EXPAND_LIBRARIES<|
 LIBS += $(S_FUNCTIONS_LIB) $(INSTRUMENT_LIBS)
 
-ifeq ($(SFCN),1)	
-LIBFIXPT = -L$(MATLAB_ROOT)/bin/$(ARCH) -lfixedpoint
-else
 LIBFIXPT = 
-endif
 
 ifeq ($(MODELREF_TARGET_TYPE),SIM)
 LIBMWMATHUTIL = -L$(MATLAB_ROOT)/bin/$(ARCH) -lmwmathutil
@@ -397,72 +369,53 @@ else
 MEX_LDFLAGS =
 endif
 
-ifeq ($(SFCN),0)
-  SRCS  = $(ADD_SRCS) $(S_FUNCTIONS)
-  SRC_DEP =
-  ifeq ($(MODELREF_TARGET_TYPE), NONE)
-    ifeq ($(SHRLIBTARGET), 1)
-      # Shared object/dynamic library
-      PRODUCT            = $(MODEL).so
-      BIN_SETTING        = $(LD) $(SHRLIBLDFLAGS)$(MODEL).def -o $(PRODUCT)
-      BUILD_PRODUCT_TYPE = "shared object"
-      SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
+SRCS  = $(ADD_SRCS) $(S_FUNCTIONS)
+SRC_DEP =
+ifeq ($(MODELREF_TARGET_TYPE), NONE)
+ifeq ($(SHRLIBTARGET), 1)
+  # Shared object/dynamic library
+  PRODUCT            = $(MODEL).so
+  BIN_SETTING        = $(LD) $(SHRLIBLDFLAGS)$(MODEL).def -o $(PRODUCT)
+  BUILD_PRODUCT_TYPE = "shared object"
+  SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
+else
+  ifeq ($(MAKEFILEBUILDER_TGT), 1)
+    # Standalone executable (e.g. for PIL)
+    PREBUILT_SRCS      = $(MODULES)
+    PREBUILT_OBJS      = $(addsuffix .o, $(basename $(PREBUILT_SRCS)))
+    PRODUCT            = $(MODEL)$(EXE_FILE_EXT)
+    BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
+    BUILD_PRODUCT_TYPE = "executable"
+  else
+    SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
+    ifeq ($(STANDALONE_SUPPRESS_EXE), 1)
+      # Build object code only for top level model
+      PRODUCT            = "ObjectModulesOnly"
+      BUILD_PRODUCT_TYPE = "object modules"
     else
-      ifeq ($(MAKEFILEBUILDER_TGT), 1)
-        # Standalone executable (e.g. for PIL)
-        PREBUILT_SRCS      = $(MODULES)
-        PREBUILT_OBJS      = $(addsuffix .o, $(basename $(PREBUILT_SRCS)))
-        PRODUCT            = $(MODEL)$(EXE_FILE_EXT)
-        BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
-        BUILD_PRODUCT_TYPE = "executable"
+      # ERT standalone
+      PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)$(EXE_FILE_EXT)
+      BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
+      BUILD_PRODUCT_TYPE = "executable"
+      ifeq ($(GEN_SAMPLE_MAIN),0)
+         ifeq ($(MULTI_INSTANCE_CODE), 1)
+            SRCS += rt_malloc_main.c
+         else
+            SRCS += rt_main.c
+         endif
       else
-        SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
-        ifeq ($(STANDALONE_SUPPRESS_EXE), 1)
-          # Build object code only for top level model
-          PRODUCT            = "ObjectModulesOnly"
-          BUILD_PRODUCT_TYPE = "object modules"
-        else
-          # ERT standalone
-          PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)$(EXE_FILE_EXT)
-          BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
-          BUILD_PRODUCT_TYPE = "executable"
-          ifeq ($(GEN_SAMPLE_MAIN),0)
-             ifeq ($(MULTI_INSTANCE_CODE), 1)
-                SRCS += rt_malloc_main.c
-             else
-                SRCS += rt_main.c
-             endif
-          else
-            SRCS += ert_main.$(TARGET_LANG_EXT)
-          endif
-        endif
+        SRCS += ert_main.$(TARGET_LANG_EXT)
       endif
     endif
-  else
-    # Model reference coder target
-    SRCS               += $(MODULES)
-    PRODUCT            = $(MODELLIB)
-    BUILD_PRODUCT_TYPE = "library"
   endif
-else
-  # Model Reference Simulation target, ERT S-function target
-  MEX                 = $(MATLAB_ROOT)/bin/mex
-  ifeq ($(MODELREF_TARGET_TYPE), SIM)
-  PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)$(MODELREF_SFCN_SUFFIX).$(MEXEXT)
-  RTW_SFUN_SRC       = $(MODEL)$(MODELREF_SFCN_SUFFIX).$(TARGET_LANG_EXT)
-  SRCS               = $(MODULES) $(ADD_SRCS)
-  else
-  PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)_sf.$(MEXEXT)
-  RTW_SFUN_SRC       = $(MODEL)_sf.$(TARGET_LANG_EXT)
-  SRCS               = $(MODULES) $(ADD_SRCS) $(S_FUNCTIONS)
-  endif
-  BIN_SETTING        = $(MEX) -MATLAB_ARCH=$(ARCH) $(CFLAGS_SFCN) $(RTW_SFUN_SRC) $(MEX_LDFLAGS) -outdir $(RELATIVE_PATH_TO_ANCHOR) -silent
-  BUILD_PRODUCT_TYPE = "mex file"
-  ifeq ($(B_ERTSFCN),1)
-    SRCS              += $(MODEL).$(TARGET_LANG_EXT)
-  endif
-  SRC_DEP            = $(RTW_SFUN_SRC)
 endif
+else
+# Model reference coder target
+SRCS               += $(MODULES)
+PRODUCT            = $(MODELLIB)
+BUILD_PRODUCT_TYPE = "library"
+endif
+
 
 USER_SRCS =
 
