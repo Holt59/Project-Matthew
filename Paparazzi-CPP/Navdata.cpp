@@ -417,6 +417,10 @@ namespace Navdata {
 
         namespace Gyroscope {
 
+            /* D'après la doc du Invensense 3000 on a une "sensitivy" = 16.4 LSB/dps pour une FS de 2000 (d'après
+            paparazzi, on a une FS de 2000, cf. je sais plus quel header... ). Si on a  16.4 LSB/dps, la valeur
+            par laquelle il faut multiplier les données brutes c'est 1/16.4... Ce qui fait du 0.0609, ça me parait
+            plus cohérent que le 4.359 ci-dessous. */
             const float Sensitivity[3] = {4.359, 4.359, 4.359} ;
 			const float Neutral[3] = {0.0, 0.0, 0.0} ;
 
