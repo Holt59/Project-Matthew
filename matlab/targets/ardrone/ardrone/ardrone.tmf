@@ -41,11 +41,11 @@
 #  BUILD           - Invoke make from the build procedure (yes/no)?
 #  SYS_TARGET_FILE - Name of system target file.
 
-MAKECMD         = make
-HOST            = UNIX
+MAKECMD         = "|>MAKE_PATH<|"
+HOST            = ANY
 BUILD           = yes
 SYS_TARGET_FILE = ardrone.tlc
-COMPILER_TOOL_CHAIN = unix
+# COMPILER_TOOL_CHAIN = unix
 
 #---------------------- Tokens expanded by make_rtw ----------------------------
 #
@@ -183,8 +183,8 @@ DEFAULT_OPT_OPTS = -O0
 ANSI_OPTS        =
 CPP_ANSI_OPTS    = 
 LD               = $(CC)
-LDFLAGS          = -L"|>PAPARAZZI_PATH<|/lib/"
-USER_INCLUDES     = -I"|>PAPARAZZI_PATH<|/include/"
+LDFLAGS          = -L"|>PAPARAZZI_PATH<|\lib"
+USER_INCLUDES     = -I"|>PAPARAZZI_PATH<|\include"
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
@@ -198,8 +198,8 @@ EXE_FILE_EXT     = .elf
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
-CC  = |>COMPILER_PATH<|/arm-none-linux-gnueabi-gcc
-CPP = |>COMPILER_PATH<|/arm-none-linux-gnueabi-g++
+CC  = "|>COMPILER_PATH<|\arm-none-linux-gnueabi-gcc"
+CPP = "|>COMPILER_PATH<|\arm-none-linux-gnueabi-g++"
 DEFAULT_OPT_OPTS = -O0
 SHRLIBLDFLAGS = -shared -Wl,--no-undefined -Wl,--version-script,
 # Allow ISO-C functions like fmin to be called
@@ -264,11 +264,11 @@ endif
 
 # Use GCC_TEST to do a test compile of the local source (add DO_GCC_TEST=1)
 ifeq ($(DO_GCC_TEST), 1)
-  GCC_TEST     = echo "Doing gcc test compile"; gcc -c -o /dev/null -Wall 
+  GCC_TEST     = echo "Doing gcc test compile"; gcc -c -o nul -Wall 
   GCC_TEST_OUT = 
 else
   GCC_TEST     = echo
-  GCC_TEST_OUT = > /dev/null
+  GCC_TEST_OUT = > nul
 endif
 
 #------------------------------ Include Path -----------------------------------

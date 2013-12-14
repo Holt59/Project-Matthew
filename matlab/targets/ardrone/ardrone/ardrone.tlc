@@ -461,7 +461,7 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
   rtwoptions(oIdx).enable         = 'on';  
   rtwoptions(oIdx).default        = 1;   % number of items under this category
 
-    oIdx = oIdx + 1;
+  oIdx = oIdx + 1;
 
   rtwoptions(oIdx).prompt         = 'Upload generated program to AR.Drone';
   rtwoptions(oIdx).type           = 'Checkbox';
@@ -474,7 +474,7 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
 
   oIdx = oIdx + 1;
 
-  rtwoptions(oIdx).prompt         = 'Location of Paparazzi Lib';
+  rtwoptions(oIdx).prompt         = 'Drone IP address';
   rtwoptions(oIdx).type           = 'Edit';
   rtwoptions(oIdx).default        = '192.168.1.1';
   rtwoptions(oIdx).tlcvariable    = 'ARDroneIP';
@@ -486,7 +486,7 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
 
   rtwoptions(oIdx).prompt         = 'Location of Paparazzi Lib';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = '/Volumes/HDData/Documents/INSA/5A/Drone/repo/paparazzi';
+  rtwoptions(oIdx).default        = '';
   rtwoptions(oIdx).tlcvariable    = 'paparazziPath';
   rtwoptions(oIdx).makevariable   = 'PAPARAZZI_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
@@ -497,12 +497,23 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
 
   rtwoptions(oIdx).prompt         = 'Location of your ARM compiler';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = '/usr/local/carlson-minot/crosscompilers/bin';
+  rtwoptions(oIdx).default        = '';
   rtwoptions(oIdx).tlcvariable    = 'compilerPath';
   rtwoptions(oIdx).makevariable   = 'COMPILER_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...
     'Location of ARM compieler']);
+
+  oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Location of your make executable';
+  rtwoptions(oIdx).type           = 'Edit';
+  rtwoptions(oIdx).default        = 'mingw32-make';
+  rtwoptions(oIdx).tlcvariable    = 'makePath';
+  rtwoptions(oIdx).makevariable   = 'MAKE_PATH';
+  rtwoptions(oIdx).callback       = 'ert_callback_handler';
+  rtwoptions(oIdx).tooltip        = sprintf([...
+    'Location of your make executable (or the name if in the path)']);
 
   %----------------------------------------%
   % Configure code generation settings %
