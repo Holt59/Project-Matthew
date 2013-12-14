@@ -45,7 +45,7 @@ MAKECMD         = "|>MAKE_PATH<|"
 HOST            = ANY
 BUILD           = yes
 SYS_TARGET_FILE = ardrone.tlc
-# COMPILER_TOOL_CHAIN = unix
+COMPILER_TOOL_CHAIN = default
 
 #---------------------- Tokens expanded by make_rtw ----------------------------
 #
@@ -260,15 +260,6 @@ ifeq ($(MODELREF_TARGET_TYPE),SIM)
 endif
 ifeq ($(B_ERTSFCN),1)
   SFCN = 1
-endif
-
-# Use GCC_TEST to do a test compile of the local source (add DO_GCC_TEST=1)
-ifeq ($(DO_GCC_TEST), 1)
-  GCC_TEST     = echo "Doing gcc test compile"; gcc -c -o nul -Wall 
-  GCC_TEST_OUT = 
-else
-  GCC_TEST     = echo
-  GCC_TEST_OUT = > nul
 endif
 
 #------------------------------ Include Path -----------------------------------
@@ -567,19 +558,15 @@ $(SHARED_BIN_DIR)/%.o : $(SHARED_SRC_DIR)/%.cpp
 endif
 
 %.o : %.c
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG) "$<"
 
 %.o : %.cpp
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG) "$<"
 
 %.o : $(RELATIVE_PATH_TO_ANCHOR)/%.c
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG) "$<"
 
 %.o : $(RELATIVE_PATH_TO_ANCHOR)/%.cpp
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG) "$<"
 
 ifeq ($(GEN_SAMPLE_MAIN),0)
