@@ -481,11 +481,11 @@ namespace Navdata {
             gyroscope[2] = - (float) navdata.vz ;
 
             accelerometer[0] = (float) navdata.ax ;
-            accelerometer[1] = 4096.0 - (float) navdata.ay ;
-            accelerometer[2] = 4096.0 - (float) navdata.az ;
+            accelerometer[1] = 4096.0f - (float) navdata.ay ;
+            accelerometer[2] = 4096.0f - (float) navdata.az ;
 
-            magnetometer[0] = (float) navdata.mx ;
-            magnetometer[1] = (float) navdata.my ;
+            magnetometer[0] = - (float) navdata.mx ;
+            magnetometer[1] = - (float) navdata.my ;
             magnetometer[2] = - (float) navdata.mz ;
 			
             for (int i = 0 ; i < 3 ; ++i) {
@@ -500,7 +500,7 @@ namespace Navdata {
 
     namespace AHRS {
 
-		float quaternion[4] = {1.0, 0.0, 0.0, 0.0} ;
+		float quaternion[4] = {1.0f, 0.0f, 0.0f, 0.0f} ;
         float samplePeriod = 1.0f ;
 
         float intErrors[3] = {0.0f, 0.0f, 0.0f} ;
