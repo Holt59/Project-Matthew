@@ -49,16 +49,26 @@ function ardrone_make_rtw_hook(hookMethod, modelName, ~, ~, ~, ~)
     
     disp(['### Successful completion of build ',...
           'procedure for model: ', modelName]);
-    %if (strcmp(get_param(gcs,'ARDroneUpload'),'on') )
-        disp('.')
-        disp('### UPLOAD TO DRONE') 
-        disp('.')
-    %end
+    if (strcmp(get_param(gcs,'ARDroneUpload'),'on'))
+        i_ardrone_upload(get_param(gcs, 'ARDroneIP'), modelName)
+    end
       
   end
 
 function i_ardrone_setup(modelName)
-    pwd
+    pwd ;
 
-
+function i_ardrone_upload(ip, modelName)
+    disp('### Connecting to drone... ')
+    socket = tcpip(ip, 23, 'NetworkRole', 'client')
+    fopen(socket)
+    disp('### Killing parrot blackbox... ')
+    fprintf(socket, 'kill -9 `ps | grep bash | cut -d" " -f 1`')
+    fprintf(socket, strcat('kill -9 `ps | grep "', modelName, '" | cut -d" " -f 1`'))
+    fprintf(socket, strcat('rm "/data/video/', modelName, '" -f'))
+    % UPLOAD... 
+    fprintf(socket, strcat('chmod +x "/data/video/', modelName, '"'))
+    fprintf(socket, strcat('"/data/video/', modelName, '"'))
+    fprintf(socket, 'END')
+    fclose(socket)
 

@@ -476,6 +476,16 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
 
   rtwoptions(oIdx).prompt         = 'Location of Paparazzi Lib';
   rtwoptions(oIdx).type           = 'Edit';
+  rtwoptions(oIdx).default        = '192.168.1.1';
+  rtwoptions(oIdx).tlcvariable    = 'ARDroneIP';
+  rtwoptions(oIdx).callback       = 'ert_callback_handler';
+  rtwoptions(oIdx).tooltip        = sprintf([...
+    'Drone IP address']);
+
+  oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Location of Paparazzi Lib';
+  rtwoptions(oIdx).type           = 'Edit';
   rtwoptions(oIdx).default        = '/Volumes/HDData/Documents/INSA/5A/Drone/repo/paparazzi';
   rtwoptions(oIdx).tlcvariable    = 'paparazziPath';
   rtwoptions(oIdx).makevariable   = 'PAPARAZZI_PATH';
