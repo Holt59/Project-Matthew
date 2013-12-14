@@ -66,8 +66,8 @@ int navdata_init()
   //Get the current options for the port
   tcgetattr(nav_fd, &options);
   //Set the baud rates to 460800
-  cfsetispeed(&options, B460800);
-  cfsetospeed(&options, B460800);
+  cfsetispeed(&options, 460800);
+  cfsetospeed(&options, 460800);
 
   options.c_cflag |= (CLOCAL | CREAD); //Enable the receiver and set local mode
   options.c_iflag = 0; //clear input options

@@ -70,24 +70,6 @@ int inc =0;
 int32_t altitude=0;
 
 int main(){
-  /*ListeningServer* lserver = NULL;
-  ReceivingServer* rserver = NULL;
-  Message* m = NULL;
-
-  //--------------------
-
-  lserver = ListeningServer::getInstanceListeningServer(_SERVER_PORT_);
-
-  rserver = lserver->listening();
-
-  m = rserver->receive();
-  m->print();
-  delete m;
-
-  rserver->shutdown();
-  delete rserver;
-  
-  //--------------------*/
   
   printf("Initialisation\n");
   actuators_init();
