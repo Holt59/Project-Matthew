@@ -22,6 +22,7 @@
   %openfile tmpBuf
   #include "%<LibGetMdlPubHdrBaseName()>.h"
   #include <sys/time.h> 
+  #include <unistd.h>
   %closefile tmpBuf
  
   %<SLibCacheCodeToFile("mainSrc_incl", tmpBuf)>

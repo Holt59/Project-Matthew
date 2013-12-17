@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'test_leds'.
  *
- * Model version                  : 1.9
- * Simulink Coder version         : 8.4 (R2013a) 13-Feb-2013
- * TLC version                    : 8.4 (Jan 18 2013)
- * C/C++ source code generated on : Thu Dec 12 10:39:04 2013
+ * Model version                  : 1.6
+ * Simulink Coder version         : 8.5 (R2013b) 08-Aug-2013
+ * TLC version                    : 8.5 (Aug  6 2013)
+ * C/C++ source code generated on : Tue Dec 17 20:58:13 2013
  *
  * Target selection: ardrone.tlc
  * Embedded hardware selection: 32-bit Generic

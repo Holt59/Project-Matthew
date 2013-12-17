@@ -41,11 +41,11 @@
 #  BUILD           - Invoke make from the build procedure (yes/no)?
 #  SYS_TARGET_FILE - Name of system target file.
 
-MAKECMD         = make
-HOST            = UNIX
+MAKECMD         = "mingw32-make"
+HOST            = ANY
 BUILD           = yes
 SYS_TARGET_FILE = ardrone.tlc
-COMPILER_TOOL_CHAIN = unix
+COMPILER_TOOL_CHAIN = default
 
 #---------------------- Tokens expanded by make_rtw ----------------------------
 #
@@ -85,25 +85,24 @@ COMPILER_TOOL_CHAIN = unix
 #                            and do not build an executable
 
 MODEL                   = test_leds
-MODULES                 = led.c test_leds_data.c 
+MODULES                 = led.cpp test_leds_data.cpp 
 MAKEFILE                = test_leds.mk
-MATLAB_ROOT             = /Applications/MATLAB_R2013a.app
-ALT_MATLAB_ROOT         = /Applications/MATLAB_R2013a.app
+MATLAB_ROOT             = I:\MATLAB\R2013b
+ALT_MATLAB_ROOT         = I:\MATLAB\R2013b
 MASTER_ANCHOR_DIR       = 
-START_DIR               = /Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/demos/test_leds
+START_DIR               = I:\Project\Drone\Project-Matthew\matlab\demos\test_leds
 S_FUNCTIONS             = 
 S_FUNCTIONS_LIB         = 
 NUMST                   = 1
 NCSTATES                = 0
-COMPUTER                = MACI64
-BUILDARGS               =  GENERATE_ASAP2=0 UPLOAD=0
+COMPUTER                = PCWIN64
+BUILDARGS               =  GENERATE_ERT_S_FUNCTION=0 GENERATE_ASAP2=0 UPLOAD=0
 MULTITASKING            = 0
 INTEGER_CODE            = 0
 MAT_FILE                = 0
 ONESTEPFCN              = 1
 TERMFCN                 = 1
-B_ERTSFCN               = 0
-MEXEXT                  = mexmaci64
+MEXEXT                  = mexw64
 EXT_MODE                = 0
 TMW_EXTMODE_TESTING     = 0
 EXTMODE_TRANSPORT       = 0
@@ -118,7 +117,7 @@ SHARED_SRC_DIR          =
 SHARED_BIN_DIR          = 
 SHARED_LIB              = 
 GEN_SAMPLE_MAIN         = 1
-TARGET_LANG_EXT         = c
+TARGET_LANG_EXT         = cpp
 PORTABLE_WORDSIZES      = 0
 SHRLIBTARGET            = 0
 MAKEFILEBUILDER_TGT     = 0
@@ -131,13 +130,12 @@ ADDITIONAL_LDFLAGS      =
 DEBUG_BUILD             = 0
 
 #--------------------------- Model and reference models -----------------------
-MODELLIB                  = test_ledslib.a
+MODELLIB                  = test_ledslib.lib
 MODELREF_LINK_LIBS        = 
 MODELREF_INC_PATH         = 
 RELATIVE_PATH_TO_ANCHOR   = ..
 # NONE: standalone, SIM: modelref sim, RTW: modelref coder target
 MODELREF_TARGET_TYPE       = NONE
-MODELREF_SFCN_SUFFIX       = _msf
 
 #-- In the case when directory name contains space ---
 ifneq ($(MATLAB_ROOT),$(ALT_MATLAB_ROOT))
@@ -183,8 +181,8 @@ DEFAULT_OPT_OPTS = -O0
 ANSI_OPTS        =
 CPP_ANSI_OPTS    = 
 LD               = $(CC)
-LDFLAGS          = -L"/Volumes/HDData/Documents/INSA/5A/Drone/repo/paparazzi/lib/"
-USER_INCLUDES     = -I"/Volumes/HDData/Documents/INSA/5A/Drone/repo/paparazzi/include/"
+LDFLAGS          = -L"I:\Project\Drone\Project-Matthew\Paparazzi-CPP\lib"
+USER_INCLUDES     = -I"I:\Project\Drone\Project-Matthew\Paparazzi-CPP\include"
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
@@ -198,8 +196,8 @@ EXE_FILE_EXT     = .elf
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
-CC  = /usr/local/carlson-minot/crosscompilers/bin/arm-none-linux-gnueabi-gcc
-CPP = /usr/local/carlson-minot/crosscompilers/bin/arm-none-linux-gnueabi-g++
+CC  = "I:\CodeSourcery\ARM_GNU_Linux\bin\arm-none-linux-gnueabi-gcc"
+CPP = "I:\CodeSourcery\ARM_GNU_Linux\bin\arm-none-linux-gnueabi-g++"
 DEFAULT_OPT_OPTS = -O0
 SHRLIBLDFLAGS = -shared -Wl,--no-undefined -Wl,--version-script,
 # Allow ISO-C functions like fmin to be called
@@ -253,24 +251,6 @@ ifeq ($(PURIFY),1)
   OPT_OPTS := -g
 endif
 
-# Determine if we are generating an s-function
-SFCN = 0
-ifeq ($(MODELREF_TARGET_TYPE),SIM)
-  SFCN = 1
-endif
-ifeq ($(B_ERTSFCN),1)
-  SFCN = 1
-endif
-
-# Use GCC_TEST to do a test compile of the local source (add DO_GCC_TEST=1)
-ifeq ($(DO_GCC_TEST), 1)
-  GCC_TEST     = echo "Doing gcc test compile"; gcc -c -o /dev/null -Wall 
-  GCC_TEST_OUT = 
-else
-  GCC_TEST     = echo
-  GCC_TEST_OUT = > /dev/null
-endif
-
 #------------------------------ Include Path -----------------------------------
 
 MATLAB_INCLUDES = \
@@ -281,10 +261,10 @@ MATLAB_INCLUDES = \
 
 # Additional includes 
 ADD_INCLUDES = \
-	-I$(START_DIR)/test_leds_ert_rtw \
+	-I$(START_DIR)\test_leds_ert_rtw \
 	-I$(START_DIR) \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led/. \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led \
+	-Ii:\Project\Drone\project-Matthew\matlab\targets\ardrone\blocks\led\. \
+	-Ii:\Project\Drone\project-Matthew\matlab\targets\ardrone\blocks\led \
 
 
 SHARED_INCLUDES =
@@ -341,31 +321,16 @@ endif
 
 CFLAGS = $(ANSI_OPTS) $(DBG_FLAG) $(CC_OPTS) $(CPP_REQ_DEFINES) $(INCLUDES)
 CPPFLAGS = $(CPP_ANSI_OPTS) $(DBG_FLAG) $(CPP_OPTS) $(CC_OPTS) $(CPP_REQ_DEFINES) $(INCLUDES)
-ifeq ($(SFCN),1)
-ifneq ($(OPTIMIZATION_FLAGS),)
-CC_OPTS_SFCN = COPTIMFLAGS="$(ANSI_OPTS) $(OPTIMIZATION_FLAGS)"
-else
-CC_OPTS_SFCN = COPTIMFLAGS="$(OPT_OPTS) $(ANSI_OPTS)"
-endif
-CFLAGS_SFCN = $(CC_OPTS_SFCN) $(CPP_REQ_DEFINES1) $(INCLUDES)
-endif
 
 #-------------------------- Additional Libraries ------------------------------
 
-SYSLIBS += $(EXT_LIB) -lpaparazzi
-ifeq ($(SFCN),0)
-SYSLIBS += -lm
-endif
+SYSLIBS += $(EXT_LIB) -lm -lpaparazzi
 
 LIBS =
  
 LIBS += $(S_FUNCTIONS_LIB) $(INSTRUMENT_LIBS)
 
-ifeq ($(SFCN),1)	
-LIBFIXPT = -L$(MATLAB_ROOT)/bin/$(ARCH) -lfixedpoint
-else
 LIBFIXPT = 
-endif
 
 ifeq ($(MODELREF_TARGET_TYPE),SIM)
 LIBMWMATHUTIL = -L$(MATLAB_ROOT)/bin/$(ARCH) -lmwmathutil
@@ -394,72 +359,53 @@ else
 MEX_LDFLAGS =
 endif
 
-ifeq ($(SFCN),0)
-  SRCS  = $(ADD_SRCS) $(S_FUNCTIONS)
-  SRC_DEP =
-  ifeq ($(MODELREF_TARGET_TYPE), NONE)
-    ifeq ($(SHRLIBTARGET), 1)
-      # Shared object/dynamic library
-      PRODUCT            = $(MODEL).so
-      BIN_SETTING        = $(LD) $(SHRLIBLDFLAGS)$(MODEL).def -o $(PRODUCT)
-      BUILD_PRODUCT_TYPE = "shared object"
-      SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
+SRCS  = $(ADD_SRCS) $(S_FUNCTIONS)
+SRC_DEP =
+ifeq ($(MODELREF_TARGET_TYPE), NONE)
+ifeq ($(SHRLIBTARGET), 1)
+  # Shared object/dynamic library
+  PRODUCT            = $(MODEL).so
+  BIN_SETTING        = $(LD) $(SHRLIBLDFLAGS)$(MODEL).def -o $(PRODUCT)
+  BUILD_PRODUCT_TYPE = "shared object"
+  SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
+else
+  ifeq ($(MAKEFILEBUILDER_TGT), 1)
+    # Standalone executable (e.g. for PIL)
+    PREBUILT_SRCS      = $(MODULES)
+    PREBUILT_OBJS      = $(addsuffix .o, $(basename $(PREBUILT_SRCS)))
+    PRODUCT            = $(MODEL)$(EXE_FILE_EXT)
+    BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
+    BUILD_PRODUCT_TYPE = "executable"
+  else
+    SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
+    ifeq ($(STANDALONE_SUPPRESS_EXE), 1)
+      # Build object code only for top level model
+      PRODUCT            = "ObjectModulesOnly"
+      BUILD_PRODUCT_TYPE = "object modules"
     else
-      ifeq ($(MAKEFILEBUILDER_TGT), 1)
-        # Standalone executable (e.g. for PIL)
-        PREBUILT_SRCS      = $(MODULES)
-        PREBUILT_OBJS      = $(addsuffix .o, $(basename $(PREBUILT_SRCS)))
-        PRODUCT            = $(MODEL)$(EXE_FILE_EXT)
-        BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
-        BUILD_PRODUCT_TYPE = "executable"
+      # ERT standalone
+      PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)$(EXE_FILE_EXT)
+      BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
+      BUILD_PRODUCT_TYPE = "executable"
+      ifeq ($(GEN_SAMPLE_MAIN),0)
+         ifeq ($(MULTI_INSTANCE_CODE), 1)
+            SRCS += rt_malloc_main.c
+         else
+            SRCS += rt_main.c
+         endif
       else
-        SRCS               += $(MODULES) $(MODEL).$(TARGET_LANG_EXT) $(EXT_SRC)
-        ifeq ($(STANDALONE_SUPPRESS_EXE), 1)
-          # Build object code only for top level model
-          PRODUCT            = "ObjectModulesOnly"
-          BUILD_PRODUCT_TYPE = "object modules"
-        else
-          # ERT standalone
-          PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)$(EXE_FILE_EXT)
-          BIN_SETTING        = $(LD) $(LDFLAGS) $(ADDITIONAL_LDFLAGS) -o $(PRODUCT)
-          BUILD_PRODUCT_TYPE = "executable"
-          ifeq ($(GEN_SAMPLE_MAIN),0)
-             ifeq ($(MULTI_INSTANCE_CODE), 1)
-                SRCS += rt_malloc_main.c
-             else
-                SRCS += rt_main.c
-             endif
-          else
-            SRCS += ert_main.$(TARGET_LANG_EXT)
-          endif
-        endif
+        SRCS += ert_main.$(TARGET_LANG_EXT)
       endif
     endif
-  else
-    # Model reference coder target
-    SRCS               += $(MODULES)
-    PRODUCT            = $(MODELLIB)
-    BUILD_PRODUCT_TYPE = "library"
   endif
-else
-  # Model Reference Simulation target, ERT S-function target
-  MEX                 = $(MATLAB_ROOT)/bin/mex
-  ifeq ($(MODELREF_TARGET_TYPE), SIM)
-  PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)$(MODELREF_SFCN_SUFFIX).$(MEXEXT)
-  RTW_SFUN_SRC       = $(MODEL)$(MODELREF_SFCN_SUFFIX).$(TARGET_LANG_EXT)
-  SRCS               = $(MODULES) $(ADD_SRCS)
-  else
-  PRODUCT            = $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)_sf.$(MEXEXT)
-  RTW_SFUN_SRC       = $(MODEL)_sf.$(TARGET_LANG_EXT)
-  SRCS               = $(MODULES) $(ADD_SRCS) $(S_FUNCTIONS)
-  endif
-  BIN_SETTING        = $(MEX) -MATLAB_ARCH=$(ARCH) $(CFLAGS_SFCN) $(RTW_SFUN_SRC) $(MEX_LDFLAGS) -outdir $(RELATIVE_PATH_TO_ANCHOR) -silent
-  BUILD_PRODUCT_TYPE = "mex file"
-  ifeq ($(B_ERTSFCN),1)
-    SRCS              += $(MODEL).$(TARGET_LANG_EXT)
-  endif
-  SRC_DEP            = $(RTW_SFUN_SRC)
 endif
+else
+# Model reference coder target
+SRCS               += $(MODULES)
+PRODUCT            = $(MODELLIB)
+BUILD_PRODUCT_TYPE = "library"
+endif
+
 
 USER_SRCS =
 
@@ -555,19 +501,15 @@ $(SHARED_BIN_DIR)/%.o : $(SHARED_SRC_DIR)/%.cpp
 endif
 
 %.o : %.c
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG) "$<"
 
 %.o : %.cpp
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG) "$<"
 
 %.o : $(RELATIVE_PATH_TO_ANCHOR)/%.c
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG) "$<"
 
 %.o : $(RELATIVE_PATH_TO_ANCHOR)/%.cpp
-	@$(GCC_TEST) $(CPP_REQ_DEFINES) $(INCLUDES) "$<" $(GCC_TEST_OUT)
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG) "$<"
 
 ifeq ($(GEN_SAMPLE_MAIN),0)
@@ -592,24 +534,24 @@ endif
 %.o : $(MATLAB_ROOT)/rtw/c/src/ext_mode/custom/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : $(MATLAB_ROOT)/rtw/c/src/%.c
+%.o : $(MATLAB_ROOT)\rtw\c\src/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : $(MATLAB_ROOT)/simulink/src/%.c
+%.o : $(MATLAB_ROOT)\simulink\src/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led/%.c
+%.o : i:\Project\Drone\project-Matthew\matlab\targets\ardrone\blocks\led/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
 
 
-%.o : $(MATLAB_ROOT)/rtw/c/src/%.cpp
+%.o : $(MATLAB_ROOT)\rtw\c\src/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : $(MATLAB_ROOT)/simulink/src/%.cpp
+%.o : $(MATLAB_ROOT)\simulink\src/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led/%.cpp
+%.o : i:\Project\Drone\project-Matthew\matlab\targets\ardrone\blocks\led/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
 

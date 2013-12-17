@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'test_leds'.
  *
- * Model version                  : 1.9
- * Simulink Coder version         : 8.4 (R2013a) 13-Feb-2013
- * TLC version                    : 8.4 (Jan 18 2013)
- * C/C++ source code generated on : Thu Dec 12 10:39:04 2013
+ * Model version                  : 1.6
+ * Simulink Coder version         : 8.5 (R2013b) 08-Aug-2013
+ * TLC version                    : 8.5 (Aug  6 2013)
+ * C/C++ source code generated on : Tue Dec 17 20:58:13 2013
  *
  * Target selection: ardrone.tlc
  * Embedded hardware selection: 32-bit Generic
@@ -88,42 +88,42 @@ typedef struct {
   real_T im;
 } creal_T;
 
-#define _CINT8_T
+#define CINT8_T
 
 typedef struct {
   int8_T re;
   int8_T im;
 } cint8_T;
 
-#define _CUINT8_T
+#define CUINT8_T
 
 typedef struct {
   uint8_T re;
   uint8_T im;
 } cuint8_T;
 
-#define _CINT16_T
+#define CINT16_T
 
 typedef struct {
   int16_T re;
   int16_T im;
 } cint16_T;
 
-#define _CUINT16_T
+#define CUINT16_T
 
 typedef struct {
   uint16_T re;
   uint16_T im;
 } cuint16_T;
 
-#define _CINT32_T
+#define CINT32_T
 
 typedef struct {
   int32_T re;
   int32_T im;
 } cint32_T;
 
-#define _CUINT32_T
+#define CUINT32_T
 
 typedef struct {
   uint32_T re;
@@ -159,16 +159,6 @@ typedef struct {
 #  endif
 #endif
 
-/*
- * Simulink Coder assumes the code is compiled on a target using a 2's complement representation
- * for signed integer values.
- */
-#if ((SCHAR_MIN + 1) != -SCHAR_MAX)
-#error "This code must be compiled using a 2's complement representation for signed integer values"
-#endif
-
-/* This ID is used to detect inclusion of an incompatible rtwtypes.h */
-#define RTWTYPES_ID_C08S16I32L32N32F1
 #else                                  /* __TMWTYPES__ */
 #define TMWTYPES_PREVIOUSLY_INCLUDED
 #endif                                 /* __TMWTYPES__ */
@@ -177,8 +167,8 @@ typedef struct {
 typedef void * pointer_T;
 
 /* Simulink specific types */
-#ifndef __SIMSTRUC_TYPES_H__
-#define __SIMSTRUC_TYPES_H__
+#ifndef __ZERO_CROSSING_TYPES__
+#define __ZERO_CROSSING_TYPES__
 
 /* Trigger directions: falling, either, and rising */
 typedef enum {
@@ -203,7 +193,7 @@ typedef enum {
   RISING_ZCEVENT = 1
 } ZCEventType;
 
-#endif                                 /* __SIMSTRUC_TYPES_H__ */
+#endif                                 /* __ZERO_CROSSING_TYPES__ */
 #endif                                 /* __RTWTYPES_H__ */
 
 /* File trailer for generated code.
