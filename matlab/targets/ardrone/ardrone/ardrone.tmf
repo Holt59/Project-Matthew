@@ -47,6 +47,9 @@ BUILD           = yes
 SYS_TARGET_FILE = ardrone.tlc
 COMPILER_TOOL_CHAIN = default
 
+RM       = del
+PATH_SEP = /
+
 #---------------------- Tokens expanded by make_rtw ----------------------------
 #
 # The following tokens, when wrapped with "|>" and "<|" are expanded by the
@@ -181,8 +184,8 @@ DEFAULT_OPT_OPTS = -O0
 ANSI_OPTS        =
 CPP_ANSI_OPTS    = 
 LD               = $(CC)
-LDFLAGS          = -L"|>PAPARAZZI_PATH<|\lib"
-USER_INCLUDES     = -I"|>PAPARAZZI_PATH<|\include"
+LDFLAGS          = -L"|>PAPARAZZI_PATH<|$(PATH_SEP)lib"
+USER_INCLUDES     = -I"|>PAPARAZZI_PATH<|$(PATH_SEP)include"
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
@@ -196,8 +199,8 @@ EXE_FILE_EXT     = .elf
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
-CC  = "|>COMPILER_PATH<|\arm-none-linux-gnueabi-gcc"
-CPP = "|>COMPILER_PATH<|\arm-none-linux-gnueabi-g++"
+CC  = "|>COMPILER_PATH<|$(PATH_SEP)arm-none-linux-gnueabi-gcc"
+CPP = "|>COMPILER_PATH<|$(PATH_SEP)arm-none-linux-gnueabi-g++"
 DEFAULT_OPT_OPTS = -O0
 SHRLIBLDFLAGS = -shared -Wl,--no-undefined -Wl,--version-script,
 # Allow ISO-C functions like fmin to be called

@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'test_leds'.
  *
- * Model version                  : 1.6
+ * Model version                  : 1.7
  * Simulink Coder version         : 8.5 (R2013b) 08-Aug-2013
  * TLC version                    : 8.5 (Aug  6 2013)
- * C/C++ source code generated on : Tue Dec 17 20:58:13 2013
+ * C/C++ source code generated on : Tue Dec 17 21:21:15 2013
  *
  * Target selection: ardrone.tlc
  * Embedded hardware selection: 32-bit Generic
@@ -39,8 +39,8 @@ struct P_test_leds_T_ {
   int8_T Constant_Value;               /* Computed Parameter: Constant_Value
                                         * Referenced by: '<Root>/Constant'
                                         */
-  uint8_T ARDrone_LED1_p1;             /* Computed Parameter: ARDrone_LED1_p1
-                                        * Referenced by: '<Root>/ARDrone_LED1'
+  uint8_T ARDrone_LED_p1;              /* Computed Parameter: ARDrone_LED_p1
+                                        * Referenced by: '<Root>/ARDrone_LED'
                                         */
 };
 

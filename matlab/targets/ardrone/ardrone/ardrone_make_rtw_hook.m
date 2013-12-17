@@ -34,7 +34,7 @@ function ardrone_make_rtw_hook(hookMethod, modelName, ~, ~, ~, ~)
     % Called after code generation is complete, and just prior to kicking
     % off make process (assuming code generation only is not selected.)  All
     % arguments are valid at this stage.
-    %i_write_arduino_makefiles;
+    % i_write_arduino_makefiles;
 
    case 'after_make'
     % Called after make process is complete. All arguments are valid at 
