@@ -6,6 +6,8 @@
 namespace Actuators {
 
     bool init () ;
+    
+    bool commit() ;
 
     bool setPWM (uint8_t motor, uint16_t pwm) ;
     bool setPWM (uint16_t pwm0, uint16_t pwm1, uint16_t pwm2, uint16_t pwm3) ;

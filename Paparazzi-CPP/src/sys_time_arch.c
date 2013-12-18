@@ -29,6 +29,11 @@
 #include <signal.h>
 #include <string.h>
 
+inline uint32_t get_sys_time_usec(void)  {
+  return sys_time.nb_sec * 1000000 +
+    usec_of_cpu_ticks(sys_time.nb_sec_rem);
+}
+
 void sys_time_arch_init( void ) {
 
   sys_time.cpu_ticks_per_sec = 1e6;

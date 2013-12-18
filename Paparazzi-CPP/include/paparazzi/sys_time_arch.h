@@ -28,23 +28,13 @@
 #ifndef SYS_TIME_ARCH_H
 #define SYS_TIME_ARCH_H
 
-extern void sys_tick_handler(int signum);
+void sys_tick_handler(int signum);
 
 /**
  * Get the time in microseconds since startup.
  * WARNING: overflows after 71min34seconds!
  * @return current system time as uint32_t
  */
-inline uint32_t get_sys_time_usec(void) {
-  return sys_time.nb_sec * 1000000 +
-    usec_of_cpu_ticks(sys_time.nb_sec_rem);
-}
-
-/* Generic timer macros */
-#define SysTimeTimerStart(_t) { _t = get_sys_time_usec(); }
-#define SysTimeTimer(_t) ( get_sys_time_usec() - (_t))
-#define SysTimeTimerStop(_t) { _t = ( get_sys_time_usec() - (_t)); }
-
-inline void sys_time_usleep(uint32_t us __attribute__ ((unused))) {}
+inline uint32_t get_sys_time_usec(void) ; 
 
 #endif /* SYS_TIME_ARCH_H */
