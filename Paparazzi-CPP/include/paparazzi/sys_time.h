@@ -30,10 +30,6 @@
 #ifndef SYS_TIME_H
 #define SYS_TIME_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <inttypes.h>
 #include <stdlib.h>
 
@@ -197,9 +193,5 @@ static inline uint32_t nsec_of_cpu_ticks(uint32_t cpu_ticks) {
 
 /* architecture specific init implementation */
 extern void sys_time_arch_init(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* SYS_TIME_H */
