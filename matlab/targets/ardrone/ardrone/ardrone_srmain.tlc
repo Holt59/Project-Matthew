@@ -25,7 +25,8 @@
   #include <paparazzi/Navdata.h>    // Données capteurs PAPARAZZI
   #include <paparazzi/Actuators.h>  // LEDS Moteurs PAPARAZZI
   #include <sys/time.h>
-  #include <stdio.h>
+  #include <unistd.h>
+  #include <iostream>
   %closefile tmpBuf
  
   %<SLibCacheCodeToFile("mainSrc_incl", tmpBuf)>
@@ -79,6 +80,7 @@
     actuators_tid = sys_time_register_timer(ACTUATORS_PERIOD, NULL);
     
     /*Initialize sensors and actuators */
+    /*
     if (!Actuators::init()) {
 		std::cerr << "Error initializing actuators." << std::endl ;
 		return 1 ;
@@ -86,7 +88,7 @@
     if (!Navdata::init()) {
 		std::cerr << "Error initializing sensors." << std::endl ;
 		return 1 ;
-	}
+	}*/
     
     /* Initialize model */
     %<LibCallModelInitialize()>\
@@ -94,17 +96,19 @@
     /* Associate rt_OneStep() with a timer that executes at the base rate of the model */
     while (!sys_time_check_and_ack_timer(main_tid))
     {
+        /*
         if(sys_time_check_and_ack_timer(sensors_tid)){
             Navdata::update () ;
             Navdata::IMU::update () ;
-        }
+        }*/
         if(sys_time_check_and_ack_timer(step_tid)){
-            printf("PERIOD=%lu\n", getTimePeriod());
+            std::cout << "PERIOD = " << getTimePeriod() << std::endl;
             %<LibCallModelStep(0)>\
         }
+        /*
         if(sys_time_check_and_ack_timer(actuators_tid)){
-            Actuators::commit();
-        }
+            //Actuators::commit();
+        }*/
     }
 
     %<LibCallModelTerminate()>\
