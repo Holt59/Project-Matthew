@@ -14,6 +14,8 @@
 
 namespace Navdata {
 
+    bool isInitialized = false ;
+
     const int NAVDATA_PACKET_SIZE = 60 ;
     const int NAVDATA_START_BYTE = 0x3a ;
 
@@ -105,6 +107,10 @@ namespace Navdata {
     bool acquireBaroCalibration () ;
 
     bool init () {
+    
+        if (isInitialized) {
+            return true ;
+        }
 
         fd = open ("/dev/ttyO1", O_RDWR | O_NOCTTY | O_NONBLOCK) ;
 
@@ -176,12 +182,15 @@ namespace Navdata {
 		baroCalibration.mc = -8711;
 		baroCalibration.md = 2868;
 		*/
+        
+        isInitialized = true ;
 
         return true ;
     }
 
     void stop () {
 
+        isInitialized = false ;
         close (fd) ;
 
     }
