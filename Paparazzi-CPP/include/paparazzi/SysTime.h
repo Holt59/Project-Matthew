@@ -45,26 +45,26 @@ private:
      * Convenience functions to convert between seconds and sys_time ticks.
      */
     inline uint32_t ticksOfSec (float seconds) {
-        return (uint32_t)(seconds * this->ticks_per_sec + 0.5);
+        return (uint32_t)(seconds * this->ticksPerSec + 0.5);
     }
     
     struct Timer {
-        bool          in_use;
+        bool          inUse ;
         SysTimeCB     cb;
         volatile bool elapsed;
-        uint32_t        end_time; ///< in SYS_TIME_TICKS
+        uint32_t        endTime ; ///< in SYS_TIME_TICKS
         uint32_t        duration; ///< in SYS_TIME_TICKS
     };
 
-    volatile uint32_t nb_sec;       ///< full seconds since startup
-    volatile uint32_t nb_sec_rem;   ///< remainder of seconds since startup in CPU_TICKS
-    volatile uint32_t nb_tick;      ///< SYS_TIME_TICKS since startup
+    volatile uint32_t nbSec;       ///< full seconds since startup
+    volatile uint32_t nbSecRem;   ///< remainder of seconds since startup in CPU_TICKS
+    volatile uint32_t nbTicks;      ///< SYS_TIME_TICKS since startup
     struct SysTime::Timer timer[SysTime::SYS_TIME_NB_TIMER];
 
     float resolution;               ///< sys_time_timer resolution in seconds
-    uint32_t ticks_per_sec;         ///< sys_time ticks per second (SYS_TIME_FREQUENCY)
-    uint32_t resolution_cpu_ticks;  ///< sys_time_timer resolution in cpu ticks
-    uint32_t cpu_ticks_per_sec;     ///< cpu ticks per second
+    uint32_t ticksPerSec;         ///< sys_time ticks per second (SYS_TIME_FREQUENCY)
+    uint32_t resolutionCPUTicks;  ///< sys_time_timer resolution in cpu ticks
+    uint32_t cpuTicksPerSec;     ///< cpu ticks per second
 
 
 } ;

@@ -17,23 +17,23 @@ SysTime* SysTime::getSysTime () {
 
 SysTime::SysTime () {
 
-    this->nb_sec     = 0;
-    this->nb_sec_rem = 0;
-    this->nb_tick    = 0;
+    this->nbSec     = 0;
+    this->nbSecRem = 0;
+    this->nbTicks    = 0;
 
-    this->ticks_per_sec = SYS_TIME_FREQUENCY;
-    this->resolution = 1.0 / this->ticks_per_sec;
+    this->ticksPerSec = SYS_TIME_FREQUENCY;
+    this->resolution = 1.0 / this->ticksPerSec;
 	unsigned int i;
     for (i=0; i<SYS_TIME_NB_TIMER; i++) {
-        this->timer[i].in_use     = false;
+        this->timer[i].inUse     = false;
         this->timer[i].cb         = NULL;
         this->timer[i].elapsed    = false;
-        this->timer[i].end_time   = 0;
+        this->timer[i].endTime   = 0;
         this->timer[i].duration   = 0;
     }
 
-    this->cpu_ticks_per_sec = 1e6;
-    this->resolution_cpu_ticks = (uint32_t)(this->resolution * this->cpu_ticks_per_sec + 0.5);
+    this->cpuTicksPerSec = 1e6;
+    this->resolutionCPUTicks = (uint32_t)(this->resolution * this->cpuTicksPerSec + 0.5);
 
     struct sigaction sa;
     struct itimerval timer;
@@ -53,15 +53,15 @@ SysTime::SysTime () {
 }
 
 int SysTime::registerTimer (float duration, SysTimeCB cb) {
-    uint32_t start_time = this->nb_tick;
+    uint32_t start_time = this->nbTicks;
     int i;
     for (i = 0; i< SYS_TIME_NB_TIMER; i++) {
-        if (!this->timer[i].in_use) {
+        if (!this->timer[i].inUse) {
             this->timer[i].cb         = cb;
             this->timer[i].elapsed    = false;
-            this->timer[i].end_time   = start_time + this->ticksOfSec (duration);
+            this->timer[i].endTime   = start_time + this->ticksOfSec (duration);
             this->timer[i].duration   = this->ticksOfSec (duration);
-            this->timer[i].in_use     = true;
+            this->timer[i].inUse     = true;
             return i;
         }
     }
@@ -78,17 +78,17 @@ bool SysTime::checkAndAckTimer (tid_t id) {
 
 void SysTime::sysTickHandler (int signum) {
 
-    m_systime->nb_tick++;
-    m_systime->nb_sec_rem += m_systime->resolution_cpu_ticks;;
-    if (m_systime->nb_sec_rem >= m_systime->cpu_ticks_per_sec) {
-        m_systime->nb_sec_rem -= m_systime->cpu_ticks_per_sec;
-        m_systime->nb_sec++;
+    m_systime->nbTicks++;
+    m_systime->nbSecRem += m_systime->resolutionCPUTicks;;
+    if (m_systime->nbSecRem >= m_systime->cpuTicksPerSec) {
+        m_systime->nbSecRem -= m_systime->cpuTicksPerSec;
+        m_systime->nbSec++;
     }
     unsigned int i;
     for (i=0; i < SysTime::SYS_TIME_NB_TIMER; i++) {
-        if (m_systime->timer[i].in_use &&
-            m_systime->nb_tick >= m_systime->timer[i].end_time) {
-            m_systime->timer[i].end_time += m_systime->timer[i].duration;
+        if (m_systime->timer[i].inUse &&
+            m_systime->nbTicks >= m_systime->timer[i].endTime) {
+            m_systime->timer[i].endTime += m_systime->timer[i].duration;
             m_systime->timer[i].elapsed = true;
             if (m_systime->timer[i].cb) {
                 m_systime->timer[i].cb(i);

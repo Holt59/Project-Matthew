@@ -125,6 +125,7 @@ namespace Actuators {
 
     bool setPWM (uint16_t pwm0, uint16_t pwm1, uint16_t pwm2, uint16_t pwm3) {
         uint8_t cmd[5];
+        PWMs[0] = pwm0 ; PWMs[1] = pwm1 ; PWMs[2] = pwm2 ; PWMs[3] = pwm3 ;
         cmd[0] = 0x20 | ((pwm0 & 0x1ff) >> 4);
         cmd[1] = ((pwm0 & 0x1ff) << 4) | ((pwm1 & 0x1ff) >> 5);
         cmd[2] = ((pwm1 & 0x1ff) << 3) | ((pwm2 & 0x1ff) >> 6);
@@ -153,6 +154,8 @@ namespace Actuators {
 
         bool set (uint8_t led0, uint8_t led1, uint8_t led2, uint8_t led3) {
             uint8_t cmd[2];
+            
+            LEDs[0] = led0 ; LEDs[1] = led1 ; LEDs[2] = led2 ; LEDs[3] = led3 ;
 
             led0 &= 0x03;
             led1 &= 0x03;

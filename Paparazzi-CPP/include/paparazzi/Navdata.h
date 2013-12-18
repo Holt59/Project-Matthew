@@ -30,6 +30,10 @@ namespace Navdata {
         void update () ;
 
         namespace Gyroscope {
+        
+            int16_t getRawX () ;
+            int16_t getRawY () ;
+            int16_t getRawZ () ;
 
             float getX () ;
             float getY () ;
@@ -38,6 +42,10 @@ namespace Navdata {
         }
 
         namespace Accelerometer {
+        
+            int16_t getRawX () ;
+            int16_t getRawY () ;
+            int16_t getRawZ () ;
 
             float getX () ;
             float getY () ;
@@ -46,6 +54,10 @@ namespace Navdata {
         }
 
         namespace Magnetometer {
+        
+            int16_t getRawX () ;
+            int16_t getRawY () ;
+            int16_t getRawZ () ;
 
             float getX () ;
             float getY () ;

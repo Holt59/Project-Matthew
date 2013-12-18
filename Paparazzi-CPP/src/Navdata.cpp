@@ -14,6 +14,8 @@
 
 namespace Navdata {
 
+    bool isInitialized = false ;
+
     const int NAVDATA_PACKET_SIZE = 60 ;
     const int NAVDATA_START_BYTE = 0x3a ;
 
@@ -105,6 +107,10 @@ namespace Navdata {
     bool acquireBaroCalibration () ;
 
     bool init () {
+    
+        if (isInitialized) {
+            return true ;
+        }
 
         fd = open ("/dev/ttyO1", O_RDWR | O_NOCTTY | O_NONBLOCK) ;
 
@@ -176,12 +182,15 @@ namespace Navdata {
 		baroCalibration.mc = -8711;
 		baroCalibration.md = 2868;
 		*/
+        
+        isInitialized = true ;
 
         return true ;
     }
 
     void stop () {
 
+        isInitialized = false ;
         close (fd) ;
 
     }
@@ -423,6 +432,18 @@ namespace Navdata {
             plus cohérent que le 4.359 ci-dessous. */
             const float Sensitivity[3] = {0.0609, 0.0609, 0.0609} ;
 			const float Neutral[3] = {0.0, 0.0, 0.0} ;
+            
+            int16_t getRawX () {
+                return navdata.vx ;
+            }
+            
+            int16_t getRawY () {
+                return navdata.vy ;
+            }
+            
+            int16_t getRawZ () {
+                return navdata.vz ;
+            }
 
             float getX () {
                 return gyroscope[0] ;
@@ -442,6 +463,18 @@ namespace Navdata {
 
             const float Sensitivity[3] = {19.5, 19.5, 19.5} ;
 			const float Neutral[3] = {2048.0, 2048.0, 2048.0} ;
+            
+            int16_t getRawX () {
+                return navdata.ax - Accelerometer::Neutral[0] ;
+            }
+            
+            int16_t getRawY () {
+                return (4096 - navdata.ay) - Accelerometer::Neutral[0] ;
+            }
+            
+            int16_t getRawZ () {
+                return (4096 - navdata.az) - Accelerometer::Neutral[0] ;
+            }
 
             float getX () {
                 return accelerometer[0] ;
@@ -462,6 +495,18 @@ namespace Navdata {
             const float Sensitivity[3] = {14.64, 14.51, 15.16} ;
 			const float Neutral[3] = {0.0, 0.0, 0.0} ;
 
+            int16_t getRawX () {
+                return navdata.mx ;
+            }
+            
+            int16_t getRawY () {
+                return navdata.my ;
+            }
+            
+            int16_t getRawZ () {
+                return navdata.mz ;
+            }
+            
             float getX () {
                 return magnetometer[0] ;
             }
