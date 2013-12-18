@@ -116,6 +116,10 @@ namespace Actuators {
         if (motor >= 0 && motor < 4) {
             PWMs[motor] = pwm ;
         }
+        return commit();
+    }
+
+    bool commit() {
         return setPWM (PWMs[0], PWMs[1], PWMs[2], PWMs[3]) ;
     }
 

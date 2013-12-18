@@ -2,7 +2,7 @@
 
 def = legacy_code('initialize')
 % Nom du fichier et du header
-def.SourceFiles = {'led.cpp'};
+def.SourceFiles = {'led.c'};
 def.HeaderFiles = {'led.h'};
 def.IncPaths = {'.',};
 
@@ -11,14 +11,8 @@ def.SFunctionName = 'ARDrone_LED';
 % Les sorties sont y1, y2... etc, 
 % les entrées sont u1, u2...etc
 % les paramètres sont p1, p2 ...
-def.Options.language = 'C++';
-<<<<<<< HEAD
-def.StartFcnSpec = 'void LED_Initialization()';
-def.OutputFcnSpec = 'void LED_Set(int32 u1, uint8 p1)';
-=======
 def.StartFcnSpec = 'LED_Initialization()';
-def.OutputFcnSpec = 'void LED_Set(int8 u1, uint8 p1)';
->>>>>>> cd56867bccda67bc3ea9913e6d148eefbb7176fe
+def.OutputFcnSpec = 'void led(int32 u1, uint8 p1)';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);

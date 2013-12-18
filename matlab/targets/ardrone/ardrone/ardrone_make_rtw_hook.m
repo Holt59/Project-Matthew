@@ -34,7 +34,7 @@ function ardrone_make_rtw_hook(hookMethod, modelName, ~, ~, ~, ~)
     % Called after code generation is complete, and just prior to kicking
     % off make process (assuming code generation only is not selected.)  All
     % arguments are valid at this stage.
-    %i_write_arduino_makefiles;
+    % i_write_arduino_makefiles;
 
    case 'after_make'
     % Called after make process is complete. All arguments are valid at 
@@ -60,18 +60,21 @@ function i_ardrone_setup(modelName)
 
 function i_ardrone_upload(ip, modelName)
     disp('### Connecting to drone... ')
-    socket = tcpip(ip, 23, 'NetworkRole', 'client')
+    socket = tcpip(ip, 23, 'NetworkRole', 'client');
     fopen(socket)
     disp('### Killing parrot blackbox... ')
-    fprintf(socket, 'kill -9 `ps | grep bash | cut -d" " -f 1`')
-    fprintf(socket, strcat('kill -9 `ps | grep "', modelName, '" | cut -d" " -f 1`'))
-    fprintf(socket, strcat('rm "/data/video/', modelName, '" -f'))
+    fprintf(socket, 'kill -9 `ps | grep program.elf | awk ''{print $1;}'' | head -n 2`')
+    fprintf(socket, strcat('kill -9 `ps | grep "', modelName, '" | awk ''{print $1;}''`'))
+    fprintf(socket, strcat('rm "/data/video/', modelName, '.elf" -f'))
     disp('### Uploading file to drone... ')
-    ftpDrone = ftp(ip)
-    mput(modelName, ftpDrone)
+    ftpDrone = ftp(ip);
+    pause(1)
+    mput(ftpDrone, strcat('../', modelName, '.elf'))
+    pause(1)
     close(ftpDrone)
-    fprintf(socket, strcat('chmod +x "/data/video/', modelName, '"'))
-    fprintf(socket, strcat('"/data/video/', modelName, '"'))
-    fprintf(socket, 'END')
+    disp('### Starting program ... ')
+    fprintf(socket, 'cd /data/video')
+    fprintf(socket, strcat('chmod +x "', modelName, '.elf"'))
+    fprintf(socket, strcat('"/data/video/', modelName, '.elf"'))
     fclose(socket)
 

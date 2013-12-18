@@ -4,11 +4,22 @@
 
 #include "print2file.h"
 
-void print2file (int a, const char *name) {
-    FILE *f = fopen(name, "a") ;
+FILE *f;
+        
+void print2file_Init(const char *name)
+{
+    f = fopen(name, "a") ;
     if (f == NULL) {
         fprintf(stderr, "Error openning file %s: %s", name, strerror(errno)) ;
     }
-    fprintf(f, "LOG: %d\n", a) ;
+}
+
+void print2file (int a)
+{
+    fprintf(f, "LOG: %d\n", a);
+}
+
+void print2file_Close()
+{
     fclose(f) ;
 }

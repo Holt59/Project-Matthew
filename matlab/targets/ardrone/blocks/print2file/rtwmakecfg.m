@@ -4,13 +4,8 @@ function makeInfo = rtwmakecfg()
 %   Please refer to the rtwmakecfg API section in the Simulink Coder
 %   documentation for details on the format of this structure.
 %
-<<<<<<< HEAD
 %   Simulink version    : 8.1 (R2013a) 13-Feb-2013
-%   MATLAB file generated on : 16-Dec-2013 18:05:26
-=======
-%   Simulink version    : 8.2 (R2013b) 08-Aug-2013
-%   MATLAB file generated on : 17-Dec-2013 20:49:41
->>>>>>> cd56867bccda67bc3ea9913e6d148eefbb7176fe
+%   MATLAB file generated on : 16-Dec-2013 17:13:28
 
 % Verify the Simulink version
 verify_simulink_version();
@@ -305,9 +300,9 @@ info(1:1) = struct(...
     'Language', ''...
     );
 
-% Dependency info for S-function 'ARDrone_LED'
-info(1).SFunctionName = 'ARDrone_LED';
+% Dependency info for S-function 'ARDrone_PRINT2FILE'
+info(1).SFunctionName = 'ARDrone_PRINT2FILE';
 info(1).IncPaths = {'.'};
-info(1).SourceFiles = {'led.cpp'};
-info(1).Language = 'C++';
+info(1).SourceFiles = {'print2file.c'};
+info(1).Language = 'C';
 

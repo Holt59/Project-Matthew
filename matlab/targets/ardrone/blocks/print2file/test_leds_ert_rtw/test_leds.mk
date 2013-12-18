@@ -41,7 +41,7 @@
 #  BUILD           - Invoke make from the build procedure (yes/no)?
 #  SYS_TARGET_FILE - Name of system target file.
 
-MAKECMD         = "|>MAKE_PATH<|"
+MAKECMD         = "make"
 HOST            = ANY
 BUILD           = yes
 SYS_TARGET_FILE = ardrone.tlc
@@ -84,58 +84,58 @@ COMPILER_TOOL_CHAIN = default
 #  STANDALONE_SUPPRESS_EXE - Build the standalone target but only create object code modules 
 #                            and do not build an executable
 
-MODEL                   = |>MODEL_NAME<|
-MODULES                 = |>MODEL_MODULES<|
-MAKEFILE                = |>MAKEFILE_NAME<|
-MATLAB_ROOT             = |>MATLAB_ROOT<|
-ALT_MATLAB_ROOT         = |>ALT_MATLAB_ROOT<|
-MASTER_ANCHOR_DIR       = |>MASTER_ANCHOR_DIR<|
-START_DIR               = |>START_DIR<|
-S_FUNCTIONS             = |>S_FUNCTIONS<|
-S_FUNCTIONS_LIB         = |>S_FUNCTIONS_LIB<|
-NUMST                   = |>NUMST<|
-NCSTATES                = |>NCSTATES<|
-COMPUTER                = |>COMPUTER<|
-BUILDARGS               = |>BUILDARGS<|
-MULTITASKING            = |>MULTITASKING<|
-INTEGER_CODE            = |>INTEGER_CODE<|
-MAT_FILE                = |>MAT_FILE<|
-ONESTEPFCN              = |>COMBINE_OUTPUT_UPDATE_FCNS<|
-TERMFCN                 = |>INCLUDE_MDL_TERMINATE_FCN<|
-MEXEXT                  = |>MEXEXT<|
-EXT_MODE                = |>EXT_MODE<|
-TMW_EXTMODE_TESTING     = |>TMW_EXTMODE_TESTING<|
-EXTMODE_TRANSPORT       = |>EXTMODE_TRANSPORT<|
-EXTMODE_STATIC          = |>EXTMODE_STATIC_ALLOC<|
-EXTMODE_STATIC_SIZE     = |>EXTMODE_STATIC_ALLOC_SIZE<|
-MULTI_INSTANCE_CODE     = |>MULTI_INSTANCE_CODE<|
-CLASSIC_INTERFACE       = |>CLASSIC_INTERFACE<|
-TGT_FCN_LIB             = |>TGT_FCN_LIB<|
-MODELREFS               = |>MODELREFS<|
-SHARED_SRC              = |>SHARED_SRC<|
-SHARED_SRC_DIR          = |>SHARED_SRC_DIR<|
-SHARED_BIN_DIR          = |>SHARED_BIN_DIR<|
-SHARED_LIB              = |>SHARED_LIB<|
-GEN_SAMPLE_MAIN         = |>GEN_SAMPLE_MAIN<|
-TARGET_LANG_EXT         = |>TARGET_LANG_EXT<|
-PORTABLE_WORDSIZES      = |>PORTABLE_WORDSIZES<|
-SHRLIBTARGET            = |>SHRLIBTARGET<|
-MAKEFILEBUILDER_TGT     = |>MAKEFILEBUILDER_TGT<|
-STANDALONE_SUPPRESS_EXE = |>STANDALONE_SUPPRESS_EXE<|
-OPTIMIZATION_FLAGS      = |>OPTIMIZATION_FLAGS<|
-ADDITIONAL_LDFLAGS      = |>ADDITIONAL_LDFLAGS<|
+MODEL                   = test_leds
+MODULES                 = led.c print2file.c rtGetInf.c rtGetNaN.c rt_nonfinite.c test_leds_data.c 
+MAKEFILE                = test_leds.mk
+MATLAB_ROOT             = /Applications/MATLAB_R2013a.app
+ALT_MATLAB_ROOT         = /Applications/MATLAB_R2013a.app
+MASTER_ANCHOR_DIR       = 
+START_DIR               = /Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/print2file
+S_FUNCTIONS             = 
+S_FUNCTIONS_LIB         = 
+NUMST                   = 1
+NCSTATES                = 0
+COMPUTER                = MACI64
+BUILDARGS               =  GENERATE_ERT_S_FUNCTION=0 GENERATE_ASAP2=0 UPLOAD=1
+MULTITASKING            = 0
+INTEGER_CODE            = 0
+MAT_FILE                = 0
+ONESTEPFCN              = 1
+TERMFCN                 = 1
+MEXEXT                  = mexmaci64
+EXT_MODE                = 0
+TMW_EXTMODE_TESTING     = 0
+EXTMODE_TRANSPORT       = 0
+EXTMODE_STATIC          = 0
+EXTMODE_STATIC_SIZE     = 1000000
+MULTI_INSTANCE_CODE     = 0
+CLASSIC_INTERFACE       = 0
+TGT_FCN_LIB             = C89/C90 (ANSI)
+MODELREFS               = 
+SHARED_SRC              = 
+SHARED_SRC_DIR          = 
+SHARED_BIN_DIR          = 
+SHARED_LIB              = 
+GEN_SAMPLE_MAIN         = 1
+TARGET_LANG_EXT         = c
+PORTABLE_WORDSIZES      = 0
+SHRLIBTARGET            = 0
+MAKEFILEBUILDER_TGT     = 0
+STANDALONE_SUPPRESS_EXE = 0
+OPTIMIZATION_FLAGS      = 
+ADDITIONAL_LDFLAGS      = 
 
 # To enable debugging:
 # set DEBUG_BUILD = 1
 DEBUG_BUILD             = 0
 
 #--------------------------- Model and reference models -----------------------
-MODELLIB                  = |>MODELLIB<|
-MODELREF_LINK_LIBS        = |>MODELREF_LINK_LIBS<|
-MODELREF_INC_PATH         = |>START_MDLREFINC_EXPAND_INCLUDES<|-I|>MODELREF_INC_PATH<| |>END_MDLREFINC_EXPAND_INCLUDES<|
-RELATIVE_PATH_TO_ANCHOR   = |>RELATIVE_PATH_TO_ANCHOR<|
+MODELLIB                  = test_ledslib.a
+MODELREF_LINK_LIBS        = 
+MODELREF_INC_PATH         = 
+RELATIVE_PATH_TO_ANCHOR   = ..
 # NONE: standalone, SIM: modelref sim, RTW: modelref coder target
-MODELREF_TARGET_TYPE       = |>MODELREF_TARGET_TYPE<|
+MODELREF_TARGET_TYPE       = NONE
 
 #-- In the case when directory name contains space ---
 ifneq ($(MATLAB_ROOT),$(ALT_MATLAB_ROOT))
@@ -181,8 +181,8 @@ DEFAULT_OPT_OPTS = -O0
 ANSI_OPTS        =
 CPP_ANSI_OPTS    = 
 LD               = $(CC)
-LDFLAGS          = -static -L"|>PAPARAZZI_PATH<|/lib"
-USER_INCLUDES     = -I"|>PAPARAZZI_PATH<|/include"
+LDFLAGS          = -static -L"/Volumes/HDData/Documents/INSA/5A/Drone/repo/paparazzi/lib"
+USER_INCLUDES     = -I"/Volumes/HDData/Documents/INSA/5A/Drone/repo/paparazzi/include"
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
@@ -196,8 +196,8 @@ EXE_FILE_EXT     = .elf
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
-CC  = "|>COMPILER_PATH<|/arm-none-linux-gnueabi-gcc"
-CPP = "|>COMPILER_PATH<|/arm-none-linux-gnueabi-g++"
+CC  = "/usr/local/carlson-minot/crosscompilers/bin/arm-none-linux-gnueabi-gcc"
+CPP = "/usr/local/carlson-minot/crosscompilers/bin/arm-none-linux-gnueabi-g++"
 DEFAULT_OPT_OPTS = -O0
 SHRLIBLDFLAGS = -shared -Wl,--no-undefined -Wl,--version-script,
 # Allow ISO-C functions like fmin to be called
@@ -261,8 +261,13 @@ MATLAB_INCLUDES = \
 
 # Additional includes 
 ADD_INCLUDES = \
-|>START_EXPAND_INCLUDES<|	-I|>EXPAND_DIR_NAME<| \
-|>END_EXPAND_INCLUDES<|
+	-I$(START_DIR)/test_leds_ert_rtw \
+	-I$(START_DIR) \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/demos/test_leds \
+	-I$(START_DIR)/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led \
+
 
 SHARED_INCLUDES =
 ifneq ($(SHARED_SRC_DIR),)
@@ -324,20 +329,7 @@ CPPFLAGS = $(CPP_ANSI_OPTS) $(DBG_FLAG) $(CPP_OPTS) $(CC_OPTS) $(CPP_REQ_DEFINES
 SYSLIBS += $(EXT_LIB) -lpaparazzi -lm
 
 LIBS =
-|>START_PRECOMP_LIBRARIES<|
-ifeq ($(OPT_OPTS),$(DEFAULT_OPT_OPTS))
-ifeq ($(INTEGER_CODE),0)
-
-LIBS += |>EXPAND_LIBRARY_LOCATION<|/|>EXPAND_LIBRARY_NAME<|_ert.a
-
-else
-LIBS += |>EXPAND_LIBRARY_LOCATION<|/|>EXPAND_LIBRARY_NAME<|_int_ert.a
-endif
-else
-LIBS += |>EXPAND_LIBRARY_NAME<|.a
-endif
-|>END_PRECOMP_LIBRARIES<| |>START_EXPAND_LIBRARIES<|
-LIBS += |>EXPAND_LIBRARY_NAME<|.a |>END_EXPAND_LIBRARIES<|
+ 
 LIBS += $(S_FUNCTIONS_LIB) $(INSTRUMENT_LIBS)
 
 LIBFIXPT = 
@@ -544,15 +536,27 @@ endif
 %.o : $(MATLAB_ROOT)/rtw/c/src/ext_mode/custom/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-|>START_EXPAND_RULES<|%.o : |>EXPAND_DIR_NAME<|/%.c
+%.o : $(MATLAB_ROOT)/rtw/c/src/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-|>END_EXPAND_RULES<|
+%.o : $(MATLAB_ROOT)/simulink/src/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-|>START_EXPAND_RULES<|%.o : |>EXPAND_DIR_NAME<|/%.cpp
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+
+
+%.o : $(MATLAB_ROOT)/rtw/c/src/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-|>END_EXPAND_RULES<|
+%.o : $(MATLAB_ROOT)/simulink/src/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/targets/ardrone/blocks/led/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+
 
 %.o : $(MATLAB_ROOT)/simulink/src/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
@@ -562,27 +566,9 @@ endif
 
 #------------------------------- Libraries -------------------------------------
 
-|>START_EXPAND_LIBRARIES<|MODULES_|>EXPAND_LIBRARY_NAME<| = \
-|>START_EXPAND_MODULES<|    |>EXPAND_MODULE_NAME<|.o \
-|>END_EXPAND_MODULES<|
 
-|>EXPAND_LIBRARY_NAME<|.a : $(MAKEFILE) rtw_proj.tmw $(MODULES_|>EXPAND_LIBRARY_NAME<|)
-	@echo "### Creating $@ "
-	ar rs $@ $(MODULES_|>EXPAND_LIBRARY_NAME<|)
-	@echo "### $@ Created "
 
-|>END_EXPAND_LIBRARIES<|
 
-|>START_PRECOMP_LIBRARIES<|MODULES_|>EXPAND_LIBRARY_NAME<| = \
-|>START_EXPAND_MODULES<|    |>EXPAND_MODULE_NAME<|.o \
-|>END_EXPAND_MODULES<|
-
-|>EXPAND_LIBRARY_NAME<|.a : $(MAKEFILE) rtw_proj.tmw $(MODULES_|>EXPAND_LIBRARY_NAME<|)
-	@echo "### Creating $@ "
-	ar rs $@ $(MODULES_|>EXPAND_LIBRARY_NAME<|)
-	@echo "### $@ Created "
-
-|>END_PRECOMP_LIBRARIES<|
 
 #----------------------------- Dependencies ------------------------------------
 

@@ -78,7 +78,7 @@ int main(){
   while(!sys_time_check_and_ack_timer(main_tid))
   {
     if(sys_time_check_and_ack_timer(main_periodic_tid)){
-      eangles = stateSetNedToBodyEulers_i();
+      eangles = stateGetNedToBodyEulers_i();
       imu_periodic(); //On regarde si des nouvelles valeurs ont été reçues
     }
     //event

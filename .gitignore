@@ -25,3 +25,7 @@ paparazzi/lib/libpaparazzi.so.1
 paparazzi/lib/libpaparazzi.a
 
 *.slx
+
+*.mat
+
+*.mat
