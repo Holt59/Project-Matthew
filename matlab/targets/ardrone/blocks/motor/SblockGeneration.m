@@ -2,17 +2,18 @@
 
 def = legacy_code('initialize')
 % Nom du fichier et du header
-def.SourceFiles = {'led.c'};
-def.HeaderFiles = {'led.h'};
+def.SourceFiles = {'motor.cpp'};
+def.HeaderFiles = {'motor.h'};
 def.IncPaths = {'.',};
 
 % Nom de la fonction
-def.SFunctionName = 'ARDrone_LED';
+def.SFunctionName = 'ARDrone_Motor';
 % Les sorties sont y1, y2... etc, 
 % les entrées sont u1, u2...etc
 % les paramètres sont p1, p2 ...
-def.StartFcnSpec = 'LED_Initialization()';
-def.OutputFcnSpec = 'void led(int32 u1, uint8 p1)';
+def.Options.language = 'C++';
+def.StartFcnSpec = 'Motor_Initialization()';
+def.OutputFcnSpec = 'void Motor_Set(single u1, uint8 p1)';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);

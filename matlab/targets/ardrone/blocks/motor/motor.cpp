@@ -7,9 +7,9 @@ void Motor_Initialization ()
 #endif
 }
 
-void Motor_Set (int pwm, int motor)
+void Motor_Set (float pwm, uint8_t motor)
 {
 #ifndef MATLAB_MEX_FILE
-    Actuators::setPWM (motor, pwm) ;
+    Actuators::setPWM (motor, (int16_t)((0x1ff*pwm)/100)) ;
 #endif
 }

@@ -6,20 +6,26 @@
 
 FILE *f;
         
-void print2file_Init(const char *name)
+void print2file_Init(signed char name[])
 {
-    f = fopen(name, "a") ;
+#ifndef MATLAB_MEX_FILE
+    f = fopen((const char *)name, "a") ;
     if (f == NULL) {
         fprintf(stderr, "Error openning file %s: %s", name, strerror(errno)) ;
     }
+#endif
 }
 
 void print2file (int a)
 {
+#ifndef MATLAB_MEX_FILE
     fprintf(f, "LOG: %d\n", a);
+#endif
 }
 
 void print2file_Close()
 {
+#ifndef MATLAB_MEX_FILE
     fclose(f) ;
+#endif
 }

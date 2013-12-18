@@ -21,12 +21,12 @@
   
   %openfile tmpBuf
   #include "%<LibGetMdlPubHdrBaseName()>.h"
-  #include <paparazzi/sys_time.h>   // Timers PAPARAZZI
+  #include <paparazzi/SysTime.h>    // Timers PAPARAZZI
   #include <paparazzi/Navdata.h>    // Données capteurs PAPARAZZI
   #include <paparazzi/Actuators.h>  // LEDS Moteurs PAPARAZZI
-  #include <sys/time.h>
   #include <unistd.h>
   #include <iostream>
+  #include <stdint.h>
   %closefile tmpBuf
  
   %<SLibCacheCodeToFile("mainSrc_incl", tmpBuf)>
@@ -35,26 +35,23 @@
   void __cxa_pure_virtual(void){}
   #define STEP_SIZE (%<CompiledModel.FundamentalStepSize>)
   #define STOP_TIME (%<CompiledModel.StopTime>)
-  #define ACTUATORS_PERIOD  0.01
-  #define SENSORS_PERIOD    0.001
+  #define ACTUATORS_PERIOD  (0.01)
+  #define SENSORS_PERIOD    (0.001)
 
-  tid_t step_tid;
-  tid_t main_tid;
-  tid_t sensors_tid;
-  tid_t actuators_tid;
-
-
-  unsigned long getTimePeriod ()
+  void step_handler(uint8_t timerID)
   {
-    static double last = 0.0 ;
-    double current = 0.0 ;
-    struct timeval tim ;
-    unsigned long diff ;
-    gettimeofday(&tim, NULL) ;
-    current = ((double)tim.tv_sec) * 10e6 + (double)tim.tv_usec ;
-    diff = current - last ;
-    last = current ;
-    return diff ;
+    %<LibCallModelStep(0)>\
+  }
+
+  void sensors_handler(uint8_t timerID)
+  {
+    Navdata::update () ;
+    Navdata::IMU::update () ;
+  }
+
+  void actuators_handler(uint8_t timerID)
+  {
+    Actuators::commit();
   }
 
   %assign fcnReturns = "int_T"
@@ -74,41 +71,33 @@
     (void)(argv);
 
     /*Initialize periodic timer */
-    step_tid      = sys_time_register_timer(STEP_SIZE, NULL);
-    main_tid      = sys_time_register_timer(STOP_TIME, NULL);
-    sensors_tid   = sys_time_register_timer(SENSORS_PERIOD, NULL);
-    actuators_tid = sys_time_register_timer(ACTUATORS_PERIOD, NULL);
+    SysTime *systime = SysTime::getSysTime () ;
     
     /*Initialize sensors and actuators */
-    /*
+    
     if (!Actuators::init()) {
-		std::cerr << "Error initializing actuators." << std::endl ;
-		return 1 ;
-	}
+		  std::cerr << "Error initializing actuators." << std::endl ;
+		  return 1 ;
+	  }
+
     if (!Navdata::init()) {
-		std::cerr << "Error initializing sensors." << std::endl ;
-		return 1 ;
-	}*/
+		  std::cerr << "Error initializing sensors." << std::endl ;
+		  return 1 ;
+	  }
     
     /* Initialize model */
     %<LibCallModelInitialize()>\
 
+    /* Initialize the timers */
+    tid_t main_tid      = systime->registerTimer (STOP_TIME, 0);
+    tid_t step_tid      = systime->registerTimer (STEP_SIZE, step_handler) ;
+    tid_t sensors_tid   = systime->registerTimer (SENSORS_PERIOD, sensors_handler);
+    tid_t actuators_tid = systime->registerTimer (ACTUATORS_PERIOD, actuators_handler) ;
+
     /* Associate rt_OneStep() with a timer that executes at the base rate of the model */
-    while (!sys_time_check_and_ack_timer(main_tid))
+    while (!systime->checkAndAckTimer(main_tid))
     {
-        /*
-        if(sys_time_check_and_ack_timer(sensors_tid)){
-            Navdata::update () ;
-            Navdata::IMU::update () ;
-        }*/
-        if(sys_time_check_and_ack_timer(step_tid)){
-            std::cout << "PERIOD = " << getTimePeriod() << std::endl;
-            %<LibCallModelStep(0)>\
-        }
-        /*
-        if(sys_time_check_and_ack_timer(actuators_tid)){
-            //Actuators::commit();
-        }*/
+      usleep(100);
     }
 
     %<LibCallModelTerminate()>\
