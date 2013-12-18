@@ -4,7 +4,6 @@
 *.o
 *.o.*
 *.so
-*.a
 
 # OS generated files #
 ######################
@@ -23,9 +22,5 @@ paparazzi/lib/libpaparazzi.so.1.0
 paparazzi/lib/libpaparazzi.so.1
 
 paparazzi/lib/libpaparazzi.a
-
-*.slx
-
-*.mat
 
 *.mat
