@@ -2,17 +2,18 @@
 
 def = legacy_code('initialize')
 % Nom du fichier et du header
-def.SourceFiles = {'led.c'};
-def.HeaderFiles = {'led.h'};
+def.SourceFiles = {'imu.cpp'};
+def.HeaderFiles = {'imu.h'};
 def.IncPaths = {'.',};
 
 % Nom de la fonction
-def.SFunctionName = 'ARDrone_LED';
+def.SFunctionName = 'ARDrone_IMU_Acc_Z';
 % Les sorties sont y1, y2... etc, 
 % les entrées sont u1, u2...etc
 % les paramètres sont p1, p2 ...
-def.StartFcnSpec = 'LED_Initialization()';
-def.OutputFcnSpec = 'void led(int32 u1, uint8 p1)';
+def.Options.language = 'C++';
+def.StartFcnSpec = 'IMU_Initialization()';
+def.OutputFcnSpec = 'int16 y1 = IMU_Get_Acceleration_Z()';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);

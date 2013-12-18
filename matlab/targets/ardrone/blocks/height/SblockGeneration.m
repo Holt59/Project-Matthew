@@ -2,9 +2,9 @@
 
 def = legacy_code('initialize')
 % Nom du fichier et du header
-def.SourceFiles = {'height.c'};
+def.SourceFiles = {'height.cpp'};
 def.HeaderFiles = {'height.h'};
-def.IncPaths = {'.',};
+def.IncPaths = {'.'};
 
 % Nom de la fonction
 def.SFunctionName = 'ARDrone_Height';
@@ -13,7 +13,7 @@ def.SFunctionName = 'ARDrone_Height';
 % les paramètres sont p1, p2 ...
 def.Options.language = 'C++';
 def.StartFcnSpec = 'void Height_Initialization(void)';
-def.OutputFcnSpec = 'int16 y1 Height_Get (void)';
+def.OutputFcnSpec = 'int16 y1 = Height_Get ()';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);
