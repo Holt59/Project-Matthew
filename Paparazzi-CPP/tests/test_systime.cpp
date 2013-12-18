@@ -1,4 +1,4 @@
-#include "../src/SysTime.h"
+#include <paparazzi/SysTime.h>
 
 #include <unistd.h>
 #include <iostream>
