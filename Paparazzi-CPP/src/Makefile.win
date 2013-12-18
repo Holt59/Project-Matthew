@@ -1,0 +1,29 @@
+CC=arm-none-linux-gnueabi-g++
+AR=arm-none-linux-gnueabi-ar
+CXXFLAGS=-W -Wall
+
+LIBNAME=paparazzi
+INCLUDE_PATH=..\include\paparazzi
+LIB_PATH=..\lib
+
+SRCS = $(wildcard *.cpp) 
+OBJS = $(SRCS:.cpp=.o)
+
+all: setup-lib setup-includes
+
+lib$(LIBNAME).a: $(OBJS)
+	$(AR) rcs $@ $^
+
+%.o: %.cpp
+	$(CC) $(CXXFLAGS) -o $@ -c $<
+
+setup-lib: lib$(LIBNAME).a
+	if not exist $(LIB_PATH) mkdir $(LIB_PATH)
+	move /Y "lib$(LIBNAME).a" "$(LIB_PATH)"
+
+setup-includes: 
+	if not exist $(INCLUDE_PATH)  mkdir $(INCLUDE_PATH)
+	copy *.h $(INCLUDE_PATH)
+
+clean:
+	for /r %%i in (*.o) do del %%i
