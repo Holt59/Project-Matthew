@@ -113,7 +113,7 @@ namespace Actuators {
     }
 
     bool setPWM (uint8_t motor, uint16_t pwm) {
-        if (motor >= 0 && motor < 4) {
+        if (motor < 4) {
             PWMs[motor] = pwm ;
         }
         return commit();
@@ -146,7 +146,7 @@ namespace Actuators {
         uint8_t LEDs[4] = {OFF, OFF, OFF, OFF} ;
 
         bool set (uint8_t led, uint8_t value) {
-            if (led >= 0 && led < 4) {
+            if (led < 4) {
                 LEDs[led] = value ;
             }
             return Led::set (LEDs[0], LEDs[1], LEDs[2], LEDs[3]) ;

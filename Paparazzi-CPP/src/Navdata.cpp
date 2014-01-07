@@ -492,8 +492,33 @@ namespace Navdata {
 
         namespace Magnetometer {
 
-            const float Sensitivity[3] = {14.64, 14.51, 15.16} ;
-			const float Neutral[3] = {0.0, 0.0, 0.0} ;
+			const float Bias[3] = {0.253407, 13.703188, 235.300088} ;
+			const float A[3][3] = {
+				{0.0083769, 0.0001547, 0.0001820},
+				{0.0001547, 0.0088271, 0.0000548},
+				{0.0001820, 0.0000548, 0.0091108}
+			} ;
+
+			void update () {
+
+				float magTmp[3] = {
+					navdata.vx - Bias[0],
+					navdata.vy - Bias[1],
+					navdata.vz - Bias[2]
+				};
+
+				for (int i=0; i<3; i++) {
+					magnetometer[i] = 0.0f ;
+					for (int j=0; j<3; j++) {
+						magnetometer[i] += A[i][j] * magTmp[j] ;
+					}
+				}
+				
+				for (int i=0 ; i<3; i++) {
+					magnetometer[i] = - magnetometer[i] ;
+				}
+			
+			}
 
             int16_t getRawX () {
                 return navdata.mx ;
@@ -533,14 +558,11 @@ namespace Navdata {
             accelerometer[1] = 4096.0f - (float) navdata.ay ;
             accelerometer[2] = 4096.0f - (float) navdata.az ;
 
-            magnetometer[0] = - (float) navdata.mx ;
-            magnetometer[1] = - (float) navdata.my ;
-            magnetometer[2] = - (float) navdata.mz ;
+			Magnetometer::update() ;
 			
             for (int i = 0 ; i < 3 ; ++i) {
                 gyroscope[i] = (gyroscope[i] - Gyroscope::Neutral[i]) * Gyroscope::Sensitivity[i] * M_PI / 180.0 ;
                 accelerometer[i] = (accelerometer[i] - Accelerometer::Neutral[i]) * Accelerometer::Sensitivity[i] ;
-                magnetometer[i] = (magnetometer[i] - Magnetometer::Neutral[i]) * Magnetometer::Sensitivity[i] ;
             }
 
         }

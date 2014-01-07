@@ -26,7 +26,7 @@ int main () {
 
         */
 
-        const int dt = 10000 ;
+        const int dt = 5000 ;
         int udt ;
 
         if (!Navdata::init ()) {
@@ -37,6 +37,7 @@ int main () {
         std::cout << "Starting loop... " << std::endl ;
 
         Navdata::AHRS::setSamplePeriod(dt) ;
+		Navdata::AHRS::setKp(0.5) ;
 
         while (1) {
 
