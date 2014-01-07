@@ -7,9 +7,12 @@ void Height_Initialization ()
 #endif
 }
 
+
 int16_t Height_Get ()
 {
 #ifndef MATLAB_MEX_FILE
     return Navdata::height();
+#else
+    return 0;
 #endif
 }

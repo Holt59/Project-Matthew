@@ -3,8 +3,8 @@
 %% Description: 
 %%   Simulink Coder TLC Code Generation file for ARDrone_IMU_Acc_Z
 %%
-%% Simulink version      : 8.1 (R2013a) 13-Feb-2013
-%% TLC file generated on : 18-Dec-2013 14:36:39
+%% Simulink version      : 8.2 (R2013b) 08-Aug-2013
+%% TLC file generated on : 18-Dec-2013 15:30:13
 
 /%
      %%%-MATLAB_Construction_Commands_Start
