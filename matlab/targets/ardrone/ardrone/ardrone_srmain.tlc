@@ -34,7 +34,11 @@
   %openfile tmpBuf
   void __cxa_pure_virtual(void){}
   #define STEP_SIZE (%<CompiledModel.FundamentalStepSize>)
-  #define STOP_TIME (%<CompiledModel.StopTime>)
+
+  %if CompiledModel.StopTime != rtInf
+    #define STOP_TIME (%<CompiledModel.StopTime>)
+  %endif
+
   #define ACTUATORS_PERIOD  (0.01)
   #define SENSORS_PERIOD    (0.001)
 
@@ -89,13 +93,19 @@
     %<LibCallModelInitialize()>\
 
     /* Initialize the timers */
+%if CompiledModel.StopTime != rtInf
     tid_t main_tid      = systime->registerTimer (STOP_TIME, 0);
+%endif
     tid_t step_tid      = systime->registerTimer (STEP_SIZE, step_handler) ;
     tid_t sensors_tid   = systime->registerTimer (SENSORS_PERIOD, sensors_handler);
     tid_t actuators_tid = systime->registerTimer (ACTUATORS_PERIOD, actuators_handler) ;
 
     /* Associate rt_OneStep() with a timer that executes at the base rate of the model */
+%if CompiledModel.StopTime != rtInf
     while (!systime->checkAndAckTimer(main_tid))
+%else
+    while (1)
+%endif    
     {
       usleep(100);
     }
