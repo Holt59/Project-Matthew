@@ -7,13 +7,11 @@ def.HeaderFiles = {'udp.h'};
 def.IncPaths = {'.',};
 
 % Nom de la fonction
-def.SFunctionName = 'UDP_Send_String';
-% Les sorties sont y1, y2... etc, 
-% les entrées sont u1, u2...etc
-% les paramètres sont p1, p2 ...
+def.SFunctionName = 'UDP_Send_Int32';
 def.Options.language = 'C++';
-def.StartFcnSpec = 'IMU_Initialization()';
-def.OutputFcnSpec = 'int16 y1 = IMU_Get_Acceleration_Z()';
+def.StartFcnSpec = 'udp_emission_init(int32 p1)';
+def.OutputFcnSpec = 'udp_send_int32(int32 u1)';
+def.TerminateFcnSpec = 'udp_emission_terminate()';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);
@@ -23,3 +21,20 @@ legacy_code('compile', def);
 legacy_code('slblock_generate', def);
 legacy_code('sfcn_tlc_generate', def);
 legacy_code('rtwmakecfg_generate', def);
+
+% Nom de la fonction
+def.SFunctionName = 'UDP_Receive_Int32';
+def.Options.language = 'C++';
+def.StartFcnSpec = 'udp_reception_init(int32 p1)';
+def.OutputFcnSpec = 'int32 y1 = udp_recv_int32(void)';
+def.TerminateFcnSpec = 'udp_reception_terminate(void)';
+
+%YOLO
+legacy_code('sfcn_cmex_generate', def);
+legacy_code('compile', def);
+
+%Genere le block sous simulink
+legacy_code('slblock_generate', def);
+legacy_code('sfcn_tlc_generate', def);
+legacy_code('rtwmakecfg_generate', def);
+
