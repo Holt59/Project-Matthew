@@ -69,7 +69,7 @@ function i_ardrone_upload(ip, modelName)
     disp('### Uploading file to drone... ')
     ftpDrone = ftp(ip);
     pause(1)
-    mput(ftpDrone, strcat('../', modelName, '.elf'))
+    mput(ftpDrone, strcat('../', modelName, '.elf'));
     pause(1)
     close(ftpDrone)
     disp('### Starting program ... ')

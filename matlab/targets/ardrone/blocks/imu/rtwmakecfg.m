@@ -4,8 +4,8 @@ function makeInfo = rtwmakecfg()
 %   Please refer to the rtwmakecfg API section in the Simulink Coder
 %   documentation for details on the format of this structure.
 %
-%   Simulink version    : 8.1 (R2013a) 13-Feb-2013
-%   MATLAB file generated on : 18-Dec-2013 14:36:39
+%   Simulink version    : 8.2 (R2013b) 08-Aug-2013
+%   MATLAB file generated on : 18-Dec-2013 15:30:26
 
 % Verify the Simulink version
 verify_simulink_version();
@@ -300,8 +300,8 @@ info(1:1) = struct(...
     'Language', ''...
     );
 
-% Dependency info for S-function 'ARDrone_IMU_Acc_Z'
-info(1).SFunctionName = 'ARDrone_IMU_Acc_Z';
+% Dependency info for S-function 'ARDrone_IMU_Acc_Y'
+info(1).SFunctionName = 'ARDrone_IMU_Acc_Y';
 info(1).IncPaths = {'.'};
 info(1).SourceFiles = {'imu.cpp'};
 info(1).Language = 'C++';
