@@ -1,5 +1,5 @@
-#include <paparazzi/Actuators.h>
-#include <paparazzi/Navdata.h>
+#include "../include/paparazzi/Actuators.h"
+#include "../include/paparazzi/Navdata.h"
 
 #include <iostream>
 
@@ -26,7 +26,6 @@ int main () {
 
         */
 
-        const int dt = 5000 ;
         int udt ;
 
         if (!Navdata::init ()) {
@@ -36,32 +35,54 @@ int main () {
 
         std::cout << "Starting loop... " << std::endl ;
 
-        Navdata::AHRS::setSamplePeriod(dt) ;
-		Navdata::AHRS::setKp(0.5) ;
+        Navdata::AHRS::setSamplePeriod(6000) ;
+		Navdata::AHRS::setKp(2.0) ;
+
+		int i = 0 ;
 
         while (1) {
 
-                struct Navdata::AHRS::EulerAngles eangles ;
                 struct timeval start, end ;
                 
                 gettimeofday(&start, NULL) ;
 
                 Navdata::update () ;
-                
-                Navdata::IMU::update () ;
-                Navdata::AHRS::update () ;
 
-                eangles = Navdata::AHRS::getEulerAngles() ;
+				/*
 
-                printf("\r%8f %8f %8f", eangles.phi * 180.0 / M_PI, eangles.rho * 180.0 / M_PI, eangles.tetha * 180.0 / M_PI) ;
+				if ((i++ % 100) == 0) {
+					printf("\r%5f %5f %5f | %5f %5f %5f | %5f %5f %5f",
+						Navdata::IMU::Gyroscope::getX(), Navdata::IMU::Gyroscope::getY(), Navdata::IMU::Gyroscope::getZ(), 
+						Navdata::IMU::Accelerometer::getX(), Navdata::IMU::Accelerometer::getY(), Navdata::IMU::Accelerometer::getZ(), 
+						Navdata::IMU::Magnetometer::getX(), Navdata::IMU::Magnetometer::getY(), Navdata::IMU::Magnetometer::getZ()) ;
+					fflush(stdout) ;
+				}
 
-                gettimeofday(&end, NULL) ;
+				usleep(2000) ;
 
-                udt = ((float)(end.tv_sec - start.tv_sec)) * 1e6 - (end.tv_usec - start.tv_usec) ;
+                */
 
-                // std::cout << udt << std::endl ;
-                
-                usleep(dt - (int)udt) ; 
+				if (i%1000 == 0) {
+					Navdata::AHRS::setKp(0.5) ;
+				}
+
+				if (i++%3 == 0) {
+					Navdata::IMU::update () ;
+					Navdata::AHRS::update () ;
+				}
+
+				if (i%250 == 0) {
+					struct Navdata::AHRS::EulerAngles eangles  = Navdata::AHRS::getEulerAngles() ;
+					printf("\r%8f %8f %8f", eangles.phi * 180.0 / M_PI, eangles.rho * 180.0 / M_PI, eangles.tetha * 180.0 / M_PI) ;
+					fflush(stdout) ;
+				}
+
+				gettimeofday(&end, NULL) ;
+				udt = ((float)(end.tv_sec - start.tv_sec)) * 1e6 - (end.tv_usec - start.tv_usec) ;
+
+				if (udt < 2000) {
+					usleep(2000 - udt) ;
+				}
 
         }
         
