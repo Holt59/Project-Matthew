@@ -2,19 +2,18 @@
 
 def = legacy_code('initialize')
 % Nom du fichier et du header
-def.SourceFiles = {'height.c'};
-def.HeaderFiles = {'height.h'};
+def.SourceFiles = {'udp.cpp'};
+def.HeaderFiles = {'udp.h'};
 def.IncPaths = {'.',};
 
 % Nom de la fonction
-def.SFunctionName = 'ARDrone_Height';
+def.SFunctionName = 'UDP_Send_String';
 % Les sorties sont y1, y2... etc, 
 % les entrées sont u1, u2...etc
 % les paramètres sont p1, p2 ...
 def.Options.language = 'C++';
-def.StartFcnSpec = 'void Height_Initialization(void)';
-def.OutputFcnSpec = 'int16 y1 Height_Get (void)';
-
+def.StartFcnSpec = 'IMU_Initialization()';
+def.OutputFcnSpec = 'int16 y1 = IMU_Get_Acceleration_Z()';
 
 %YOLO
 legacy_code('sfcn_cmex_generate', def);
