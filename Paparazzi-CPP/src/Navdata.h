@@ -81,7 +81,8 @@ namespace Navdata {
         void setKp (float kp) ;
         void setKi (float ki) ;
 
-        void update () ;
+		void update () ;
+        void updateWithMag () ;
 
         struct EulerAngles getEulerAngles () ;
         
