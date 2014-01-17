@@ -41,17 +41,16 @@ function ardrone_make_rtw_hook(hookMethod, modelName, ~, ~, ~, ~)
     % this stage.    
     
     % allow a back door for tests to skip download to hardware
+    disp(['### Successful completion of build ',...
+          'procedure for model: ', modelName]);
+    if (strcmp(get_param(gcs, 'GenCodeOnly'), 'off') && strcmp(get_param(gcs,'ARDroneUpload'),'on'))
+        i_ardrone_upload(get_param(gcs, 'ARDroneIP'), modelName)
+    end
     
     
    case 'exit'
     % Called at the end of the build process.  All arguments are valid at this
     % stage.
-    
-    disp(['### Successful completion of build ',...
-          'procedure for model: ', modelName]);
-    if (strcmp(get_param(gcs,'ARDroneUpload'),'on'))
-        i_ardrone_upload(get_param(gcs, 'ARDroneIP'), modelName)
-    end
       
   end
 

@@ -1,7 +1,9 @@
-#ifndef __PRINT2FILE_H
-#define __PRINT2FILE_H
+#ifndef _PRINT2FILE_H
+#define _PRINT2FILE_H
 
-void print2file_Init(signed char name[]);
+#include <stdint.h>
+
+void print2file_Init(int8_t *name);
 
 void print2file (int a) ;
 

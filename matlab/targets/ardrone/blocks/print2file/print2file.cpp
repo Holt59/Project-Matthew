@@ -6,7 +6,7 @@
 
 FILE *f;
         
-void print2file_Init(signed char name[])
+void print2file_Init(int8_t *name)
 {
 #ifndef MATLAB_MEX_FILE
     f = fopen((const char *)name, "a") ;
