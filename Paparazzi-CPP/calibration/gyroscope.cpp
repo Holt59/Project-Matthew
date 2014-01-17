@@ -18,11 +18,10 @@ int main (int argc, char *argv[]) {
     }
 
     for (int i = 0 ; i < NB_SAMPLES ; ++i) {
-        samples[i] = {
-            Navdata::IMU::Gyroscope::getRawX (),
-            Navdata::IMU::Gyroscope::getRawY (),
-            Navdata::IMU::Gyroscope::getRawZ ()
-        } ;
+		Navdata::update () ;
+        samples[i].x = Navdata::IMU::Gyroscope::getRawX () ;
+		samples[i].y = Navdata::IMU::Gyroscope::getRawY () ;
+		samples[i].z = Navdata::IMU::Gyroscope::getRawZ () ;
         usleep (2000) ;
     }
 
@@ -44,11 +43,11 @@ int main (int argc, char *argv[]) {
             int16_t max ;
             int32_t avg ;
         } x, y, z ;
-    } noises = {
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    };
+    } noises ;
+
+	noises.x.min = noises.y.min = noises.z.min = 32735 ;
+	noises.x.max = noises.y.max = noises.z.max = 0 ;
+	noises.x.avg = noises.y.avg = noises.z.avg = 0 ;
 
     for (int i = 0; i < NB_SAMPLES; i++) {
 
@@ -74,6 +73,13 @@ int main (int argc, char *argv[]) {
     noises.z.avg /= NB_SAMPLES ;
     noises.x.avg /= NB_SAMPLES ;
     noises.y.avg /= NB_SAMPLES ;
+
+	std::cout << "Offsets: " << offX << " " << offY << " " << offZ << std::endl ;
+
+	std::cout << "Noises: " << std::endl ;
+	std::cout << "  Min: " << noises.x.min << " " << noises.y.min << " " << noises.z.min << std::endl ;
+	std::cout << "  Max: " << noises.x.max << " " << noises.y.max << " " << noises.z.max << std::endl ;
+	std::cout << "  Avg: " << noises.x.avg << " " << noises.y.avg << " " << noises.z.avg << std::endl ;
 
     return 0 ;
 
