@@ -6,6 +6,8 @@ def.SourceFiles = {'udp.cpp'};
 def.HeaderFiles = {'udp.h'};
 def.IncPaths = {'.',};
 
+%% Emission
+
 % Nom de la fonction
 def.SFunctionName = 'UDP_Send_Int32';
 def.Options.language = 'C++';
@@ -21,6 +23,8 @@ legacy_code('compile', def);
 legacy_code('slblock_generate', def);
 legacy_code('sfcn_tlc_generate', def);
 legacy_code('rtwmakecfg_generate', def);
+
+%% Reception
 
 % Nom de la fonction
 def.SFunctionName = 'UDP_Receive_Int32';

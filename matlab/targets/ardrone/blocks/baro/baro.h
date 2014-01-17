@@ -1,6 +1,8 @@
 #ifndef _BARO_H
 #define _BARO_H
 
+#include <stdint.h>
+
 #ifndef MATLAB_MEX_FILE
 
 #include <paparazzi/Navdata.h>

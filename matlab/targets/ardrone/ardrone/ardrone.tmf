@@ -41,7 +41,7 @@
 #  BUILD           - Invoke make from the build procedure (yes/no)?
 #  SYS_TARGET_FILE - Name of system target file.
 
-MAKECMD         = "|>MAKE_PATH<|"
+MAKECMD         = |>MAKE_PATH<|
 HOST            = ANY
 BUILD           = yes
 SYS_TARGET_FILE = ardrone.tlc
@@ -196,8 +196,8 @@ EXE_FILE_EXT     = .elf
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
-CC  = "|>COMPILER_PATH<|/arm-none-linux-gnueabi-gcc"
-CPP = "|>COMPILER_PATH<|/arm-none-linux-gnueabi-g++"
+CC  = |>COMPILER_PATH<|/arm-none-linux-gnueabi-gcc
+CPP = |>COMPILER_PATH<|/arm-none-linux-gnueabi-g++
 DEFAULT_OPT_OPTS = -O0
 SHRLIBLDFLAGS = -shared -Wl,--no-undefined -Wl,--version-script,
 # Allow ISO-C functions like fmin to be called

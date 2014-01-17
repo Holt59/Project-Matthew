@@ -153,7 +153,7 @@ namespace Navdata {
 		
         baroCalibrated = false ;
         if (!acquireBaroCalibration ())
-            return false;
+            /*return false*/;
 
         // start acquisition
         cmd = 0x01;
@@ -206,22 +206,22 @@ namespace Navdata {
 
         if (read (fd, calibBuffer, sizeof calibBuffer) < 0) {
             perror ("acquire_baro_calibration: read failed");
-            return false ;
+            /*return false*/ ;
+        }else{
+            baroCalibration.ac1 = calibBuffer[0] << 8 | calibBuffer[1];
+            baroCalibration.ac2 = calibBuffer[2] << 8 | calibBuffer[3];
+            baroCalibration.ac3 = calibBuffer[4] << 8 | calibBuffer[5];
+            baroCalibration.ac4 = calibBuffer[6] << 8 | calibBuffer[7];
+            baroCalibration.ac5 = calibBuffer[8] << 8 | calibBuffer[9];
+            baroCalibration.ac6 = calibBuffer[10] << 8 | calibBuffer[11];
+            baroCalibration.b1 = calibBuffer[12] << 8 | calibBuffer[13];
+            baroCalibration.b2 = calibBuffer[14] << 8 | calibBuffer[15];
+            baroCalibration.mb = calibBuffer[16] << 8 | calibBuffer[17];
+            baroCalibration.mc = calibBuffer[18] << 8 | calibBuffer[19];
+            baroCalibration.md = calibBuffer[20] << 8 | calibBuffer[21];
+            baroCalibrated = true ;
         }
 
-        baroCalibration.ac1 = calibBuffer[0] << 8 | calibBuffer[1];
-        baroCalibration.ac2 = calibBuffer[2] << 8 | calibBuffer[3];
-        baroCalibration.ac3 = calibBuffer[4] << 8 | calibBuffer[5];
-        baroCalibration.ac4 = calibBuffer[6] << 8 | calibBuffer[7];
-        baroCalibration.ac5 = calibBuffer[8] << 8 | calibBuffer[9];
-        baroCalibration.ac6 = calibBuffer[10] << 8 | calibBuffer[11];
-        baroCalibration.b1 = calibBuffer[12] << 8 | calibBuffer[13];
-        baroCalibration.b2 = calibBuffer[14] << 8 | calibBuffer[15];
-        baroCalibration.mb = calibBuffer[16] << 8 | calibBuffer[17];
-        baroCalibration.mc = calibBuffer[18] << 8 | calibBuffer[19];
-        baroCalibration.md = calibBuffer[20] << 8 | calibBuffer[21];
-
-        baroCalibrated = true ;
         return true ;
     }
 
@@ -723,7 +723,8 @@ namespace Navdata {
 			h_z = twom_x * (SEq_2SEq_4 - SEq_1SEq_3) + twom_y * (SEq_3SEq_4 + SEq_1SEq_2) + twom_z * (0.5f - quaternion[1] * quaternion[1] - quaternion[2] * quaternion[2]);
 			// normalise the flux vector to have only components in the x and z
 			b_x = sqrt((h_x * h_x) + (h_y * h_y));
-			b_z = h_z;
+			b_z = h_z;
+
 
 
 			/*
