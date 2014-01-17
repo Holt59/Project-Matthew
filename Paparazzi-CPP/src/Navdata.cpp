@@ -10,6 +10,7 @@
 #include <math.h>
 
 #include <iostream>
+#include <algorithm>
 #include <stdio.h>
 
 namespace Navdata {
@@ -153,7 +154,7 @@ namespace Navdata {
 		
         baroCalibrated = false ;
         if (!acquireBaroCalibration ())
-            /*return false*/;
+            return false;
 
         // start acquisition
         cmd = 0x01;
@@ -206,22 +207,22 @@ namespace Navdata {
 
         if (read (fd, calibBuffer, sizeof calibBuffer) < 0) {
             perror ("acquire_baro_calibration: read failed");
-            /*return false*/ ;
-        }else{
-            baroCalibration.ac1 = calibBuffer[0] << 8 | calibBuffer[1];
-            baroCalibration.ac2 = calibBuffer[2] << 8 | calibBuffer[3];
-            baroCalibration.ac3 = calibBuffer[4] << 8 | calibBuffer[5];
-            baroCalibration.ac4 = calibBuffer[6] << 8 | calibBuffer[7];
-            baroCalibration.ac5 = calibBuffer[8] << 8 | calibBuffer[9];
-            baroCalibration.ac6 = calibBuffer[10] << 8 | calibBuffer[11];
-            baroCalibration.b1 = calibBuffer[12] << 8 | calibBuffer[13];
-            baroCalibration.b2 = calibBuffer[14] << 8 | calibBuffer[15];
-            baroCalibration.mb = calibBuffer[16] << 8 | calibBuffer[17];
-            baroCalibration.mc = calibBuffer[18] << 8 | calibBuffer[19];
-            baroCalibration.md = calibBuffer[20] << 8 | calibBuffer[21];
-            baroCalibrated = true ;
+            return false ;
         }
 
+        baroCalibration.ac1 = calibBuffer[0] << 8 | calibBuffer[1];
+        baroCalibration.ac2 = calibBuffer[2] << 8 | calibBuffer[3];
+        baroCalibration.ac3 = calibBuffer[4] << 8 | calibBuffer[5];
+        baroCalibration.ac4 = calibBuffer[6] << 8 | calibBuffer[7];
+        baroCalibration.ac5 = calibBuffer[8] << 8 | calibBuffer[9];
+        baroCalibration.ac6 = calibBuffer[10] << 8 | calibBuffer[11];
+        baroCalibration.b1 = calibBuffer[12] << 8 | calibBuffer[13];
+        baroCalibration.b2 = calibBuffer[14] << 8 | calibBuffer[15];
+        baroCalibration.mb = calibBuffer[16] << 8 | calibBuffer[17];
+        baroCalibration.mc = calibBuffer[18] << 8 | calibBuffer[19];
+        baroCalibration.md = calibBuffer[20] << 8 | calibBuffer[21];
+
+        baroCalibrated = true ;
         return true ;
     }
 
@@ -432,6 +433,8 @@ namespace Navdata {
             plus cohérent que le 4.359 ci-dessous. */
             const float Sensitivity[3] = {0.0609, 0.0609, 0.0609} ;
 			const float Neutral[3] = {0.0, 0.0, 0.0} ;
+			const int16_t Offset[3] = {-73, 14, -13} ;
+			const int16_t Noises[3] = {35, 35, 15} ;
             
             int16_t getRawX () {
                 return navdata.vx ;
@@ -504,10 +507,20 @@ namespace Navdata {
 
 			void update () {
 
+				magnetometer[0] = - (float) navdata.mx ;
+				magnetometer[1] =   (float) navdata.my ;
+				magnetometer[2] = - (float) navdata.mz ;
+		
+				for (int i = 0 ; i < 3 ; ++i) {
+					magnetometer[i] = (magnetometer[i] - Magnetometer::Neutral[i]) * Magnetometer::Sensitivity[i] ;
+				}
+
+				/*
+
 				float magTmp[3] = {
-					navdata.vx - Bias[0],
+					- navdata.vx - Bias[0],
 					navdata.vy - Bias[1],
-					navdata.vz - Bias[2]
+					- navdata.vz - Bias[2]
 				};
 
 				for (int i=0; i<3; i++) {
@@ -519,6 +532,8 @@ namespace Navdata {
 				
 				magnetometer[0] = - magnetometer[0] ;
 				magnetometer[2] = - magnetometer[2] ;
+
+				*/
 			
 			}
 
@@ -552,9 +567,20 @@ namespace Navdata {
 
 			// printf("\r %5d %5d %6d", navdata.ax, navdata.ay, navdata.az) ;
 
-            gyroscope[0] = (float) navdata.vx ;
-            gyroscope[1] = - (float) navdata.vy ;
-            gyroscope[2] = - (float) navdata.vz ;
+			int16_t vRaws[3] = {
+				Navdata::IMU::Gyroscope::getRawX (),
+				Navdata::IMU::Gyroscope::getRawY (),
+				Navdata::IMU::Gyroscope::getRawZ ()
+			} ;
+
+			for (int i = 0 ; i < 3 ; ++i) {
+				gyroscope[i] = vRaws[i] * Gyroscope::Sensitivity[i] * M_PI / 180.0 ;
+				/*
+				int16_t vRaw = vRaws[i] - Gyroscope::Offset[i] ;
+                if (abs(vRaw) > Gyroscope::Noises[i]) {
+					gyroscope[i] = vRaw * Gyroscope::Sensitivity[i] * M_PI / 180.0 ;
+				}*/
+            }
 
             accelerometer[0] = (float) navdata.ax ;
             accelerometer[1] = 4096.0f - (float) navdata.ay ;
@@ -563,7 +589,6 @@ namespace Navdata {
 			Magnetometer::update() ;
 			
             for (int i = 0 ; i < 3 ; ++i) {
-                gyroscope[i] = (gyroscope[i] - Gyroscope::Neutral[i]) * Gyroscope::Sensitivity[i] * M_PI / 180.0 ;
                 accelerometer[i] = (accelerometer[i] - Accelerometer::Neutral[i]) * Accelerometer::Sensitivity[i] ;
             }
 
@@ -589,7 +614,76 @@ namespace Navdata {
 
 		float b_x = 1, b_z = 0; // reference direction of flux in earth frame
 
-        void update () {
+		void update () {
+
+			float w_x = IMU::gyroscope[0],
+                w_y = IMU::gyroscope[1],
+                w_z = IMU::gyroscope[2],
+                a_x = IMU::accelerometer[0],
+                a_y = IMU::accelerometer[1],
+                a_z = IMU::accelerometer[2] ;
+
+			// Local system variables
+			float norm; // vector norm
+			float SEqDot_omega_1, SEqDot_omega_2, SEqDot_omega_3, SEqDot_omega_4; // quaternion derrivative from gyroscopes elements
+			float f_1, f_2, f_3; // objective function elements
+			float J_11or24, J_12or23, J_13or22, J_14or21, J_32, J_33; // objective function Jacobian elements
+			float SEqHatDot_1, SEqHatDot_2, SEqHatDot_3, SEqHatDot_4; // estimated direction of the gyroscope error
+			// Axulirary variables to avoid reapeated calcualtions
+			float halfSEq_1 = 0.5f * quaternion[0] ;
+			float halfSEq_2 = 0.5f * quaternion[1] ;
+			float halfSEq_3 = 0.5f * quaternion[2] ;
+			float halfSEq_4 = 0.5f * quaternion[3] ;
+			float twoSEq_1 = 2.0f * quaternion[0] ;
+			float twoSEq_2 = 2.0f * quaternion[1] ;
+			float twoSEq_3 = 2.0f * quaternion[2] ;
+
+			// Normalise the accelerometer measurement
+			norm = sqrt(a_x * a_x + a_y * a_y + a_z * a_z);
+			a_x /= norm;
+			a_y /= norm;
+			a_z /= norm;
+			// Compute the objective function and Jacobian
+			f_1 = twoSEq_2 * quaternion[3] - twoSEq_1 * quaternion[2] - a_x;
+			f_2 = twoSEq_1 * quaternion[1] + twoSEq_3 * quaternion[3] - a_y;
+			f_3 = 1.0f - twoSEq_2 * quaternion[1] - twoSEq_3 * quaternion[2] - a_z;
+			J_11or24 = twoSEq_3; // J_11 negated in matrix multiplication
+			J_12or23 = 2.0f * quaternion[3];
+			J_13or22 = twoSEq_1; // J_12 negated in matrix multiplication
+			J_14or21 = twoSEq_2;
+			J_32 = 2.0f * J_14or21; // negated in matrix multiplication
+			J_33 = 2.0f * J_11or24; // negated in matrix multiplication
+			// Compute the gradient (matrix multiplication)
+			SEqHatDot_1 = J_14or21 * f_2 - J_11or24 * f_1;
+			SEqHatDot_2 = J_12or23 * f_1 + J_13or22 * f_2 - J_32 * f_3;
+			SEqHatDot_3 = J_12or23 * f_2 - J_33 * f_3 - J_13or22 * f_1;
+			SEqHatDot_4 = J_14or21 * f_1 + J_11or24 * f_2;
+			// Normalise the gradient
+			norm = sqrt(SEqHatDot_1 * SEqHatDot_1 + SEqHatDot_2 * SEqHatDot_2 + SEqHatDot_3 * SEqHatDot_3 + SEqHatDot_4 * SEqHatDot_4);
+			SEqHatDot_1 /= norm;
+			SEqHatDot_2 /= norm;
+			SEqHatDot_3 /= norm;
+			SEqHatDot_4 /= norm;
+			// Compute the quaternion derrivative measured by gyroscopes
+			SEqDot_omega_1 = -halfSEq_2 * w_x - halfSEq_3 * w_y - halfSEq_4 * w_z;
+			SEqDot_omega_2 = halfSEq_1 * w_x + halfSEq_3 * w_z - halfSEq_4 * w_y;
+			SEqDot_omega_3 = halfSEq_1 * w_y - halfSEq_2 * w_z + halfSEq_4 * w_x;
+			SEqDot_omega_4 = halfSEq_1 * w_z + halfSEq_2 * w_y - halfSEq_3 * w_x;
+			// Compute then integrate the estimated quaternion derrivative
+			quaternion[0] += (SEqDot_omega_1 - (Kp * SEqHatDot_1)) * samplePeriod;
+			quaternion[1] += (SEqDot_omega_2 - (Kp * SEqHatDot_2)) * samplePeriod;
+			quaternion[2] += (SEqDot_omega_3 - (Kp * SEqHatDot_3)) * samplePeriod;
+			quaternion[3] += (SEqDot_omega_4 - (Kp * SEqHatDot_4)) * samplePeriod;
+			// Normalise quaternion
+			norm = sqrt(quaternion[0] * quaternion[0] + quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2] + quaternion[3] * quaternion[3]);
+			quaternion[0] /= norm;
+			quaternion[1] /= norm;
+			quaternion[2] /= norm;
+			quaternion[3] /= norm;
+
+		}
+
+        void updateWithMag () {
 
 			float gx = IMU::gyroscope[0],
                 gy = IMU::gyroscope[1],
@@ -725,115 +819,9 @@ namespace Navdata {
 			b_x = sqrt((h_x * h_x) + (h_y * h_y));
 			b_z = h_z;
 
-
-
-			/*
-
-            float q1 = quaternion[0], q2 = quaternion[1], q3 = quaternion[2], q4 = quaternion[3];   // short name local variable for readability
-            float norm;
-            float hx, hy, bx, bz;
-            float vx, vy, vz, wx, wy, wz;
-            float ex, ey, ez;
-            float pa, pb, pc;
-
-            float gx = IMU::gyroscope[0],
-                gy = IMU::gyroscope[1],
-                gz = IMU::gyroscope[2],
-                ax = IMU::accelerometer[0],
-                ay = IMU::accelerometer[1],
-                az = IMU::accelerometer[2],
-                mx = IMU::magnetometer[0],
-                my = IMU::magnetometer[1],
-                mz = IMU::magnetometer[2] ;
-
-            // Auxiliary variables to avoid repeated arithmetic
-            float q1q1 = q1 * q1;
-            float q1q2 = q1 * q2;
-            float q1q3 = q1 * q3;
-            float q1q4 = q1 * q4;
-            float q2q2 = q2 * q2;
-            float q2q3 = q2 * q3;
-            float q2q4 = q2 * q4;
-            float q3q3 = q3 * q3;
-            float q3q4 = q3 * q4;
-            float q4q4 = q4 * q4;
-
-            // Normalise accelerometer measurement
-            norm = (float) sqrt (ax * ax + ay * ay + az * az);
-
-			// std::cout << "TOP: " << std::endl ;
-            if (norm == 0.0f) return; // handle NaN
-            norm = 1.0f / norm;        // use reciprocal for division
-            ax *= norm;
-            ay *= norm;
-            az *= norm;
-
-            // Normalise magnetometer measurement
-            norm = (float) sqrt (mx * mx + my * my + mz * mz);
-            if (norm == 0.0f) return; // handle NaN
-            norm = 1.0f / norm;        // use reciprocal for division
-            mx *= norm;
-            my *= norm;
-            mz *= norm;
-
-            // Reference direction of Earth's magnetic field
-            hx = 2.0f * mx * (0.5f - q3q3 - q4q4) + 2.0f * my * (q2q3 - q1q4) + 2.0f * mz * (q2q4 + q1q3);
-            hy = 2.0f * mx * (q2q3 + q1q4) + 2.0f * my * (0.5f - q2q2 - q4q4) + 2.0f * mz * (q3q4 - q1q2);
-            bx = (float) sqrt ((hx * hx) + (hy * hy));
-			// std::cout << "BX: " << (hx * hx) + (hy * hy) << std::endl ;
-            bz = 2.0f * mx * (q2q4 - q1q3) + 2.0f * my * (q3q4 + q1q2) + 2.0f * mz * (0.5f - q2q2 - q3q3);
-
-            // Estimated direction of gravity and magnetic field
-            vx = 2.0f * (q2q4 - q1q3);
-            vy = 2.0f * (q1q2 + q3q4);
-            vz = q1q1 - q2q2 - q3q3 + q4q4;
-            wx = 2.0f * bx * (0.5f - q3q3 - q4q4) + 2.0f * bz * (q2q4 - q1q3);
-            wy = 2.0f * bx * (q2q3 - q1q4) + 2.0f * bz * (q1q2 + q3q4);
-            wz = 2.0f * bx * (q1q3 + q2q4) + 2.0f * bz * (0.5f - q2q2 - q3q3);
-
-            // Error is cross product between estimated direction and measured direction of gravity
-            ex = (ay * vz - az * vy) + (my * wz - mz * wy);
-            ey = (az * vx - ax * vz) + (mz * wx - mx * wz);
-            ez = (ax * vy - ay * vx) + (mx * wy - my * wx);
-            if (Ki > 0.0f) {
-                intErrors[0] += ex;      // accumulate integral error
-                intErrors[1] += ey;
-                intErrors[2] += ez;
-            }
-            else {
-                intErrors[0] = 0.0f;     // prevent integral wind up
-                intErrors[1] = 0.0f;
-                intErrors[2] = 0.0f;
-            }
-
-            // Apply feedback terms
-            gx = gx + Kp * ex + Ki * intErrors[0];
-            gy = gy + Kp * ey + Ki * intErrors[1];
-            gz = gz + Kp * ez + Ki * intErrors[2];
-
-            // Integrate rate of change of quaternion
-            pa = q2;
-            pb = q3;
-            pc = q4;
-            q1 = q1 + (-q2 * gx - q3 * gy - q4 * gz) * (0.5f * samplePeriod);
-            q2 = pa + (q1 * gx + pb * gz - pc * gy) * (0.5f * samplePeriod);
-            q3 = pb + (q1 * gy - pa * gz + pc * gx) * (0.5f * samplePeriod);
-            q4 = pc + (q1 * gz + pa * gy - pb * gx) * (0.5f * samplePeriod);
-
-			// std::cout << q1 << ", " << q2 << ", " << q3 << ", " << q4 << std::endl ;
-
-            // Normalise quaternion
-            norm = (float) sqrt (q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
-			// std::cout << norm << std::endl ;
-
-            norm = 1.0f / norm;
-            quaternion[0] = q1 * norm;
-            quaternion[1] = q2 * norm;
-            quaternion[2] = q3 * norm;
-            quaternion[3] = q4 * norm;*/
         }
-
-        struct EulerAngles getEulerAngles () {
+		
+		struct EulerAngles getEulerAngles () {
 			struct EulerAngles eangles ;
 			eangles.phi = atan2(2 * quaternion[2] * quaternion[3] - 2 * quaternion[0] * quaternion[1], 
 					2 * quaternion[0] * quaternion[0] + 2 * quaternion[3] * quaternion[3] - 1) ;
