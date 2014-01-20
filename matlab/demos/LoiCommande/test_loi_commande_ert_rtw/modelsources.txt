@@ -1,1 +1,0 @@
-   test_loi_commande.cpp  accelero.cpp  motor.cpp 
