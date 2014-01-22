@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import socket
-import tkinter as tk
+import Tkinter as tk
 import struct
 import threading
 

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import socket
-import tkinter as tk
+import Tkinter as tk
 import struct
 import threading
 import copy
@@ -11,7 +11,7 @@ mainWindow = tk.Tk ()
 def sendMotor (what, offset, _ = None):
     if what == "moveto":
         sSend = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sSend.sendto(struct.pack('bi', 4, int(float(offset) * 100)), ('127.0.0.1', 9500))
+        sSend.sendto(struct.pack('bi', 4, int(float(offset) * 100)), ('192.168.1.1', 9500))
 
 LEDValues = [tk.StringVar(mainWindow), 
              tk.StringVar(mainWindow), 
@@ -20,7 +20,7 @@ LEDValues = [tk.StringVar(mainWindow),
 
 def sendLED (led, value):
     sSend = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sSend.sendto(struct.pack('bi', led, ["OFF", "RED", "GREEN", "ORANGE"].index(value)), ('127.0.0.1', 9500))
+    sSend.sendto(struct.pack('bi', led, ["OFF", "RED", "GREEN", "ORANGE"].index(value)), ('192.168.1.1', 9500))
 
 if __name__ == "__main__":
 

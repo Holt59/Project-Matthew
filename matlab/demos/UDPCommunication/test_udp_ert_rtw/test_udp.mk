@@ -85,7 +85,7 @@ COMPILER_TOOL_CHAIN = default
 #                            and do not build an executable
 
 MODEL                   = test_udp
-MODULES                 = ahrs.cpp rtGetInf.cpp rtGetNaN.cpp rt_nonfinite.cpp test_udp_data.cpp udp.cpp 
+MODULES                 = accelero.cpp baro.cpp gyro.cpp height.cpp led.cpp magneto.cpp motor.cpp rtGetInf.cpp rtGetNaN.cpp rt_nonfinite.cpp test_udp_data.cpp udp_multi.cpp 
 MAKEFILE                = test_udp.mk
 MATLAB_ROOT             = /Applications/MATLAB_R2013a.app
 ALT_MATLAB_ROOT         = /Applications/MATLAB_R2013a.app
@@ -263,10 +263,22 @@ MATLAB_INCLUDES = \
 ADD_INCLUDES = \
 	-I$(START_DIR)/test_udp_ert_rtw \
 	-I$(START_DIR) \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs/. \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp/. \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp_multi/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp_multi \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/led/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/led \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/motor/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/motor \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/accelero/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/accelero \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/gyro/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/gyro \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/baro/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/baro \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/magneto/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/magneto \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height \
 
 
 SHARED_INCLUDES =
@@ -542,10 +554,28 @@ endif
 %.o : $(MATLAB_ROOT)/simulink/src/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs/%.c
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp_multi/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp/%.c
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/led/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/motor/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/accelero/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/gyro/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/baro/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/magneto/%.c
+	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
 
@@ -556,10 +586,28 @@ endif
 %.o : $(MATLAB_ROOT)/simulink/src/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs/%.cpp
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp_multi/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp/%.cpp
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/led/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/motor/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/accelero/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/gyro/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/baro/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/magneto/%.cpp
+	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
+
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
 

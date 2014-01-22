@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <arpa/inet.h>
+#include <stdexcept>
 
 int 				sock_emet;
 int 				sock_recept;
