@@ -3,8 +3,8 @@
 %% Description: 
 %%   Simulink Coder TLC Code Generation file for UDP_Send_Int32
 %%
-%% Simulink version      : 8.1 (R2013a) 13-Feb-2013
-%% TLC file generated on : 16-Jan-2014 16:21:36
+%% Simulink version      : 8.2 (R2013b) 08-Aug-2013
+%% TLC file generated on : 21-Jan-2014 10:01:35
 
 /%
      %%%-MATLAB_Construction_Commands_Start

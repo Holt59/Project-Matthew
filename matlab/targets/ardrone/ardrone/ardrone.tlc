@@ -483,29 +483,29 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
 
   oIdx = oIdx + 1;
 
-  rtwoptions(oIdx).prompt         = 'Location of Paparazzi Lib';
+  rtwoptions(oIdx).prompt         = 'Location of Paparazzi Library';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = '';
+  rtwoptions(oIdx).default        = 'C:\INSA Toulouse\ARDrone\Paparazzi-CPP';
   rtwoptions(oIdx).makevariable   = 'PAPARAZZI_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...
-    'Location of paparazzi library']);
+    'Location of Paparazzi library']);
 
     oIdx = oIdx + 1;
 
-  rtwoptions(oIdx).prompt         = 'Location of your ARM compiler';
+  rtwoptions(oIdx).prompt         = 'Location of your ARM Compiler';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = '';
+  rtwoptions(oIdx).default        = 'C:\CodeSourcery\Sourcery_CodeBench_Lite_for_ARM_GNU_Linux\bin';
   rtwoptions(oIdx).makevariable   = 'COMPILER_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...
-    'Location of ARM compieler']);
+    'Location of ARM compiler']);
 
   oIdx = oIdx + 1;
 
-  rtwoptions(oIdx).prompt         = 'Location of your make executable';
+  rtwoptions(oIdx).prompt         = 'Location of your make command';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = 'mingw32-make';
+  rtwoptions(oIdx).default        = 'C:\MinGW\bin\mingw32-make';
   rtwoptions(oIdx).makevariable   = 'MAKE_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...

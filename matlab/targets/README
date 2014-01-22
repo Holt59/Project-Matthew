@@ -2,6 +2,7 @@ Pour installer une target dans MATLAB, ajouter dans le path MATLAB le répertoir
 target
 target/target
 target/blocks
+target/doc
 
 COMMANDE
 > addpath(genpath('/cheminversdossier/target'))
@@ -9,5 +10,5 @@ COMMANDE
 % Pour sauvegarder le path définitivement: 
 > savepath 
 
-% Ouvrir la fenêtre de configuration pour le modèle Simulink (ctrl-E)
+% Ouvrir la fenêtre de configuration pour le modèle Simulink (ctrl+E)
 % On doit trouver la toolbox dans le library browser

@@ -121,6 +121,8 @@ int udp_recv(char * message, int lg_message)
 {
 #ifndef MATLAB_MEX_FILE
 	return read(sock_recept, message, lg_message);
+#else
+    return 0;
 #endif
 }
 
@@ -136,6 +138,8 @@ int32_t udp_recv_int32()
 	}
 
 	return value;
+#else
+    return 0;
 #endif
 }
 
