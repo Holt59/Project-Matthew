@@ -205,9 +205,10 @@ namespace Navdata {
 
         uint8_t calibBuffer[22];
 
-        if (read (fd, calibBuffer, sizeof calibBuffer) < 0) {
-            perror ("acquire_baro_calibration: read failed");
-            return false ;
+        while (read (fd, calibBuffer, sizeof calibBuffer) < 0) {
+            //perror ("acquire_baro_calibration: read failed");
+            //return false ;
+            usleep(500);
         }
 
         baroCalibration.ac1 = calibBuffer[0] << 8 | calibBuffer[1];

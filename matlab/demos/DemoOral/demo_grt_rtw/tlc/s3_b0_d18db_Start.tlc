@@ -1,0 +1,32 @@
+%implements s3_b0_d18db_Start "C"
+
+%function Start(block, system) Output
+%assign tlcStartFcnOfS3B0 = OpaqueTLCBlockFcn("Start", 3, 0, 0, 0)
+%assign tlcStartFcnOfS3B5 = OpaqueTLCBlockFcn("Start", 3, 5, 0, 0)
+%assign tlcStartFcnOfS3B6 = OpaqueTLCBlockFcn("Start", 3, 6, 0, 0)
+%assign tlcStartFcnOfS3B7 = OpaqueTLCBlockFcn("Start", 3, 7, 0, 0)
+%assign tlcStartFcnOfS3B8 = OpaqueTLCBlockFcn("Start", 3, 8, 0, 0)
+%assign tlcStartFcnOfS3B9 = OpaqueTLCBlockFcn("Start", 3, 9, 0, 0)
+%assign tlcStartFcnOfS3B10 = OpaqueTLCBlockFcn("Start", 3, 10, 0, 0)
+%assign tlcStartFcnOfS3B11 = OpaqueTLCBlockFcn("Start", 3, 11, 0, 0)
+%assign tlcStartFcnOfS3B12 = OpaqueTLCBlockFcn("Start", 3, 12, 0, 0)
+%assign tlcStartFcnOfS3B13 = OpaqueTLCBlockFcn("Start", 3, 13, 0, 0)
+%assign tlcStartFcnOfS3B14 = OpaqueTLCBlockFcn("Start", 3, 14, 0, 0)
+%<tlcStartFcnOfS3B0>\
+%<tlcStartFcnOfS3B5>\
+%<tlcStartFcnOfS3B6>\
+%<tlcStartFcnOfS3B7>\
+%<tlcStartFcnOfS3B8>\
+%<tlcStartFcnOfS3B9>\
+%<tlcStartFcnOfS3B10>\
+%<tlcStartFcnOfS3B11>\
+%<tlcStartFcnOfS3B12>\
+%<tlcStartFcnOfS3B13>\
+%<tlcStartFcnOfS3B14>\
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Start(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 0, fcnProtoType)>
+%endfunction

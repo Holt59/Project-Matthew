@@ -1,0 +1,544 @@
+%implements s3_b0_d18db_TLCInterface "C"
+
+%function getOutputAddr_3_0_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return "NULL"
+%endfunction
+
+%function getOutput_3_0_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return "*NULL"
+%endfunction
+
+%function getInputAddr_3_5_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_5_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_5_0_0_1_6(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED_p1"
+%endfunction
+
+%function getParam_3_5_0_0_1_6(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED_p1"
+%endfunction
+
+%function getInputAddr_3_6_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_6_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_6_0_0_1_7(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED1_p1"
+%endfunction
+
+%function getParam_3_6_0_0_1_7(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED1_p1"
+%endfunction
+
+%function getInputAddr_3_7_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_7_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_7_0_0_1_8(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED2_p1"
+%endfunction
+
+%function getParam_3_7_0_0_1_8(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED2_p1"
+%endfunction
+
+%function getInputAddr_3_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_8_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_8_0_0_1_9(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED3_p1"
+%endfunction
+
+%function getParam_3_8_0_0_1_9(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED3_p1"
+%endfunction
+
+%function getOutputAddr_3_9_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(1, 0)> %% rtb_UDP_Receive_Int1
+
+%return "&rtb_UDP_Receive_Int1"
+%endfunction
+
+%function getOutput_3_9_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(1, 0)> %% rtb_UDP_Receive_Int1
+
+%return "rtb_UDP_Receive_Int1"
+%endfunction
+
+%function getParamAddr_3_9_0_0_1_4(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.UDP_Receive_Int1_p1"
+%endfunction
+
+%function getParam_3_9_0_0_1_4(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.UDP_Receive_Int1_p1"
+%endfunction
+
+%function getInputAddr_3_10_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_10_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_10_0_0_1_10(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor_p1"
+%endfunction
+
+%function getParam_3_10_0_0_1_10(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor_p1"
+%endfunction
+
+%function getInputAddr_3_11_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_11_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_11_0_0_1_11(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor1_p1"
+%endfunction
+
+%function getParam_3_11_0_0_1_11(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor1_p1"
+%endfunction
+
+%function getInputAddr_3_12_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_12_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_12_0_0_1_12(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor2_p1"
+%endfunction
+
+%function getParam_3_12_0_0_1_12(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor2_p1"
+%endfunction
+
+%function getInputAddr_3_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_13_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_13_0_0_1_13(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor3_p1"
+%endfunction
+
+%function getParam_3_13_0_0_1_13(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor3_p1"
+%endfunction
+
+%function getInputAddr_3_14_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return ""
+%endfunction
+
+%function getInput_3_14_0_0_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return ""
+%endfunction
+
+%function getParamAddr_3_14_0_0_1_5(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.UDP_Send_Int32_p1"
+%endfunction
+
+%function getParam_3_14_0_0_1_5(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.UDP_Send_Int32_p1"
+%endfunction
+
+%function getOutputAddr_3_0_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return "NULL"
+%endfunction
+
+%function getOutput_3_0_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return "*NULL"
+%endfunction
+
+%function getInputAddr_3_5_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_5_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_5_0_2_1_6(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED_p1"
+%endfunction
+
+%function getParam_3_5_0_2_1_6(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED_p1"
+%endfunction
+
+%function getInputAddr_3_6_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_6_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_6_0_2_1_7(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED1_p1"
+%endfunction
+
+%function getParam_3_6_0_2_1_7(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED1_p1"
+%endfunction
+
+%function getInputAddr_3_7_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_7_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_7_0_2_1_8(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED2_p1"
+%endfunction
+
+%function getParam_3_7_0_2_1_8(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED2_p1"
+%endfunction
+
+%function getInputAddr_3_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "&rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getInput_3_8_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+
+%return "rtb_DataTypeConversion3_o"
+%endfunction
+
+%function getParamAddr_3_8_0_2_1_9(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_LED3_p1"
+%endfunction
+
+%function getParam_3_8_0_2_1_9(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_LED3_p1"
+%endfunction
+
+%function getOutputAddr_3_9_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(1, 0)> %% rtb_UDP_Receive_Int1
+
+%return "&rtb_UDP_Receive_Int1"
+%endfunction
+
+%function getOutput_3_9_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(1, 0)> %% rtb_UDP_Receive_Int1
+
+%return "rtb_UDP_Receive_Int1"
+%endfunction
+
+%function getParamAddr_3_9_0_2_1_4(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.UDP_Receive_Int1_p1"
+%endfunction
+
+%function getParam_3_9_0_2_1_4(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.UDP_Receive_Int1_p1"
+%endfunction
+
+%function getInputAddr_3_10_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_10_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_10_0_2_1_10(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor_p1"
+%endfunction
+
+%function getParam_3_10_0_2_1_10(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor_p1"
+%endfunction
+
+%function getInputAddr_3_11_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_11_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_11_0_2_1_11(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor1_p1"
+%endfunction
+
+%function getParam_3_11_0_2_1_11(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor1_p1"
+%endfunction
+
+%function getInputAddr_3_12_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_12_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_12_0_2_1_12(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor2_p1"
+%endfunction
+
+%function getParam_3_12_0_2_1_12(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor2_p1"
+%endfunction
+
+%function getInputAddr_3_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "&rtb_DataTypeConversion3"
+%endfunction
+
+%function getInput_3_13_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%return "rtb_DataTypeConversion3"
+%endfunction
+
+%function getParamAddr_3_13_0_2_1_13(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.ARDrone_Motor3_p1"
+%endfunction
+
+%function getParam_3_13_0_2_1_13(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.ARDrone_Motor3_p1"
+%endfunction
+
+%function getInputAddr_3_14_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return ""
+%endfunction
+
+%function getInput_3_14_0_2_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return ""
+%endfunction
+
+%function getParamAddr_3_14_0_2_1_5(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.UDP_Send_Int32_p1"
+%endfunction
+
+%function getParam_3_14_0_2_1_5(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.UDP_Send_Int32_p1"
+%endfunction
+
+%function getOutputAddr_3_9_0_3_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(1, 0)> %% rtb_UDP_Receive_Int1
+
+%return "&rtb_UDP_Receive_Int1"
+%endfunction
+
+%function getOutput_3_9_0_3_0_0(block, lcv, ucv, sigIdx, reim) void
+%<SLibCGIRAccessLocalVar(1, 0)> %% rtb_UDP_Receive_Int1
+
+%return "rtb_UDP_Receive_Int1"
+%endfunction
+
+%function getParamAddr_3_9_0_3_1_4(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.UDP_Receive_Int1_p1"
+%endfunction
+
+%function getParam_3_9_0_3_1_4(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.UDP_Receive_Int1_p1"
+%endfunction
+
+%function getInputAddr_3_14_0_3_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return ""
+%endfunction
+
+%function getInput_3_14_0_3_0_0(block, lcv, ucv, sigIdx, reim) void
+
+%return ""
+%endfunction
+
+%function getParamAddr_3_14_0_3_1_5(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "&demo_P.UDP_Send_Int32_p1"
+%endfunction
+
+%function getParam_3_14_0_3_1_5(block, lcv, ucv, sigIdx, reim) void
+%<SLibCG_TrackParam(3)>
+
+%return "demo_P.UDP_Send_Int32_p1"
+%endfunction
+

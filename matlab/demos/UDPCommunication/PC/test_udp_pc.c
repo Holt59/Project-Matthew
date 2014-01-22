@@ -65,7 +65,7 @@ void _creer_adresse_distante(struct sockaddr_in * adr_distant, int num_port, str
 
 	//memset((char*)&adr_distant, 0, sizeof(*adr_distant));
 	adr_distant->sin_family = AF_INET;
-	adr_distant->sin_port = num_port;
+	adr_distant->sin_port = htons(num_port);
 	
 	if((hp = gethostbyname(nom_machine)) == NULL){
 		printf("Erreur GetHostByName \n");
@@ -146,9 +146,11 @@ int main()
 
 	while(1)
 	{
-		scanf("%d", &envoi);
-		udp_send_int32(envoi);
-		printf("%d\n", udp_recv_int32());
+		//scanf("%d", &envoi);
+		//udp_send_int32(envoi);
+		usleep(5000);
+		printf("\r%4d", udp_recv_int32());
+		fflush(stdout);
 	}
 
 	return 0;

@@ -41,6 +41,7 @@
 
   #define ACTUATORS_PERIOD  (0.01)
   #define SENSORS_PERIOD    (0.001)
+  #define AHRS_PERIOD       (0.004)
 
   void step_handler(uint8_t timerID)
   {
@@ -56,6 +57,23 @@
   void actuators_handler(uint8_t timerID)
   {
     Actuators::commit();
+  }
+
+  void ahrs_handler(uint8_t timerID)
+  {
+      static int compteur = 0;
+      
+      if(compteur == 0){
+        Navdata::AHRS::setSamplePeriod(4000) ;
+        Navdata::AHRS::setKp(5.0, 10.0, 5.0);
+        Navdata::AHRS::setKi(0.01, 0.01, 0.03);
+      }
+      if(compteur <= 1000){
+        compteur++;
+      }else{
+        Navdata::AHRS::setKp(0.5, 0.25, 0.5);
+      }
+      Navdata::AHRS::updateWithMag();
   }
 
   %assign fcnReturns = "int_T"

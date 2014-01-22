@@ -1,0 +1,397 @@
+%implements s3_b0_d18db_Outputs "C"
+
+%function Outputs(block, system) Output
+%<SLibCGIRAccessLocalVar(1, 0)> %% rtb_UDP_Receive_Int1
+%<SLibCGIRAccessLocalVar(3, 0)> %% rtb_DataTypeConversion3_o
+%<SLibCGIRAccessLocalVar(0, 0)> %% rtb_DataTypeConversion3
+
+%assign tlcOutputsFcnOfS3B0 = OpaqueTLCBlockFcn("Outputs", 3, 0, 0, 2)
+%assign tlcOutputsFcnOfS3B5 = OpaqueTLCBlockFcn("Outputs", 3, 5, 0, 2)
+%assign tlcOutputsFcnOfS3B6 = OpaqueTLCBlockFcn("Outputs", 3, 6, 0, 2)
+%assign tlcOutputsFcnOfS3B7 = OpaqueTLCBlockFcn("Outputs", 3, 7, 0, 2)
+%assign tlcOutputsFcnOfS3B8 = OpaqueTLCBlockFcn("Outputs", 3, 8, 0, 2)
+%assign tlcOutputsFcnOfS3B9 = OpaqueTLCBlockFcn("Outputs", 3, 9, 0, 2)
+%assign tlcOutputsFcnOfS3B10 = OpaqueTLCBlockFcn("Outputs", 3, 10, 0, 2)
+%assign tlcOutputsFcnOfS3B11 = OpaqueTLCBlockFcn("Outputs", 3, 11, 0, 2)
+%assign tlcOutputsFcnOfS3B12 = OpaqueTLCBlockFcn("Outputs", 3, 12, 0, 2)
+%assign tlcOutputsFcnOfS3B13 = OpaqueTLCBlockFcn("Outputs", 3, 13, 0, 2)
+%assign tlcOutputsFcnOfS3B14 = OpaqueTLCBlockFcn("Outputs", 3, 14, 0, 2)
+%<SLibCG_TrackParam(3)>\
+%<tlcOutputsFcnOfS3B0>\
+/* MultiPortSwitch: '<S1>/Multiport Switch' incorporates:
+ *  Constant: '<S1>/Constant'
+ *  Constant: '<S1>/Constant1'
+ *  Constant: '<S1>/Constant2'
+ *  Constant: '<S1>/Constant3'
+ *  S-Function (ARDrone_Height): '<Root>/Height'
+ */
+guard1 = FALSE;
+guard2 = FALSE;
+guard3 = FALSE;
+guard4 = FALSE;
+switch (%<(SLibCG_Expr(3, 0, 0, 1, "", -1, "", 0))>) {
+  case 0:
+    guard1 = TRUE;
+    break;
+  case 1:
+    guard1 = TRUE;
+    break;
+  case 2:
+    guard1 = TRUE;
+    break;
+  case 3:
+    guard1 = TRUE;
+    break;
+  case 4:
+    guard1 = TRUE;
+    break;
+  case 5:
+    guard1 = TRUE;
+    break;
+  case 6:
+    guard1 = TRUE;
+    break;
+  case 7:
+    guard1 = TRUE;
+    break;
+  case 8:
+    guard1 = TRUE;
+    break;
+  case 9:
+    guard1 = TRUE;
+    break;
+  case 10:
+    guard1 = TRUE;
+    break;
+  case 11:
+    guard1 = TRUE;
+    break;
+  case 12:
+    guard1 = TRUE;
+    break;
+  case 13:
+    guard1 = TRUE;
+    break;
+  case 14:
+    guard1 = TRUE;
+    break;
+  case 15:
+    guard1 = TRUE;
+    break;
+  case 16:
+    guard1 = TRUE;
+    break;
+  case 17:
+    guard1 = TRUE;
+    break;
+  case 18:
+    guard1 = TRUE;
+    break;
+  case 19:
+    guard1 = TRUE;
+    break;
+  case 20:
+    guard1 = TRUE;
+    break;
+  case 21:
+    guard1 = TRUE;
+    break;
+  case 22:
+    guard1 = TRUE;
+    break;
+  case 23:
+    guard1 = TRUE;
+    break;
+  case 24:
+    guard1 = TRUE;
+    break;
+  case 25:
+    guard1 = TRUE;
+    break;
+  case 26:
+    guard2 = TRUE;
+    break;
+  case 27:
+    guard2 = TRUE;
+    break;
+  case 28:
+    guard2 = TRUE;
+    break;
+  case 29:
+    guard2 = TRUE;
+    break;
+  case 30:
+    guard2 = TRUE;
+    break;
+  case 31:
+    guard2 = TRUE;
+    break;
+  case 32:
+    guard2 = TRUE;
+    break;
+  case 33:
+    guard2 = TRUE;
+    break;
+  case 34:
+    guard2 = TRUE;
+    break;
+  case 35:
+    guard2 = TRUE;
+    break;
+  case 36:
+    guard2 = TRUE;
+    break;
+  case 37:
+    guard2 = TRUE;
+    break;
+  case 38:
+    guard2 = TRUE;
+    break;
+  case 39:
+    guard2 = TRUE;
+    break;
+  case 40:
+    guard2 = TRUE;
+    break;
+  case 41:
+    guard2 = TRUE;
+    break;
+  case 42:
+    guard2 = TRUE;
+    break;
+  case 43:
+    guard2 = TRUE;
+    break;
+  case 44:
+    guard2 = TRUE;
+    break;
+  case 45:
+    guard2 = TRUE;
+    break;
+  case 46:
+    guard2 = TRUE;
+    break;
+  case 47:
+    guard2 = TRUE;
+    break;
+  case 48:
+    guard2 = TRUE;
+    break;
+  case 49:
+    guard2 = TRUE;
+    break;
+  case 50:
+    guard2 = TRUE;
+    break;
+  case 51:
+    guard3 = TRUE;
+    break;
+  case 52:
+    guard3 = TRUE;
+    break;
+  case 53:
+    guard3 = TRUE;
+    break;
+  case 54:
+    guard3 = TRUE;
+    break;
+  case 55:
+    guard3 = TRUE;
+    break;
+  case 56:
+    guard3 = TRUE;
+    break;
+  case 57:
+    guard3 = TRUE;
+    break;
+  case 58:
+    guard3 = TRUE;
+    break;
+  case 59:
+    guard3 = TRUE;
+    break;
+  case 60:
+    guard3 = TRUE;
+    break;
+  case 61:
+    guard3 = TRUE;
+    break;
+  case 62:
+    guard3 = TRUE;
+    break;
+  case 63:
+    guard3 = TRUE;
+    break;
+  case 64:
+    guard3 = TRUE;
+    break;
+  case 65:
+    guard3 = TRUE;
+    break;
+  case 66:
+    guard3 = TRUE;
+    break;
+  case 67:
+    guard3 = TRUE;
+    break;
+  case 68:
+    guard3 = TRUE;
+    break;
+  case 69:
+    guard3 = TRUE;
+    break;
+  case 70:
+    guard3 = TRUE;
+    break;
+  case 71:
+    guard3 = TRUE;
+    break;
+  case 72:
+    guard3 = TRUE;
+    break;
+  case 73:
+    guard3 = TRUE;
+    break;
+  case 74:
+    guard3 = TRUE;
+    break;
+  case 75:
+    guard3 = TRUE;
+    break;
+  case 76:
+    guard4 = TRUE;
+    break;
+  case 77:
+    guard4 = TRUE;
+    break;
+  case 78:
+    guard4 = TRUE;
+    break;
+  case 79:
+    guard4 = TRUE;
+    break;
+  case 80:
+    guard4 = TRUE;
+    break;
+  case 81:
+    guard4 = TRUE;
+    break;
+  case 82:
+    guard4 = TRUE;
+    break;
+  case 83:
+    guard4 = TRUE;
+    break;
+  case 84:
+    guard4 = TRUE;
+    break;
+  case 85:
+    guard4 = TRUE;
+    break;
+  case 86:
+    guard4 = TRUE;
+    break;
+  case 87:
+    guard4 = TRUE;
+    break;
+  case 88:
+    guard4 = TRUE;
+    break;
+  case 89:
+    guard4 = TRUE;
+    break;
+  case 90:
+    guard4 = TRUE;
+    break;
+  case 91:
+    guard4 = TRUE;
+    break;
+  case 92:
+    guard4 = TRUE;
+    break;
+  case 93:
+    guard4 = TRUE;
+    break;
+  case 94:
+    guard4 = TRUE;
+    break;
+  case 95:
+    guard4 = TRUE;
+    break;
+  case 96:
+    guard4 = TRUE;
+    break;
+  case 97:
+    guard4 = TRUE;
+    break;
+  case 98:
+    guard4 = TRUE;
+    break;
+  case 99:
+    guard4 = TRUE;
+    break;
+  case 100:
+    guard4 = TRUE;
+    break;
+  default:
+    rtb_UDP_Receive_Int1 = demo_P.Constant_Value;
+    break;
+}
+if (guard4 == TRUE) {
+    rtb_UDP_Receive_Int1 = demo_P.Constant3_Value;
+}
+if (guard3 == TRUE) {
+    rtb_UDP_Receive_Int1 = demo_P.Constant2_Value;
+}
+if (guard2 == TRUE) {
+    rtb_UDP_Receive_Int1 = demo_P.Constant1_Value;
+}
+if (guard1 == TRUE) {
+    rtb_UDP_Receive_Int1 = demo_P.Constant_Value;
+}
+/* End of MultiPortSwitch: '<S1>/Multiport Switch' */
+
+/* DataTypeConversion: '<S2>/Data Type Conversion' */
+rtb_DataTypeConversion3_o = (int8_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B5>\
+/* DataTypeConversion: '<S2>/Data Type Conversion1' */
+rtb_DataTypeConversion3_o = (int8_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B6>\
+/* DataTypeConversion: '<S2>/Data Type Conversion2' */
+rtb_DataTypeConversion3_o = (int8_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B7>\
+/* DataTypeConversion: '<S2>/Data Type Conversion3' */
+rtb_DataTypeConversion3_o = (int8_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B8>\
+%<tlcOutputsFcnOfS3B9>\
+/* DataTypeConversion: '<S3>/Data Type Conversion' */
+rtb_DataTypeConversion3 = (real32_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B10>\
+/* DataTypeConversion: '<S3>/Data Type Conversion1' */
+rtb_DataTypeConversion3 = (real32_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B11>\
+/* DataTypeConversion: '<S3>/Data Type Conversion2' */
+rtb_DataTypeConversion3 = (real32_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B12>\
+/* DataTypeConversion: '<S3>/Data Type Conversion3' */
+rtb_DataTypeConversion3 = (real32_T)rtb_UDP_Receive_Int1;
+%<tlcOutputsFcnOfS3B13>\
+%<tlcOutputsFcnOfS3B14>\
+%<SLibInsertSolverResetCode()>\
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Outputs(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 2, fcnProtoType)>
+
+%assign localVarDecl = ""
+%openfile localVarDecl
+boolean_T guard1 = FALSE;
+boolean_T guard2 = FALSE;
+boolean_T guard3 = FALSE;
+boolean_T guard4 = FALSE;
+
+%closefile localVarDecl
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction

@@ -1,0 +1,14 @@
+%implements s3_b0_d18db_Terminate "C"
+
+%function Terminate(block, system) Output
+%assign tlcTerminateFcnOfS3B9 = OpaqueTLCBlockFcn("Terminate", 3, 9, 0, 3)
+%assign tlcTerminateFcnOfS3B14 = OpaqueTLCBlockFcn("Terminate", 3, 14, 0, 3)
+%<tlcTerminateFcnOfS3B9>\
+%<tlcTerminateFcnOfS3B14>\
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Terminate(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 3, fcnProtoType)>
+%endfunction

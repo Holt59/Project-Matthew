@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'test_udp'.
  *
- * Model version                  : 1.35
+ * Model version                  : 1.26
  * Simulink Coder version         : 8.4 (R2013a) 13-Feb-2013
  * TLC version                    : 8.4 (Jan 18 2013)
- * C/C++ source code generated on : Wed Jan 22 13:34:25 2014
+ * C/C++ source code generated on : Wed Jan 22 14:37:21 2014
  *
  * Target selection: ardrone.tlc
  * Embedded hardware selection: 32-bit Generic
@@ -19,9 +19,13 @@
 #ifndef test_udp_COMMON_INCLUDES_
 # define test_udp_COMMON_INCLUDES_
 #include <stddef.h>
+#include <math.h>
 #include "rtwtypes.h"
-#include "height.h"
+#include "ahrs.h"
 #include "udp.h"
+#include "rtGetInf.h"
+#include "rtGetNaN.h"
+#include "rt_nonfinite.h"
 #endif                                 /* test_udp_COMMON_INCLUDES_ */
 
 #include "test_udp_types.h"
@@ -38,10 +42,10 @@
 /* Parameters (auto storage) */
 struct P_test_udp_T_ {
   int32_T UDP_Receive_Int1_p1;         /* Computed Parameter: UDP_Receive_Int1_p1
-                                        * Referenced by: '<S1>/UDP_Receive_Int1'
+                                        * Referenced by: '<S2>/UDP_Receive_Int1'
                                         */
   int32_T UDP_Send_Int32_p1;           /* Computed Parameter: UDP_Send_Int32_p1
-                                        * Referenced by: '<S1>/UDP_Send_Int32'
+                                        * Referenced by: '<S2>/UDP_Send_Int32'
                                         */
 };
 
@@ -109,7 +113,8 @@ extern "C" {
  * Here is the system hierarchy for this model
  *
  * '<Root>' : 'test_udp'
- * '<S1>'   : 'test_udp/UDP'
+ * '<S1>'   : 'test_udp/Euler Angles'
+ * '<S2>'   : 'test_udp/UDP'
  */
 #endif                                 /* RTW_HEADER_test_udp_h_ */
 

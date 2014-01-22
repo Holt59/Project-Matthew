@@ -85,7 +85,7 @@ COMPILER_TOOL_CHAIN = default
 #                            and do not build an executable
 
 MODEL                   = test_udp
-MODULES                 = height.cpp test_udp_data.cpp udp.cpp 
+MODULES                 = ahrs.cpp rtGetInf.cpp rtGetNaN.cpp rt_nonfinite.cpp test_udp_data.cpp udp.cpp 
 MAKEFILE                = test_udp.mk
 MATLAB_ROOT             = /Applications/MATLAB_R2013a.app
 ALT_MATLAB_ROOT         = /Applications/MATLAB_R2013a.app
@@ -263,9 +263,8 @@ MATLAB_INCLUDES = \
 ADD_INCLUDES = \
 	-I$(START_DIR)/test_udp_ert_rtw \
 	-I$(START_DIR) \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/repo/matlab/demos/UDPCommunication \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height/. \
-	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs/. \
+	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs \
 	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp/. \
 	-I/Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp \
 
@@ -543,7 +542,7 @@ endif
 %.o : $(MATLAB_ROOT)/simulink/src/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height/%.c
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs/%.c
 	$(CC) -c $(CFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
 %.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp/%.c
@@ -557,7 +556,7 @@ endif
 %.o : $(MATLAB_ROOT)/simulink/src/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
-%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/height/%.cpp
+%.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/ahrs/%.cpp
 	$(CPP) -c $(CPPFLAGS) $(GCC_WALL_FLAG_MAX) "$<"
 
 %.o : /Volumes/HDData/Documents/INSA/5A/Drone/git/matlab/targets/ardrone/blocks/udp/%.cpp
