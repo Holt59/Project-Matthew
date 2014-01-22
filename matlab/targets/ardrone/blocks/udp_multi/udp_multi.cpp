@@ -138,12 +138,13 @@ int32_t udp_recv_int32 (int8_t command) {
 	while(udp_recv(buffer, sizeof(int8_t) + sizeof(int32_t)) > 0) {
         int8_t cmd = *reinterpret_cast<int8_t*>(buffer) ;
         int32_t value = *reinterpret_cast<int32_t*>(buffer + 1) ;
+        UDP_RecvValues[cmd] = value ;
 	}
     
     int32_t value ;
     
     try {
-        value = UDP_RecvValues[command] ;
+        value = UDP_RecvValues.at(command) ;
     }
     catch (const std::out_of_range& oor) {
         value = 0 ;
