@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:file="java.io.File">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+
+  <title>Simulink Support Package for AR.Drone v2.0</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="droneindex.css" />
+</head>
+
+<body>
+  <div id="background-container">
+    <div id="header-container">
+      <div id="header">
+        <div>
+          <span class="header-demo-name">Simulink Support Package for AR.Drone v2.0</span> <span class="header-demos">Motor and LED
+          Interaction</span>
+        </div>
+
+        <div class="header-content">
+          <p xmlns=""><br />
+          This example shows how the LEDs and the motor can respond to the altitude data mesured by the drone.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demopanel-container">
+      <div class="demopanel">
+        <div xmlns="" class="demopanel">
+          <div class="demopanel-title">
+            Model
+          </div>
+
+          <p><img src="../image/motorandledinteraction.png" /></p>
+        </div>
+
+        <div xmlns="" class="demopanel">
+          <div class="demopanel-title">
+            Subsystem
+          </div>
+
+          <p><img src="../image/motorandledinteraction_subsystem.png" /></p>
+        </div>
+
+        <div xmlns="" class="demopanel">
+          <div class="demopanel-title">
+            Description
+          </div>
+
+          <p>This model mesures the height in centimeters. The mesured data is then used to apply a thrust <b>proportional to the
+          drone&#39;s altitude</b>.</p>
+		  <p>
+		  Above 100 centimeters, full thrust is applied.</p>
+
+          <p>The LEDs are given different colours depending of the drone&#39;s altitude :<br /></p>
+
+          <ul>
+            <li>0-25cm : <b>OFF</b></li>
+
+            <li>25-50cm : <b>RED</b></li>
+
+            <li>50-75cm : <b>GREEN</b></li>
+
+            <li>75-100cm : <b>ORANGE</b></li>
+
+            <li>after 100cm : <b>OFF</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'test_udp'.
  *
- * Model version                  : 1.26
+ * Model version                  : 1.27
  * Simulink Coder version         : 8.4 (R2013a) 13-Feb-2013
  * TLC version                    : 8.4 (Jan 18 2013)
- * C/C++ source code generated on : Wed Jan 22 14:37:21 2014
+ * C/C++ source code generated on : Wed Jan 22 15:17:05 2014
  *
  * Target selection: ardrone.tlc
  * Embedded hardware selection: 32-bit Generic
@@ -27,7 +27,6 @@ void __cxa_pure_virtual(void)
 }
 
 #define STEP_SIZE                      (0.1)
-#define STOP_TIME                      (100.0)
 #define ACTUATORS_PERIOD               (0.01)
 #define SENSORS_PERIOD                 (0.001)
 #define AHRS_PERIOD                    (0.004)
@@ -55,17 +54,17 @@ void ahrs_handler(uint8_t timerID)
   static int compteur = 0;
   if (compteur == 0) {
     Navdata::AHRS::setSamplePeriod(4000) ;
-    Navdata::AHRS::setKp(5.0, 10.0, 5.0);
-    Navdata::AHRS::setKi(0.01, 0.01, 0.03);
+    Navdata::AHRS::setKp(5.0);
+    Navdata::AHRS::setKis(0.1, 0.1, 0.1);
   }
 
   if (compteur <= 1000) {
     compteur++;
   } else {
-    Navdata::AHRS::setKp(0.5, 0.25, 0.5);
+    Navdata::AHRS::setKp(0.5);
   }
 
-  Navdata::AHRS::updateWithMag();
+  Navdata::AHRS::update();
 }
 
 int_T main(int_T argc, const char *argv[])
@@ -92,14 +91,14 @@ int_T main(int_T argc, const char *argv[])
   test_udp_initialize();
 
   /* Initialize the timers */
-  tid_t main_tid = systime->registerTimer (STOP_TIME, 0);
   tid_t step_tid = systime->registerTimer (STEP_SIZE, step_handler) ;
   tid_t sensors_tid = systime->registerTimer (SENSORS_PERIOD, sensors_handler);
   tid_t actuators_tid = systime->registerTimer (ACTUATORS_PERIOD,
     actuators_handler) ;
+  tid_t ahrs_tid = systime->registerTimer (AHRS_PERIOD, ahrs_handler);
 
   /* Associate rt_OneStep() with a timer that executes at the base rate of the model */
-  while (!systime->checkAndAckTimer(main_tid)) {
+  while (1) {
     usleep(100);
   }
 

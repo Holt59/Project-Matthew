@@ -146,11 +146,11 @@ int main()
 
 	while(1)
 	{
-		//scanf("%d", &envoi);
-		//udp_send_int32(envoi);
+		scanf("%d", &envoi);
+		udp_send_int32(envoi);
 		usleep(5000);
-		printf("\r%4d", udp_recv_int32());
-		fflush(stdout);
+		//printf("\r%4d", udp_recv_int32());
+		//fflush(stdout);
 	}
 
 	return 0;

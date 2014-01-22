@@ -1,0 +1,13 @@
+<productinfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="optional">
+    <?xml-stylesheet type="text/xsl"href="optional"?>
+     
+    <matlabrelease>2013b</matlabrelease>
+    <name>Simulink Support Package for AR.Drone v2.0</name>
+    <type>blockset</type>
+    <icon></icon>
+    <help_location>example</help_location>
+    <!--<help_contents_icon>$toolbox/matlab/icons/bookicon.gif</help_contents_icon>-->
+    <help_contents_icon>../image/ardrone_icon.png</help_contents_icon>
+
+</productinfo>

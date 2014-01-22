@@ -604,15 +604,15 @@ namespace Navdata {
 
         float intErrors[3] = {0.0f, 0.0f, 0.0f} ;
 
-        float Kpx = 1.0f, Kpy = 1.0f, Kpz = 1.0f,
+        float Kp = 1.0f,
             Kix = 0.02f, Kiy = 0.02f, Kiz = 0.02f ;
 
         void setSamplePeriod (uint32_t dt) {
             samplePeriod = ((float) dt) / 1e6 ;
         }
 
-        void setKps (float kpx, float kpy, float kpz) { Kpx = kpx ; Kpy = kpy ; Kpz = kpz ; }
-        void setKi (float kix, float kiy, float kiz) { Kix = kix ; Kiy = kiy ; Kiz = kiz ; }
+        void setKp (float kp) { Kp = kp ; }
+        void setKis (float kix, float kiy, float kiz) { Kix = kix ; Kiy = kiy ; Kiz = kiz ; }
 
 		float b_x = 1, b_z = 0; // reference direction of flux in earth frame
 
@@ -667,15 +667,15 @@ namespace Navdata {
 			SEqHatDot_3 /= norm;
 			SEqHatDot_4 /= norm;
 			// Compute the quaternion derrivative measured by gyroscopes
-			SEqDot_omega_1 = -halfSEq_2 * Kpx *  w_x - halfSEq_3 * Kpy * w_y - halfSEq_4 * Kpz * w_z;
-			SEqDot_omega_2 = halfSEq_1 * Kpx * w_x + halfSEq_3 * Kpz * w_z - halfSEq_4 * Kpy * w_y;
-			SEqDot_omega_3 = halfSEq_1 * Kpy * w_y - halfSEq_2 * Kpz * w_z + halfSEq_4 * Kpx * w_x;
-			SEqDot_omega_4 = halfSEq_1 * Kpz * w_z + halfSEq_2 * Kpy * w_y - halfSEq_3 * Kpx * w_x;
+			SEqDot_omega_1 = -halfSEq_2 *  w_x - halfSEq_3 * w_y - halfSEq_4 * w_z;
+			SEqDot_omega_2 = halfSEq_1 * w_x + halfSEq_3 * w_z - halfSEq_4 * w_y;
+			SEqDot_omega_3 = halfSEq_1 * w_y - halfSEq_2 * w_z + halfSEq_4 * w_x;
+			SEqDot_omega_4 = halfSEq_1 * w_z + halfSEq_2 * w_y - halfSEq_3 * w_x;
 			// Compute then integrate the estimated quaternion derrivative
-			quaternion[0] += (SEqDot_omega_1 - SEqHatDot_1) * samplePeriod;
-			quaternion[1] += (SEqDot_omega_2 - SEqHatDot_2) * samplePeriod;
-			quaternion[2] += (SEqDot_omega_3 - SEqHatDot_3) * samplePeriod;
-			quaternion[3] += (SEqDot_omega_4 - SEqHatDot_4) * samplePeriod;
+			quaternion[0] += (SEqDot_omega_1 - Kp * SEqHatDot_1) * samplePeriod;
+			quaternion[1] += (SEqDot_omega_2 - Kp * SEqHatDot_2) * samplePeriod;
+			quaternion[2] += (SEqDot_omega_3 - Kp * SEqHatDot_3) * samplePeriod;
+			quaternion[3] += (SEqDot_omega_4 - Kp * SEqHatDot_4) * samplePeriod;
 			// Normalise quaternion
 			norm = sqrt(quaternion[0] * quaternion[0] + quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2] + quaternion[3] * quaternion[3]);
 			quaternion[0] /= norm;
@@ -792,15 +792,15 @@ namespace Navdata {
 			gy -= intErrors[1];
 			gz -= intErrors[2];
 			// compute the quaternion rate measured by gyroscopes
-			SEqDot_omega_1 = -halfSEq_2 * Kpx * gx - halfSEq_3 * Kpy * gy - halfSEq_4 * Kpz * gz;
-			SEqDot_omega_2 = halfSEq_1 * Kpx * gx + halfSEq_3 * Kpz * gz - halfSEq_4 * Kpy * gy;
-			SEqDot_omega_3 = halfSEq_1 * Kpy * gy - halfSEq_2 * Kpz * gz + halfSEq_4 * Kpx * gx;
-			SEqDot_omega_4 = halfSEq_1 * Kpz * gz + halfSEq_2 * Kpy * gy - halfSEq_3 * Kpx * gx;
+			SEqDot_omega_1 = -halfSEq_2 * gx - halfSEq_3 * gy - halfSEq_4 * gz;
+			SEqDot_omega_2 = halfSEq_1 * gx + halfSEq_3 * gz - halfSEq_4 * gy;
+			SEqDot_omega_3 = halfSEq_1 * gy - halfSEq_2 * gz + halfSEq_4 * gx;
+			SEqDot_omega_4 = halfSEq_1 * gz + halfSEq_2 * gy - halfSEq_3 * gx;
 			// compute then integrate the estimated quaternion rate
-			quaternion[0] += (SEqDot_omega_1 - SEqHatDot_1) * samplePeriod;
-			quaternion[1] += (SEqDot_omega_2 - SEqHatDot_2) * samplePeriod;
-			quaternion[2] += (SEqDot_omega_3 - SEqHatDot_3) * samplePeriod;
-			quaternion[3] += (SEqDot_omega_4 - SEqHatDot_4) * samplePeriod;
+			quaternion[0] += (SEqDot_omega_1 - Kp * SEqHatDot_1) * samplePeriod;
+			quaternion[1] += (SEqDot_omega_2 - Kp * SEqHatDot_2) * samplePeriod;
+			quaternion[2] += (SEqDot_omega_3 - Kp * SEqHatDot_3) * samplePeriod;
+			quaternion[3] += (SEqDot_omega_4 - Kp * SEqHatDot_4) * samplePeriod;
 			// normalise quaternion
 			norm = sqrt(quaternion[0] * quaternion[0] + quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2] + quaternion[3] * quaternion[3]);
 			quaternion[0] /= norm;

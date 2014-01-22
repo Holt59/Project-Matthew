@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding="utf-8"?>
+<toc version="2.0">
+
+    <tocitem target="ARdrone.html" image="HelpIcon.USER_GUIDE">Simulink Support Package AR.Drone v2.0
+        <tocitem target="funclist.html" image="HelpIcon.FUNCTION">Blocks 
+            <tocitem target="accelerometer.html">Accelerometer</tocitem>
+            <tocitem target="barometer.html">Barometer</tocitem>
+            <tocitem target="gyroscope.html">Gyroscope</tocitem>
+			<tocitem target="leds.html">LEDs</tocitem>
+			<tocitem target="magnetometer.html">Magnetometer</tocitem>
+            <tocitem target="motors.html">Motors</tocitem>
+			<tocitem target="udp.html">UDP</tocitem>
+			<tocitem target="height.html">Height</tocitem>
+			<tocitem target="print2file.html">Print2file</tocitem>
+        </tocitem>
+        <tocitem target="examplelist.html" image="HelpIcon.EXAMPLES">Examples
+            <tocitem target="testleds.html">Test LEDs</tocitem>
+			<tocitem target="ledcircle.html">LED Circle</tocitem>
+            <tocitem target="ledresponsetozacceleration.html">LED Response to Z Acceleration</tocitem>
+            <tocitem target="motorandledinteraction.html">Motor and LED Interaction</tocitem>
+        </tocitem>
+    </tocitem>
+</toc>

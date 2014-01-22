@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:file="java.io.File">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+
+  <title>Simulink Support Package for AR.Drone v2.0</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="droneindex.css" />
+</head>
+
+<body>
+  <div id="background-container">
+    <div id="header-container">
+      <div id="header">
+        <div>
+          <span class="header-demo-name">Simulink Support Package for AR.Drone v2.0</span> <span class="header-demos">LEDS</span>
+        </div>
+
+        <div class="header-content">
+          <p xmlns=""><br />
+          This section explains how you may control the different LEDs individually on the drone.</p>
+
+          <p><img src="../image/led_block.png" /></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demopanel-container">
+      <div class="demopanel">
+        <div xmlns="" class="demopanel">
+          <div class="demopanel-title">
+            Port map
+          </div>
+
+          <p>The LED block makes it possible control all four LEDs on the drone. Each input port controls a specific LED :</p>
+
+          <ul>
+            <li>input port 0 : <b>LED 0</b> (left front)</li>
+
+            <li>input port 1 : <b>LED 1</b> (right front)</li>
+
+            <li>input port 2 : <b>LED 2</b> (right back)</li>
+
+            <li>input port 3 : <b>LED 3</b> (left back)</li>
+          </ul>The following image shows where the LEDs are located on the AR.Drone v2.0.
+
+          <p><img src="../image/port_map.png" width="300" height="300" /></p>
+        </div>
+
+        <div xmlns="" class="demopanel">
+          <div class="demopanel-title">
+            Parameters
+          </div>
+
+          <p>The LEDs are controlled by sending one of the following values on each port :</p>
+
+          <ul>
+            <li>0 : <b>OFF</b></li>
+
+            <li>1 : <b>RED</b></li>
+
+            <li>2 : <b>GREEN</b></li>
+
+            <li>3 : <b>ORANGE</b> (red and green simultaneously)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

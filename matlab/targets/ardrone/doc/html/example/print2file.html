@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:file="java.io.File">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+
+  <title>Simulink Support Package for AR.Drone v2.0</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="droneindex.css" />
+</head>
+
+<body>
+  <div id="background-container">
+    <div id="header-container">
+      <div id="header">
+        <div>
+          <span class="header-demo-name">Simulink Support Package for AR.Drone v2.0</span> <span class=
+          "header-demos">PRINT-TO-FILE</span>
+        </div>
+
+        <div class="header-content">
+          <p xmlns=""><br />
+          This section explains how you may write data to a file on the drone.</p>
+
+          <p><img src="../image/print2file_block.png" /></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demopanel-container">
+      <div class="demopanel">
+        <div xmlns="" class="demopanel">
+          <div class="demopanel-title">
+            Port map
+          </div>
+
+          <p>The print2file block makes it possible write data to a file stored on the drone.<br />
+          The data to be written must be sent on the input port of the block.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demopanel-container">
+      <div class="demopanel">
+        <div xmlns="" class="demopanel">
+          <div class="demopanel-title">
+            Parameters
+          </div>
+
+          <p>The name of the file to be written must be specified in the parameters option in the following way :
+          <b>int8(&quot;nameOfTheFile&quot;)</b><br />
+          <br />
+          By default, the file will be stored in <b>/data/video</b>.<br />
+          The user can modify this by providing an absolute or relative path in the block parameter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

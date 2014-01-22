@@ -78,7 +78,7 @@ namespace Navdata {
         /* Set the sample period in us. */
         void setSamplePeriod (uint32_t dt) ;
 
-        void setKps (float, float, float) ;
+        void setKp (float) ;
         void setKis (float, float, float) ;
 
 		void update () ;

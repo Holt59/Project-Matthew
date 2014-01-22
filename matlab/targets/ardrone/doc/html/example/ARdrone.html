@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:file="java.io.File">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+
+  <title>Simulink Support Package for AR.Drone v2.0</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="droneindex.css" />
+</head>
+
+<body>
+  <div id="background-container">
+    <div id="header-container">
+      <div id="header">
+        <div>
+          <span class="header-demo-name">Simulink Support Package for AR.Drone v2.0</span>
+        </div><br />
+        <br />
+
+        <div class="header-content">
+          <p xmlns=""></p>
+        </div>
+
+        <div class="demopanel-container">
+          <div class="demopanel">
+            <div xmlns="" class="demopanel">
+              <div class="demopanel-title">
+                Presentation
+              </div><br />
+              This Simulink Support Package was designed in order to easily design embedded applications for the AR.Drone
+              v2.0.<br />
+              This documentation presents step-by-step the setup of the support package and the description of each block.<br />
+
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+
+            <div xmlns="" class="demopanel">
+              <div class="demopanel-title">
+                Prerequisites
+              </div>
+
+              <p>Before starting, please ensure you have all the following prerequisites or equivalents:<br /></p>
+
+              <ul>
+                <li>MinGW utility installed (available for free here : <a href="http://www.mingw.org/">Minimalist GNU for
+                Windows</a>)
+                </li>
+
+                <li>ARM Linux GNU EABI compiler installed (available for free here : <a href=
+                "http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/arm-gnu-linux">ARM
+                compiler by MentorGraphics</a>)
+                </li>
+
+                <li>Matlab 2013a or newer with Embedded Coder Toolbox</li>
+
+                <li>The complete set of AR.Drone target files with the supported blocks</li>
+
+                <li>The Paparazzi library installed</li>
+
+                <li>A computer running Windows or OS X with wireless network adapter</li>
+              </ul>
+            </div>
+
+            <div xmlns="" class="demopanel">
+              <div class="demopanel-title">
+                Setup
+              </div>
+
+              <p>First ensure that the target directory is in the Matlab path, if not include it in the Matlab path.<br /></p>
+
+              <p>Either by right-cliking the target folder in <b>&#39;Current Folder&#39;</b> window and selecting <b>&#39;Add to
+              Path&gt;Selected Folders and Subfolders&#39;</b><br />
+              Or by entering the following command :
+              <b>&#39;<code>addpath(genpath(&#39;path/to/directory/target&#39;))</code>&#39;</b><br /></p>
+
+              <p>Now, open a new simulink model and display the AR.Drone library in the Simulink Library Browser.<br /></p>
+
+              <p><img src="../image/library_overview.png" width="800" height="500" /></p>
+
+              <p>Then, simply drag and drop blocks into your Simulink model.</p>
+
+              <p>Once you have completed your Simulink model, you have to setup the AR.Drone target&#39;s parameters.<br />
+              <br />
+              To do so, open the <b>&#39;Model Configuration Parameters&#39;</b> menu (shortcut <b>&#39;Ctrl+E&#39;</b>) and select
+              the <b>&#39;Solver&#39;</b> pane :</p>
+
+              <ol>
+                <li>Choose a <b>&#39;Start time&#39;</b> and a <b>&#39;Stop time&#39;</b></li>
+
+                <li>Select <b>&#39;Fixed-step&#39;</b> as type and <b>&#39;discrete&#39;</b> as solver</li>
+
+                <li>Enter the <b>&#39;Fixed-step size&#39;</b></li>
+              </ol>
+
+              <p><img src="../image/solver_pane.png" width="800" height="500" /></p>
+
+              <p>Then, in the <b>&#39;Code Generation&#39;</b> pane :</p>
+
+              <ol>
+                <li>Click <b>&#39;Browse...&#39;</b> and select the target <b>&#39;ardrone.tlc&#39;</b> from the list</li>
+
+                <li>Select <b>&#39;C++&#39;</b> in the Language drop-down list</li>
+              </ol>
+
+              <p><img src="../image/code_generation_pane.png" width="800" height="500" /></p>
+
+              <p>Expand the Code Ceneration tab and select the <b>&#39;AR.Drone options&#39;</b> to provide the necessary
+              additional information.</p>
+
+              <ol>
+                <li>Check the whether or not you would like to <b>upload the application</b> directly to the drone</li>
+
+                <li>Enter the <b>IP address</b> of the drone (default address is : 192.168.1.1)</li>
+
+                <li>Precise the location of the <b>Paparazzi library</b></li>
+
+                <li>Enter the path to the <b>ARM Compiler</b></li>
+
+                <li>Specify the location of the <b>make command</b></li>
+              </ol>
+
+              <p><img src="../image/target_options_pane.png" width="800" height="500" /></p>
+
+              <p>Hit <b>&#39;Apply&#39;</b> and you are good to go!<br />
+              <br />
+              Finish up your Simulink application and connect to the AR.Drone by wi-fi if you want to upload and run the
+              application on the drone directly.</p>
+
+              <p>Click the <b>&#39;build button&#39;</b> <img src="../image/build_button.png" /> (shortcut
+              <b>&#39;Ctrl+B&#39;</b>).<br />
+              <br />
+              The default program (program.elf) will be killed and your program is uploaded and launched on the AR Drone.<br /></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
