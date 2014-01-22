@@ -483,29 +483,29 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
 
   oIdx = oIdx + 1;
 
-  rtwoptions(oIdx).prompt         = 'Location of Paparazzi Library';
+  rtwoptions(oIdx).prompt         = 'Location of Bibrone Lib';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = 'C:\INSA Toulouse\ARDrone\Paparazzi-CPP';
+  rtwoptions(oIdx).default        = '/usr/local/bibrone';
   rtwoptions(oIdx).makevariable   = 'PAPARAZZI_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...
-    'Location of Paparazzi library']);
+    'Location of paparazzi library']);
 
     oIdx = oIdx + 1;
 
-  rtwoptions(oIdx).prompt         = 'Location of your ARM Compiler';
+  rtwoptions(oIdx).prompt         = 'Location of your ARM compiler';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = 'C:\CodeSourcery\Sourcery_CodeBench_Lite_for_ARM_GNU_Linux\bin';
+  rtwoptions(oIdx).default        = '/usr/local/carlson-minot/crosscompilers/bin';
   rtwoptions(oIdx).makevariable   = 'COMPILER_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...
-    'Location of ARM compiler']);
+    'Location of ARM compieler']);
 
   oIdx = oIdx + 1;
 
-  rtwoptions(oIdx).prompt         = 'Location of your make command';
+  rtwoptions(oIdx).prompt         = 'Location of your make executable';
   rtwoptions(oIdx).type           = 'Edit';
-  rtwoptions(oIdx).default        = 'C:\MinGW\bin\mingw32-make';
+  rtwoptions(oIdx).default        = 'make';
   rtwoptions(oIdx).makevariable   = 'MAKE_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...
