@@ -2,8 +2,8 @@ CC=arm-none-linux-gnueabi-g++
 AR=arm-none-linux-gnueabi-ar
 CXXFLAGS=-W -Wall
 
-LIBNAME=paparazzi
-INCLUDE_PATH=..\include\paparazzi
+LIBNAME=bibrone
+INCLUDE_PATH=..\include\$(LIBNAME)
 LIB_PATH=..\lib
 
 SRCS = $(wildcard *.cpp) 
