@@ -21,9 +21,9 @@
   
   %openfile tmpBuf
   #include "%<LibGetMdlPubHdrBaseName()>.h"
-  #include <paparazzi/SysTime.h>    // Timers PAPARAZZI
-  #include <paparazzi/Navdata.h>    // Données capteurs PAPARAZZI
-  #include <paparazzi/Actuators.h>  // LEDS Moteurs PAPARAZZI
+  #include <bibrone/SysTime.h>    // Timers BIBRONE
+  #include <bibrone/Navdata.h>    // Données capteurs BIBRONE
+  #include <bibrone/Actuators.h>  // LEDS Moteurs BIBRONE
   #include <unistd.h>
   #include <iostream>
   #include <stdint.h>

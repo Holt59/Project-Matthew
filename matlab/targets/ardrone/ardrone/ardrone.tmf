@@ -181,8 +181,8 @@ DEFAULT_OPT_OPTS = -O0
 ANSI_OPTS        =
 CPP_ANSI_OPTS    = 
 LD               = $(CC)
-LDFLAGS          = -static -L"|>PAPARAZZI_PATH<|/lib"
-USER_INCLUDES     = -I"|>PAPARAZZI_PATH<|/include"
+LDFLAGS          = -static -L"|>BIBRONE_PATH<|/lib"
+USER_INCLUDES     = -I"|>BIBRONE_PATH<|/include"
 
 GCC_WALL_FLAG     := 
 GCC_WALL_FLAG_MAX :=
@@ -321,7 +321,7 @@ CPPFLAGS = $(CPP_ANSI_OPTS) $(DBG_FLAG) $(CPP_OPTS) $(CC_OPTS) $(CPP_REQ_DEFINES
 
 #-------------------------- Additional Libraries ------------------------------
 
-SYSLIBS += $(EXT_LIB) -lpaparazzi -lm
+SYSLIBS += $(EXT_LIB) -lbibrone -lm
 
 LIBS =
 |>START_PRECOMP_LIBRARIES<|

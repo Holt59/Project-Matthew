@@ -486,10 +486,10 @@ rtwoptions(oIdx).prompt         = 'ERT code generation options (1)';
   rtwoptions(oIdx).prompt         = 'Location of Bibrone Lib';
   rtwoptions(oIdx).type           = 'Edit';
   rtwoptions(oIdx).default        = '/usr/local/bibrone';
-  rtwoptions(oIdx).makevariable   = 'PAPARAZZI_PATH';
+  rtwoptions(oIdx).makevariable   = 'BIBRONE_PATH';
   rtwoptions(oIdx).callback       = 'ert_callback_handler';
   rtwoptions(oIdx).tooltip        = sprintf([...
-    'Location of paparazzi library']);
+    'Location of BibRone library']);
 
     oIdx = oIdx + 1;
 

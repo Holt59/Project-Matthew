@@ -5,7 +5,7 @@
 
 #ifndef MATLAB_MEX_FILE
 
-#include <paparazzi/Actuators.h>
+#include <bibrone/Actuators.h>
 
 #endif
 

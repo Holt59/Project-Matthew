@@ -5,7 +5,7 @@
 
 #ifndef MATLAB_MEX_FILE
 
-#include <paparazzi/Navdata.h>
+#include <bibrone/Navdata.h>
 
 #endif
 
