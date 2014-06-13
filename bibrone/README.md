@@ -1,8 +1,7 @@
 Bibrone - Parrot 2.0 Drivers Library
 ====================================
 
-How to build?
-===============
+###How to build?
 
 To build the drivers, you need a ARM cross compiler and a make utility (MinGW make works well for Windows). To build the drivers, just run:
 
@@ -14,10 +13,9 @@ Replace `Makefile.unix` with `Makefile.win` if you're compiling under Windows.
 
 Once you've built the library, you should find two folders `include` and `lib` in the `bibrone` directory. The include contains a `bibrone` subfolders with all header files, and the lib folder contains the static library.
 
-How to use?
-===========
+###How to use?
 
-Just add the path to the include folder and the library and run:
+Just add the path to the include folder and the library when building with your arm compiler:
 
 ```
 arm-none-linux-gnueabi-g++ -IPATH_TO_BIBRONE/include -LPATH_TO_BIBRONE/lib main.c -o main -lbibrone
