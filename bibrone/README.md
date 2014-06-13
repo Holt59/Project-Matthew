@@ -9,7 +9,7 @@ To build the drivers, you need a ARM cross compiler and a make utility (MinGW ma
 make -f Makefile.unix
 ```
 
-Replace `Makefile.unix` with `Makefile.win` if you're compiling under Windows.
+Replace `Makefile.unix` with `Makefile.win` if you're compiling on Windows.
 
 Once you've built the library, you should find two folders `include` and `lib` in the `bibrone` directory. The include contains a `bibrone` subfolders with all header files, and the lib folder contains the static library.
 
