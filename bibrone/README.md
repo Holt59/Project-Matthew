@@ -11,7 +11,7 @@ make -f Makefile.unix
 
 Replace `Makefile.unix` with `Makefile.win` if you're compiling on Windows.
 
-Once you've built the library, you should find two folders `include` and `lib` in the `bibrone` directory. The include contains a `bibrone` subfolders with all header files, and the lib folder contains the static library.
+Once you've built the library, you should find two folders `include` and `lib` in the `bibrone` directory. The include contains a `bibrone` subfolders with all header files, and the lib folder contains the `libbibrone.a` file.
 
 ###How to use?
 
