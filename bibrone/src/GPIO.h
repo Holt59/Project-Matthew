@@ -23,14 +23,14 @@ namespace GPIO {
 
         }
 
-	}
+    }
 
     bool init () ;
 
     void stop () ;
 
     void setupInput (uint16_t pin) ;
-	void setupOutput (uint16_t pin) ;
+    void setupOutput (uint16_t pin) ;
 
     void set (uint16_t pin) ;
 
