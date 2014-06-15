@@ -13,7 +13,7 @@
 namespace Actuators {
 
     int fd ;
-	bool isInitialized = false ;
+    bool isInitialized = false ;
 
     uint16_t PWMs[4] = {0, 0, 0, 0} ;
 
@@ -24,9 +24,9 @@ namespace Actuators {
 
     bool init () {
 
-		if (isInitialized) {
-			return true ;
-		}
+        if (isInitialized) {
+            return true ;
+        }
 
         if (!GPIO::init ()) {
 			return false ;
@@ -39,7 +39,7 @@ namespace Actuators {
         }
 
         int flags = fcntl(fd, F_GETFL, 0) ;
-	    fcntl(fd, F_SETFL, flags | O_NONBLOCK); //read calls are non blocking
+        fcntl(fd, F_SETFL, flags | O_NONBLOCK); //read calls are non blocking
 
         //set port options
         struct termios options;
@@ -59,10 +59,10 @@ namespace Actuators {
 
         GPIO::setupInput (GPIO::Pin::IRQ::Input) ;
 
-		GPIO::setupOutput (GPIO::Pin::IRQ::FlipFlop) ;
-		GPIO::clear (GPIO::Pin::IRQ::FlipFlop) ;
-		usleep (1000) ;
-		GPIO::set (GPIO::Pin::IRQ::FlipFlop) ;
+        GPIO::setupOutput (GPIO::Pin::IRQ::FlipFlop) ;
+        GPIO::clear (GPIO::Pin::IRQ::FlipFlop) ;
+        usleep (1000) ;
+        GPIO::set (GPIO::Pin::IRQ::FlipFlop) ;
 		
         GPIO::setupOutput (GPIO::Pin::Motor::Motor1);
         GPIO::setupOutput (GPIO::Pin::Motor::Motor2);
@@ -104,11 +104,11 @@ namespace Actuators {
         GPIO::clear (GPIO::Pin::IRQ::FlipFlop) ;
         GPIO::set (GPIO::Pin::IRQ::FlipFlop);
 
-		Actuators::Led::set(Actuators::Led::GREEN, Actuators::Led::GREEN, 
-							Actuators::Led::GREEN, Actuators::Led::GREEN) ;
+        Actuators::Led::set(Actuators::Led::GREEN, Actuators::Led::GREEN, 
+                            Actuators::Led::GREEN, Actuators::Led::GREEN) ;
 
-		isInitialized = true ;
-		return true ;
+        isInitialized = true ;
+        return true ;
 
     }
 
@@ -136,7 +136,7 @@ namespace Actuators {
 
     void stop () {
 
-		isInitialized = false ;
+        isInitialized = false ;
         close (fd) ;
 
     }
