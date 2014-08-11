@@ -25,7 +25,7 @@ namespace Navdata {
 
     namespace IMU {
 
-		bool isIMUAvailable () ;
+        bool isIMUAvailable () ;
 
         void update () ;
 

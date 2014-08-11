@@ -8,6 +8,7 @@
 #include <termios.h> /* POSIX terminal control definitions */
 #include <stdint.h>
 #include <math.h>
+#include <signal.h>
 
 #include <iostream>
 #include <algorithm>
@@ -22,6 +23,8 @@ namespace Navdata {
 
     const int NAVDATA_BUFFER_SIZE = 60 ;
 
+    const int IO_SIGNUM = SIGRTMIN + 43 ;
+    
     struct NavdataPort {
         bool isInitialized;
         uint16_t bytesRead;
@@ -106,21 +109,36 @@ namespace Navdata {
     int16_t previousUltrasoundHeight ;
 
     bool acquireBaroCalibration () ;
+    
+    void signalIOCallback (int) {
+        Navdata::update () ;
+    }
 
     bool init () {
     
         if (isInitialized) {
             return true ;
         }
+        
+        sigset_t mskvar_1 ;                 //Variable of signal bitfieldtype
+        struct sigaction sigio_action ;     //Structure which describes signal handler
+        
+        sigfillset(&mskvar_1);                    //set all mask bits of maskbit variable
+        sigprocmask(SIG_SETMASK,&mskvar_1,NULL);  //write the mask info present in mskvar_1 to the pd
+        sigdelset(&mskvar_1, IO_SIGNUM);               //Unmask SIGIO , to register for IO Interrupt Events
 
-        fd = open ("/dev/ttyO1", O_RDWR | O_NOCTTY | O_NONBLOCK) ;
+        sigio_action.sa_handler = signalIOCallback;    //Configure Signal Handler
+        sigio_action.sa_flags  = 0;
+        sigfillset(&sigio_action.sa_mask);
+        sigaction(SIGIO,&sigio_action,NULL);      //Install Signal handler
+
+        fd = open ("/dev/ttyO1", O_RDWR | O_NOCTTY | O_NDELAY) ;
 
         if (fd < 0) {
             return false ;
         }
 
-		int flags = fcntl(fd, F_GETFL, 0) ;
-	    fcntl(fd, F_SETFL, flags | O_NONBLOCK); //read calls are non blocking
+        fcntl(fd, F_SETSIG, IO_SIGNUM);
 	    //set port options
 	    struct termios options;
 	    //Get the current options for the port

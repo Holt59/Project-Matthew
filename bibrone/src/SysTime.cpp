@@ -23,7 +23,7 @@ SysTime::SysTime () {
 
     this->ticksPerSec = SYS_TIME_FREQUENCY;
     this->resolution = 1.0 / this->ticksPerSec;
-	unsigned int i;
+	int i;
     for (i=0; i<SYS_TIME_NB_TIMER; i++) {
         this->timer[i].inUse     = false;
         this->timer[i].cb         = NULL;
@@ -76,7 +76,7 @@ bool SysTime::checkAndAckTimer (tid_t id) {
     return false;
 }
 
-void SysTime::sysTickHandler (int signum) {
+void SysTime::sysTickHandler (int) {
 
     m_systime->nbTicks++;
     m_systime->nbSecRem += m_systime->resolutionCPUTicks;;
@@ -84,7 +84,7 @@ void SysTime::sysTickHandler (int signum) {
         m_systime->nbSecRem -= m_systime->cpuTicksPerSec;
         m_systime->nbSec++;
     }
-    unsigned int i;
+    int i;
     for (i=0; i < SysTime::SYS_TIME_NB_TIMER; i++) {
         if (m_systime->timer[i].inUse &&
             m_systime->nbTicks >= m_systime->timer[i].endTime) {
